@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loment — a systems programming language</title>
+<meta name="description" content="Loment is a systems programming language. It emits native x86-64 executables — Linux ELF, Windows PE, or a freestanding object for bare metal — with no runtime and no libc. The toolchain is itself written in Loment.">
+<meta property="og:title" content="Loment — a systems programming language">
+<meta property="og:description" content="Native x86-64 with no runtime and no libc. The toolchain is written in Loment.">
+<meta property="og:type" content="website">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#5468ff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Get started</a>
+      <a href="examples.html">Examples</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Loment</h1>
+    <p class="lede">
+      A systems programming language. It emits native x86-64 executables — Linux ELF,
+      Windows PE, or a freestanding object for bare metal — with no runtime and no libc.
+      The toolchain is itself written in Loment.
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Download</a>
+      <a class="btn btn-quiet" href="start.html">Get started</a>
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+      <p class="out"><span class="prompt">$</span> loment run hello.lomt<br><b>hello from Loment</b></p>
+    </div>
+
+    <p class="note">
+      <code>_start</code> is the entry point, because there is no runtime to call one for you.
+      There is no <code>printf</code> either — output goes through the <code>write</code>
+      system call.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Who can run what, in what scope</h2>
+    <p class="body">
+      Most languages answer <em>what can this program do?</em> Loment is arranged around a
+      narrower question — <strong>who can run what, in what scope, and can that be settled
+      without reading the source?</strong> The rest of the language exists to keep that
+      question answerable.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> native_cap</span><span class="ln" data-n="2"> </span><span class="ln ln-mark" data-n="3"><span class="k">capability</span> blk_write : disk[<span class="rng">0..4</span>] revocable</span><span class="ln" data-n="4"> </span><span class="ln" data-n="5"><span class="k">fn</span> write(slot: <span class="t">u32</span>) -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="6">    <span class="k">guard</span> blk_write(slot);</span><span class="ln" data-n="7">    <span class="k">return</span> slot;</span><span class="ln" data-n="8">}</span><span class="ln" data-n="9"> </span><span class="ln" data-n="10"><span class="k">fn</span> literal_ok() -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="11">    <span class="k">guard</span> blk_write(<span class="rng">2</span>);</span><span class="ln" data-n="12">    <span class="k">return</span> <span class="n">2</span>;</span><span class="ln" data-n="13">}</span></code></pre>
+    </div>
+    <p class="caption">
+      Line 3 declares the range a unit may reach. Line 6 checks <code>slot</code> against it
+      at run time, where an out-of-range index traps. Line 11 is a literal, so the compiler
+      settles it and nothing is emitted.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Capability domains</h3>
+        <p>
+          A unit declares the range it may reach, and a <code>guard</code> checks an index
+          against it — at compile time when the index is a literal, otherwise at run time.
+          The boundary is stated rather than glossed: a guard bounds the <em>index</em>,
+          not the subject.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Form objects</h3>
+        <p>
+          Every unit exports a declared, machine-readable summary of what it contains and
+          what it reaches, judged by two independent validators — so "what can this touch"
+          is answerable without reading the source.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A compat layer</h3>
+        <p>
+          Ten languages' libraries, callable end to end: C, C++, Rust and Zig behind the C
+          ABI by static linking, then Go, Python, Java, JavaScript, Perl and Lua over a
+          process bridge. Dynamic libraries and embedding a runtime are not started.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What else is different</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Written in six other syntaxes</h3>
+        <p>
+          C, C++, Java, C#, Go or Python. Only the spelling changes; the meaning is always
+          Loment's — it is a syntax, not a semantics, and each front end says so on its
+          first line.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A library you import one module at a time</h3>
+        <p>
+          <code>lompi/store/</code> ships with the toolchain: a standard library and a host
+          layer, reached as <code>use vec</code>, <code>use map</code>, <code>use fs</code>.
+          Per module is the intended way — a package-wide import is slow and
+          collision-prone, and says so in the documentation.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A project mode, not a crate attribute</h3>
+        <p>
+          <code>choose std</code> or <code>choose no_std</code>, at most once, in the root
+          unit. "Hosted or freestanding" becomes a property of the whole program — the
+          compiler can refuse a half-hosted one.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Everything is customizable</h3>
+        <p>
+          The source suffix, the command surface, the libraries — a directory whose identity
+          is a content hash — and the toolchain itself. There is no registry; the extension
+          points are files on disk.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Where to read more</h2>
+    <div style="margin-top: var(--s5)">
+      <a class="doclink" href="start.html">
+        <span class="who">Get started</span>
+        <span class="what">Install it and run your first program. Native binaries; no Python, no clang, no WSL.</span>
+      </a>
+      <a class="doclink" href="examples.html">
+        <span class="who">Examples</span>
+        <span class="what">Four programs, each with the output it printed — and what is not among them.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">
+        <span class="who">More examples</span>
+        <span class="what">The full set in the repository. Not every one of them links in 0.1.4.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
+        <span class="who">README</span>
+        <span class="what">What it is for, what else is different, and what is honestly not finished.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/issues">
+        <span class="who">Issues</span>
+        <span class="what">Questions are as welcome as bug reports.</span>
+      </a>
+      <a class="doclink" href="https://discord.gg/rGw7NRNU">
+        <span class="who">Discord</span>
+        <span class="what">Where the project talks.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment is MIT licensed. Program by Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Source</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

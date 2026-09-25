@@ -1,0 +1,22 @@
+module funct
+
+fn write_str(fd: u64, s: str) -> i64 {
+    return syscall4(1, fd, str_ptr(s) as u64, str_len(s) as u64);
+}
+
+fn larger(a: u32, b: u32) -> u32 {
+    if a > b {
+        return a;
+    }
+    return b;
+}
+
+fn _start() {
+    let m: u32 = larger(7, 9);
+    if m == 9 {
+        write_str(1, "larger(7, 9) came back with 9\n");
+        syscall4(60, 0, 0, 0);
+    }
+    write_str(1, "unexpected\n");
+    syscall4(60, 1, 0, 0);
+}

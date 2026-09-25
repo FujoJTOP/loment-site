@@ -1,0 +1,20 @@
+module counting
+
+const LIMIT: u32 = 5;
+
+fn write_str(fd: u64, s: str) -> i64 {
+    return syscall4(1, fd, str_ptr(s) as u64, str_len(s) as u64);
+}
+
+fn _start() {
+    let sum: u32 = 0;
+    for i in 0..LIMIT {
+        sum = sum + i;
+    }
+    if sum == 10 {
+        write_str(1, "the loop summed 0 through 4\n");
+        syscall4(60, 0, 0, 0);
+    }
+    write_str(1, "unexpected\n");
+    syscall4(60, 1, 0, 0);
+}

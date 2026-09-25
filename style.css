@@ -1,0 +1,342 @@
+/*  Loment — site design system
+
+    Canvas is indigo-black, not neutral black: the language's own mark is a
+    blue rounded square, and the whole page keeps that bias rather than
+    dropping a bright accent onto grey. One accent, --blue, and it is spent
+    only where the page is talking about a *range* or a *hop out* — a
+    capability declaration, a link, the compiler settling an index. It is
+    never chrome.
+
+    Type does the personality: IBM Plex Mono carries the display and every
+    piece of code, because on a language's site the material is the source.
+    IBM Plex Sans carries prose. Two families of one design, so the page
+    reads as one voice across code and argument.
+*/
+
+/* ------------------------------------------------------------- tokens */
+
+:root {
+  --ink:      #0e1222;
+  --ink-2:    #141a2c;
+  --ink-3:    #1b2237;
+  --line:     #252d47;
+  --line-2:   #333c5c;
+
+  --paper:    #e8ecf7;
+  --dim:      #98a0b8;
+  --faint:    #626c88;
+
+  --blue:     #5468ff;
+  --blue-2:   #8494ff;
+
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
+          "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", "SF Mono",
+          Menlo, Consolas, monospace;
+
+  --t-hero: clamp(2.6rem, 7vw, 4.75rem);
+  --t-h2:   clamp(1.5rem, 3.2vw, 2.1rem);
+  --t-h3:   1.0625rem;
+  --t-body: 1.0625rem;
+  --t-sm:   0.9375rem;
+  --t-code: 0.875rem;
+
+  --page:    1120px;
+  --measure: 62ch;
+
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 48px;
+  --s6: 64px;
+  --s7: 96px;
+  --s8: 128px;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+}
+
+/* --------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--ink);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 400 var(--t-body) / 1.65 var(--sans);
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--blue-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--paper); }
+
+h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+
+p { margin: 0; }
+p + p { margin-top: var(--s2); }
+
+:focus-visible {
+  outline: 2px solid var(--blue-2);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  padding: var(--s2) var(--s3);
+  background: var(--blue); color: #fff; font-weight: 600;
+}
+.skip:focus { left: var(--s3); top: var(--s3); z-index: 10; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 48px);
+}
+
+/* ---------------------------------------------------------------- bar */
+
+.bar {
+  position: sticky; top: 0; z-index: 5;
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.bar .wrap {
+  display: flex; align-items: center; gap: var(--s3);
+  min-height: 60px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-right: auto;
+  color: var(--paper); text-decoration: none;
+  font: 600 1.0625rem/1 var(--mono); letter-spacing: -0.01em;
+}
+.brand svg { display: block; }
+.brand:hover { color: var(--paper); }
+
+.bar nav { display: flex; align-items: center; gap: var(--s3); }
+.bar nav a {
+  color: var(--dim); text-decoration: none;
+  font-size: var(--t-sm); font-weight: 500;
+}
+.bar nav a:hover { color: var(--paper); }
+.bar nav a[aria-current="page"] { color: var(--paper); }
+
+/* --------------------------------------------------------------- hero */
+
+.hero { padding-block: clamp(var(--s6), 9vw, var(--s8)) var(--s6); }
+
+.hero h1 {
+  font: 600 var(--t-hero) / 1 var(--mono);
+  letter-spacing: -0.035em;
+}
+
+/* Inner pages: the same head, at the size a page title needs rather than
+   the size a front page needs. */
+.head { padding-block: clamp(var(--s5), 6vw, var(--s7)) var(--s5); }
+.head h1 {
+  font: 600 var(--t-h2) / 1.15 var(--mono);
+  letter-spacing: -0.025em;
+}
+
+.hero .lede, .head .lede {
+  max-width: var(--measure);
+  margin-top: var(--s3);
+  font-size: clamp(1.125rem, 1.8vw, 1.3125rem);
+  line-height: 1.6;
+  color: var(--paper);
+}
+.head .lede { font-size: var(--t-body); color: var(--dim); }
+
+.actions {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s2) var(--s3);
+  margin-top: var(--s4);
+}
+.btn {
+  display: inline-flex; align-items: center;
+  padding: 11px 20px;
+  border-radius: var(--r-sm);
+  font: 600 var(--t-sm)/1 var(--sans);
+  text-decoration: none;
+}
+.btn-solid { background: var(--blue); color: #fff; }
+.btn-solid:hover { background: var(--blue-2); color: #fff; }
+.btn-quiet { color: var(--paper); border: 1px solid var(--line-2); }
+.btn-quiet:hover { border-color: var(--blue); color: var(--paper); }
+
+/* ---------------------------------------------------------------- code */
+
+.codewrap {
+  margin-top: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--ink-2);
+  overflow: hidden;
+}
+
+pre.code {
+  margin: 0;
+  padding: var(--s3) 0 var(--s3);
+  overflow-x: auto;
+  font: 400 var(--t-code) / 1.75 var(--mono);
+  tab-size: 4;
+}
+pre.code code { display: block; }
+
+.ln {                     /* one line: real gutter numbers, no faked ones */
+  display: block;
+  padding-inline: var(--s3);
+  white-space: pre;
+}
+.ln::before {
+  content: attr(data-n);
+  display: inline-block;
+  width: 2ch; margin-right: var(--s3);
+  color: var(--faint);
+  text-align: right;
+  user-select: none;
+}
+
+/* The one boldness: a guard line is marked by a blue rule down its left
+   edge — the page's single structural device, and it encodes the only thing
+   the language is really about. */
+.ln-mark {
+  border-left: 2px solid var(--blue);
+  padding-left: calc(var(--s3) - 2px);
+  background: color-mix(in srgb, var(--blue) 7%, transparent);
+}
+.ln-mark::before { margin-left: 0; }
+
+.k { color: var(--blue-2); }        /* keyword   */
+.s { color: #9fd6a8; }              /* string    */
+.n { color: #e6c07b; }              /* number    */
+.c { color: var(--faint); font-style: italic; }
+.t { color: #7fd4e0; }              /* type      */
+.rng { color: var(--blue-2); font-weight: 600; }   /* a declared range */
+
+.out {
+  border-top: 1px solid var(--line);
+  padding: var(--s2) var(--s3);
+  background: var(--ink);
+  font: 400 var(--t-code) / 1.7 var(--mono);
+  color: var(--dim);
+}
+.out b { color: var(--paper); font-weight: 400; }
+.out .prompt { color: var(--faint); }
+
+/* ------------------------------------------------------------ sections */
+
+.sec { padding-block: var(--s7); border-top: 1px solid var(--line); }
+.sec h2 {
+  font: 600 var(--t-h2) / 1.2 var(--mono);
+  letter-spacing: -0.025em;
+  max-width: 34ch;
+}
+.sec .body { max-width: var(--measure); margin-top: var(--s3); color: var(--dim); }
+.sec .body strong { color: var(--paper); font-weight: 600; }
+
+/* Rows, not cards: a hairline between items and nothing else. A rounded
+   box with a soft shadow per item is the default this brief does not need. */
+.rows { margin-top: var(--s5); border-top: 1px solid var(--line); }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: var(--s2) var(--s4);
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--line);
+}
+.row h3 {
+  font: 600 var(--t-h3) / 1.4 var(--mono);
+  color: var(--paper);
+}
+.row p { color: var(--dim); max-width: var(--measure); }
+.row p + p { margin-top: var(--s2); }
+
+@media (max-width: 720px) {
+  .row { grid-template-columns: 1fr; gap: var(--s2); }
+}
+
+/* --------------------------------------------------------------- misc */
+
+.doclink {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: var(--s2) var(--s4);
+  padding: var(--s3) 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+.doclink:hover { background: var(--ink-2); }
+.doclink .who { font: 500 var(--t-sm)/1.5 var(--mono); color: var(--blue-2); }
+.doclink .what { color: var(--dim); font-size: var(--t-sm); }
+@media (max-width: 720px) { .doclink { grid-template-columns: 1fr; gap: 4px; } }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-block: var(--s5);
+  color: var(--faint);
+  font-size: var(--t-sm);
+}
+footer .wrap {
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
+  align-items: baseline; justify-content: space-between;
+}
+footer a { color: var(--dim); text-decoration: none; }
+footer a:hover { color: var(--paper); text-decoration: underline; }
+footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
+
+.note {
+  margin-top: var(--s4);
+  padding-left: var(--s3);
+  border-left: 2px solid var(--line-2);
+  color: var(--faint);
+  font-size: var(--t-sm);
+  max-width: var(--measure);
+}
+
+/* A line of prose that belongs to the block above it. No rule of its own —
+   the block already has one, and a second would read as a second block. */
+.caption {
+  margin-top: var(--s2);
+  color: var(--faint);
+  font-size: var(--t-sm);
+  max-width: var(--measure);
+}
+.caption code { font-size: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Narrow phones: the nav is the first thing to break, and a wrapped
+   two-line "Get / started" in a 60px bar is worse than a smaller one. */
+@media (max-width: 560px) {
+  .bar .wrap { padding-inline: 16px; gap: var(--s2); }
+  .bar nav { gap: var(--s2); }
+  .bar nav a { font-size: 0.8125rem; white-space: nowrap; }
+  .brand { font-size: 1rem; }
+
+  /* Gutter and code inset are pure overhead on a 375px screen: the code is
+     scrolling sideways regardless, so give it the room. */
+  .ln { padding-inline: var(--s2); }
+  .ln::before { margin-right: var(--s2); }
+  .ln-mark { padding-left: calc(var(--s2) - 2px); }
+  .out { padding-inline: var(--s2); }
+}

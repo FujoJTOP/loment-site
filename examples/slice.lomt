@@ -1,0 +1,26 @@
+module slice
+
+fn write_str(fd: u64, s: str) -> i64 {
+    return syscall4(1, fd, str_ptr(s) as u64, str_len(s) as u64);
+}
+
+fn sum(xs: [u32]) -> u32 {
+    let acc: u32 = 0;
+    let i: u32 = 0;
+    while i < slice_len(xs) {
+        acc = acc + xs[i];
+        i = i + 1;
+    }
+    return acc;
+}
+
+fn _start() {
+    let xs: [u32; 3] = [1, 2, 3];
+    let s: u32 = sum(&xs);
+    if s == 6 {
+        write_str(1, "the slice summed to 6\n");
+        syscall4(60, 0, 0, 0);
+    }
+    write_str(1, "unexpected\n");
+    syscall4(60, 1, 0, 0);
+}
