@@ -1,0 +1,257 @@
+<!doctype html>
+<!-- translated-from: roadmap.html -->
+<!-- source-sha256: 95056a2d342b6ecaf883552c8bde2443998a1abb9568e513cf18f73a0ca88859 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoja de ruta — Loment</title>
+<meta name="description" content="Lo que Loment pretende construir a continuación, de 0.1.5 a 0.1.8 — un plan, no una promesa. Sin fechas, y nada de esto se puede descargar hoy.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/roadmap.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/roadmap.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/roadmap.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/roadmap.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/roadmap.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/roadmap.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="releases.html">Versiones</a>
+      <a href="roadmap.html" aria-current="page">Hoja de ruta</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../roadmap.html" hreflang="en">English</a></li>
+        <li><a href="../zh/roadmap.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/roadmap.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/roadmap.html" hreflang="ru">Русский</a></li>
+        <li><a href="roadmap.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Hoja de ruta</p>
+    <h1>Lo que viene después</h1>
+    <p class="lede">
+      Las versiones a las que apunta el proyecto, desde 0.1.5 en adelante, y para <em>qué</em> es
+      cada una. Esto es un <strong>plan</strong> &mdash; la forma del trabajo que el proyecto se ha
+      impuesto, no un calendario.
+    </p>
+    <p class="limit">
+      <strong>Sin fechas, y nada de lo que hay aquí se puede descargar.</strong> Cada línea de
+      abajo es una dirección que el proyecto ha elegido; ninguna es un compromiso con un momento,
+      y ninguna es una función que se pueda usar hoy. Lo que se puede instalar es la
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">última versión</a>, y lo que
+      contiene está en el <a href="releases.html">historial de versiones</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>El hito más cercano: 0.1.5 Alpha 1</h2>
+    <p class="body">
+      Lo siguiente en la lista no es una función. Su objetivo se enuncia como <strong>silencio
+      cero</strong>: <em>cada virtud que el lenguaje afirma recibe un veredicto o un criterio
+      ejecutable</em>, de modo que nada se describa sin algo que pueda falsar la descripción.
+    </p>
+    <p class="body">
+      La entrada es un sondeo de lo que otros lenguajes hacen bien &mdash; tomado de C, Rust, Java
+      y Python &mdash; y el objetivo es que <strong>cada línea de ese sondeo acabe decidida</strong>.
+      Hay tres veredictos admisibles: copiar el mecanismo; copiar la <em>intención</em> pero no la
+      forma; o rechazarlo sin más, y decir con qué conflicto chocó y qué lado se eligió.
+      <strong>Tres frases se tratan como estados de fallo:</strong> "sin decidir", "por discutir" y
+      "según las circunstancias" &mdash; una línea que acaba en una de ellas no se ha decidido, se
+      ha aplazado, y la regla es que aplazar cuenta como fallar.
+    </p>
+    <p class="body">
+      Eso suena burocrático hasta que se ve para qué sirve. Algunas de las virtudes del sondeo
+      <em>no pueden</em> coexistir, y la parte útil del ejercicio es verse obligado a decir a cuál
+      se renuncia y por qué. Tres de los conflictos merecen nombrarse, porque son aquellos sobre
+      los que este lenguaje se asienta de hecho:
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Qué grosor tiene la máquina abstracta</h3>
+        <p>
+          C es lo bastante fino para permitir comportamiento indefinido, y esa finura es lo que
+          compra su velocidad y su portabilidad &mdash; el lenguaje no da nada por supuesto. Rust
+          es lo bastante grueso para decidir los préstamos en tiempo de compilación, y ese grosor
+          es lo que compra sus demostraciones &mdash; el lenguaje da por supuesto muchísimo.
+          <strong>No se pueden maximizar los dos a la vez.</strong>
+        </p>
+      </div>
+      <div class="row">
+        <h3>Dónde vive la inteligencia</h3>
+        <p>
+          Java la pone en el runtime, y con ello compra un rendimiento máximo y unas operaciones
+          más simples. La razón de ser de Loment es un programa <em>sin</em> runtime y con un
+          comportamiento predecible. <strong>Poner el recolector en el núcleo es renunciar a
+          aquello para lo que existe este lenguaje</strong> &mdash; por eso la recuperación es una
+          elección por niveles y no una política.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Cuándo se resuelve un nombre</h3>
+        <p>
+          Python resuelve en tiempo de ejecución: sin ceremonias, y se escribe rápido. Java resuelve
+          en tiempo de compilación: herramientas y refactorización fiables. La misma importación no
+          puede comprobarse en tiempo de compilación y no serlo a la vez.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      Ninguno de esos tres se resuelve encontrando un término medio ingenioso. Cada uno se resuelve
+      eligiendo un lado y anotando qué costó el otro lado.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lo que viene después</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.5 &mdash; la recuperación pasa a ser algo con lo que se puede contar</h3>
+        <p>
+          La escala de recuperación es aquello para lo que sirve 0.1.5: el punto en el que deja de
+          ser un diseño y pasa a ser una propiedad con la que un programa puede contar. <strong>La
+          mayor parte de la escala ya está construida</strong> &mdash; los cuatro peldaños tienen
+          implementación y criterio, el recolector adaptativo y la mitad generacional ya han
+          aterrizado, y las dos implementaciones del lenguaje coinciden en ellos byte a byte. Lo
+          que 0.1.5 añade es la parte que no es una función: darla por zanjada, y poder decir qué
+          garantiza y qué no. La escala en sí se describe en <a href="lgc.html">su propia
+          página</a>, que mantiene su propia línea de estado.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.5.x &mdash; el runtime queda terminado</h3>
+        <p>
+          La dimensión <code>runtime</code> ya existe como un modo con un valor por defecto, y es
+          <strong>obligatoria en vez de orientativa</strong>: pedir el nivel que necesita un
+          recolector mientras se declara que el artefacto no lleva runtime es un error de
+          compilación, porque los dos se contradicen por definición. Lo que el runtime contiene hoy
+          es exactamente la parte que ese nivel necesita. Esta línea añade el resto.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.6 &mdash; la primera VM de Loment, en el peldaño más bajo</h3>
+        <p>
+          Una segunda forma de ejecutar un programa, que aterriza en el primer peldaño de su escala:
+          bytecode y un intérprete, nada por encima. <strong>Hoy no hay ningún motor</strong>, y
+          <a href="lvm.html">esa página</a> lo dice antes que ninguna otra cosa.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.7 &mdash; se completa el sistema de objetos</h3>
+        <p>
+          Hoy el lenguaje tiene structs, enums cuyas variantes llevan una sola carga útil, traits
+          despachados de forma estática y genéricos resueltos en tiempo de compilación. Esta línea
+          trata de lo que falta y no de añadir una función que nadie ha pedido.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.8 &mdash; se completa el sistema de gestión de memoria</h3>
+        <p>
+          Que se apoya en los niveles y la escala anteriores: la recuperación pasa a ser un sistema
+          y no un conjunto de mecanismos.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      Más allá de 0.1.8 los epígrafes aún están en fase de planificación, y esta página no va a
+      inventárselos. Una cosa ajena a esta lista se ha anunciado por separado: la próxima versión
+      del propio gestor de paquetes, que se anuncia en
+      <a href="https://github.com/FujoJTOP/lompi">su propio repositorio</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Cómo se puede saber si algo de esto ha ocurrido</h2>
+    <p class="body">
+      Una hoja de ruta solo merece leerse si hay una forma de comprobarla más tarde, así que lo
+      honesto es decir dónde tiene lugar esa comprobación. <strong>El proyecto no lleva sus planes
+      en un gestor público de incidencias.</strong> Los registra como documentos de diseño
+      numerados en el repositorio, y esos documentos están escritos en chino &mdash; cosa que
+      conviene saber antes de ir a buscarlos, porque la hoja de ruta no está donde se cabría
+      esperar.
+    </p>
+    <p class="body">
+      La llegada de cada versión es entonces cuestión de registro y no de anuncio: el historial de
+      versiones dice qué se publicó y cuándo, y cada una de las páginas de abajo lleva su propia
+      línea de estado en lugar de describirse como terminada.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="releases.html">
+        <span class="who">Historial de versiones</span>
+        <span class="what">Lo que realmente se ha publicado, desde la primera versión hasta la que se está construyendo ahora.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Hoja de ruta en la wiki</span>
+        <span class="what">El mismo plan con más detalle, junto al resto del lenguaje.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">Los registros de diseño numerados, donde cada una de estas líneas se argumenta en vez de resumirse. En chino.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Volver a la página principal</span>
+        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

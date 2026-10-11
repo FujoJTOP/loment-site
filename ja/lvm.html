@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 160d820450b5459f799e5410bc6afecafb553057c693186865046e38c6bb11c2 -->
+<!-- source-sha256: ce45591165327ce795e1c94e2d48d9ae2c8a5532afddfd24296644c91e3f52f5 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -36,6 +36,7 @@
       <a href="start.html">はじめに</a>
       <a href="examples.html">サンプル</a>
       <a href="releases.html">リリース</a>
+      <a href="roadmap.html">ロードマップ</a>
       <a href="lgc.html">LGC</a>
       <a href="lvm.html" aria-current="page">LVM</a>
       <a href="lompi.html">lompi</a>
@@ -233,9 +234,13 @@
       <div class="row">
         <h3>T4 —— 世代別かつ並行の回収</h3>
         <p>
-          他の段の延長ではない唯一の段。現在の回収設計は、世代別回収が行われて<em>いない</em>ことを
-          率直に述べ、その理由も述べている —— ライトバリアを置く場所がない。この段は通りがかりに
-          拾えるものではない。
+          他の段の延長ではない唯一の段。かつて回収設計は、これがここではまったくできない、と
+          述べていた: バックエンドはポインタをローカルとパラメータスロットにしか保たず、それが
+          通常のライトバリアを排除する。<strong>その理由はもはや成り立たない</strong> ——
+          ポインタを整数に変える道が到来し、世代別の半分は
+          <a href="lgc.html">回収側</a>に着地した —— カードテーブルとライトバリアを伴って。
+          まだ先にあるのは、それを<em>VM の内側で</em>行うことであり、それは事前に行うこととは
+          別の問題である。
         </p>
       </div>
     </div>

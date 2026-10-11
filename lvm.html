@@ -34,6 +34,7 @@
       <a href="start.html">Get started</a>
       <a href="examples.html">Examples</a>
       <a href="releases.html">Releases</a>
+      <a href="roadmap.html">Roadmap</a>
       <a href="lgc.html">LGC</a>
       <a href="lvm.html" aria-current="page">LVM</a>
       <a href="lompi.html">lompi</a>
@@ -234,9 +235,13 @@
       <div class="row">
         <h3>T4 &mdash; generational and concurrent reclamation</h3>
         <p>
-          The one rung that is not an extension of the others. The current reclamation design
-          says plainly that generational collection is <em>not</em> done, and says why &mdash;
-          there is nowhere to put the write barrier. This rung cannot be picked up in passing.
+          The one rung that is not an extension of the others. The reclamation design used to say
+          this could not be done here at all: the back end kept pointers only in locals and
+          parameter slots, and that rules out the usual write barrier. <strong>That reason no
+          longer holds</strong> &mdash; a way to turn a pointer into an integer arrived, and the
+          generational half landed on the <a href="lgc.html">reclamation side</a>, with a card
+          table and a write barrier. What is still ahead is doing it <em>inside the VM</em>,
+          which is a different problem from doing it ahead of time.
         </p>
       </div>
     </div>

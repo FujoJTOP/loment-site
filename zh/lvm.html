@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 160d820450b5459f799e5410bc6afecafb553057c693186865046e38c6bb11c2 -->
+<!-- source-sha256: ce45591165327ce795e1c94e2d48d9ae2c8a5532afddfd24296644c91e3f52f5 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -36,6 +36,7 @@
       <a href="start.html">入门</a>
       <a href="examples.html">示例</a>
       <a href="releases.html">发布</a>
+      <a href="roadmap.html">路线图</a>
       <a href="lgc.html">LGC</a>
       <a href="lvm.html" aria-current="page">LVM</a>
       <a href="lompi.html">lompi</a>
@@ -219,8 +220,10 @@
       <div class="row">
         <h3>T4 — 分代与并发回收</h3>
         <p>
-          唯一一级不是其它几级的延伸。当前的回收设计明确说分代回收<em>没有</em>做，并说明了
-          原因 —— 没有地方放写屏障。这一级没法顺手捡起来。
+          唯一一级不是其它几级的延伸。回收设计曾经说这件事在这里根本做不了：后端只把指针存在
+          局部变量和形参槽里，而这排除了通常的写屏障。<strong>那条理由不再成立</strong> —— 把指针
+          变成整数的办法出现了，而分代那一半落到了<a href="lgc.html">回收那一侧</a>，带着一张卡表
+          和一道写屏障。仍然在前面的，是在<em>VM 内部</em>做这件事，而这与提前做是两回事。
         </p>
       </div>
     </div>

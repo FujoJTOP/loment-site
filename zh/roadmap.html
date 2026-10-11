@@ -1,0 +1,236 @@
+<!doctype html>
+<!-- translated-from: roadmap.html -->
+<!-- source-sha256: 95056a2d342b6ecaf883552c8bde2443998a1abb9568e513cf18f73a0ca88859 -->
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>路线图 — Loment</title>
+<meta name="description" content="Loment 接下来打算构建什么，从 0.1.5 到 0.1.8 —— 一份计划，而不是一份承诺。没有日期，而且其中没有任何一样今天可以下载。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/roadmap.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/roadmap.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/roadmap.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/roadmap.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/roadmap.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/roadmap.html">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">入门</a>
+      <a href="examples.html">示例</a>
+      <a href="releases.html">发布</a>
+      <a href="roadmap.html" aria-current="page">路线图</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>中文</summary>
+      <ul>
+        <li><a href="../roadmap.html" hreflang="en">English</a></li>
+        <li><a href="roadmap.html" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+        <li><a href="../ja/roadmap.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/roadmap.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/roadmap.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">路线图</p>
+    <h1>接下来是什么</h1>
+    <p class="lede">
+      项目瞄准的那些版本，从 0.1.5 往后，以及每一版是<em>为了</em>什么。这是一份<strong>计划</strong>
+      —— 项目给自己定下的工作的形状，而不是一份时间表。
+    </p>
+    <p class="limit">
+      <strong>没有日期，这里也没有任何东西可以下载。</strong>下面每一条都是项目选定的一个方向；
+      没有任何一条是对某个时间的承诺，也没有任何一条是你今天能用的功能。你能安装的是
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">最新发布</a>，而它包含什么写在
+      <a href="releases.html">发布历程</a>上。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>最近的里程碑：0.1.5 Alpha 1</h2>
+    <p class="body">
+      清单上的下一件事不是一个功能。它的目标被表述为<strong>零沉默</strong>：<em>这门语言声称的
+      每一条优点，要么得到一个裁决，要么得到一条可运行的判据</em>，于是没有任何东西被描述，却
+      没有能被用来证伪那份描述的东西。
+    </p>
+    <p class="body">
+      输入是一份针对其它语言做得好的地方的调研 —— 取自 C、Rust、Java 和 Python —— 目标是
+      <strong>其中每一条最后都被裁决</strong>。允许的裁决有三种：照搬机制；照搬<em>意图</em>而不
+      照搬形式；或者干脆拒绝它，并说明它撞上了哪一处冲突、选了哪一边。<strong>有三种说法被当作
+      失败态：</strong>未定、待讨论、以及视情况而定 —— 一条以它们之一结尾的条目并没有被裁决，
+      它被推迟了，而规则是推迟即算失败。
+    </p>
+    <p class="body">
+      这听起来很官僚，直到你看清它是为了什么。调研里有些优点<em>无法</em>共存，而这项练习有用的
+      部分，正是被逼着说出放弃的是哪一个、以及为什么。其中有三处冲突值得点出来，因为它们是这门
+      语言真正坐在其上的那三处：
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>抽象机器有多厚</h3>
+        <p>
+          C 薄到允许未定义行为，而正是这份薄买来它的速度和可移植性 —— 这门语言什么也不假定。
+          Rust 厚到能在编译期裁定借用，而正是这份厚买来它的证明 —— 这门语言假定了一大批东西。
+          <strong>两者不可能同时被最大化。</strong>
+        </p>
+      </div>
+      <div class="row">
+        <h3>智能住在哪里</h3>
+        <p>
+          Java 把它放进 runtime，并借此买来峰值吞吐和更简单的运维。Loment 存在的理由，是一个
+          <em>没有</em> runtime、行为可预测的程序。<strong>把收集器塞进内核，就是放弃这门语言存在
+          的理由</strong> —— 所以回收是一个分档的选择，而不是一条策略。
+        </p>
+      </div>
+      <div class="row">
+        <h3>一个名字在什么时候被解析</h3>
+        <p>
+          Python 在运行期解析：没有仪式，写得也快。Java 在编译期解析：可靠的工具与重构。同一个
+          import 不可能既在编译期被检查、又不被检查。
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      这三处里没有一处是靠找到某个聪明的中间点解决的。每一处都是靠选一边、并把另一边的代价写下来
+      解决的。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>之后是什么</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.5 —— 回收变成你可以依赖的东西</h3>
+        <p>
+          回收阶梯正是 0.1.5 的目的：它不再是一份设计、而成为一个程序可以指望的性质的那个点。
+          <strong>这座阶梯的大部分已经建成</strong> —— 全部四层都有实现和判据，自适应收集器和
+          分代那一半都已落地，而这门语言的两份实现在它们上逐字节一致。0.1.5 添加的，是那部分
+          算不上功能的东西：把它定下来，并且能够说出它保证什么、不保证什么。阶梯本身在
+          <a href="lgc.html">它自己那一页</a>上有描述，而那一页维护着自己的状态行。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.5.x —— runtime 完成</h3>
+        <p>
+          <code>runtime</code> 维度已经作为一个带默认值的模式存在，而且它是<strong>被强制的，
+          而不只是提示</strong>：在声明产物不携带 runtime 的同时，要求那个需要收集器的档，是一个
+          编译错误，因为两者按定义就互相矛盾。runtime 今天装着的，恰好就是那一档需要的那部分。
+          这一条要补上其余的部分。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.6 —— 第一个 Loment VM，在最底那一级</h3>
+        <p>
+          运行程序的第二种方式，落在它那座阶梯的第一级：字节码和一个解释器，上面什么都没有。
+          <strong>今天没有引擎</strong>，而<a href="lvm.html">那一页</a>在说别的任何东西之前，先
+          说了这件事。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.7 —— 对象系统被补齐</h3>
+        <p>
+          今天这门语言有结构体、变体各携带单个载荷的枚举、静态派发的 trait，以及在编译期解析的
+          泛型。这一条讲的是缺了什么，而不是加一个没人要过的功能。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.8 —— 内存管理系统被补齐</h3>
+        <p>
+          它立在上面那些档和那座阶梯之上：回收变成一个系统，而不是一组机制。
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      0.1.8 之后，那些还在计划之中的条目，这一页不会替它们编造。清单之外有一样东西是单独公布的：
+      包管理器自己的下一个版本，它在<a href="https://github.com/FujoJTOP/lompi">它自己的仓库</a>上
+      公布。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>你怎么判断这些有没有发生</h2>
+    <p class="body">
+      一份路线图只有在日后有办法核对时才值得读，所以诚实的做法是说明核对发生在哪里。<strong>这个
+      项目不把它的计划放在公开的 issue 追踪器里。</strong>它把它们记成仓里带编号的设计文档，而
+      那些文档是中文写的 —— 在你去找之前这件事值得知道，因为这份路线图并不在你预期它会在的地方。
+    </p>
+    <p class="body">
+      于是每个版本的到来是一件可供查证的事，而不是一句公告：发布历程说明实际发布了什么、什么时候
+      发布，而下面每一页都维护着自己的状态行，而不是自称已经完工。
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="releases.html">
+        <span class="who">发布历程</span>
+        <span class="what">实际发布过什么，从第一个版本到此刻正在构建的这一版。</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">wiki 上的路线图</span>
+        <span class="what">同一份计划，更详细，与语言的其余部分放在一起。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">带编号的设计记录，这里的每一条在那里是被论证的，而不是被概括的。中文写的。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">回到首页</span>
+        <span class="what">Loment 是什么，以及它构建的两类产物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment 依据 Loment-Open License 发布。由 Fujo 编写。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">源码</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">发布</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
