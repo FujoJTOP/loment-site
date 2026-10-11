@@ -1,0 +1,209 @@
+<!doctype html>
+<!-- translated-from: lvm.html -->
+<!-- source-sha256: e4da20427090d575932c1d32bf5d5c1552e98018dce75a5623ab62401e1119ba -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LVM — Loment VM — Loment</title>
+<meta name="description" content="La Loment VM: diseñada como una quinta dimensión de choose, por defecto no_vm, y con compuerta fuera de las compilaciones de versión. El motor todavía no existe. Esta página dice qué se está construyendo y qué no.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lvm.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lvm.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lvm.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lvm.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lvm.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lvm.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html" aria-current="page">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../lvm.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lvm.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/lvm.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/lvm.html" hreflang="ru">Русский</a></li>
+        <li><a href="lvm.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Sistema · en curso</p>
+    <h1>Loment VM</h1>
+    <p class="lede">
+      La VM es el siguiente modelo de ejecución para el que se está preparando el lenguaje. Su
+      primera porción — una dimensión y una compuerta — se está construyendo. <strong>El motor
+      no existe.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>No hay VM</h2>
+    <p class="body">
+      Ni bytecode, ni intérprete, ni motor de ejecución de ningún tipo. Eso va arriba en lugar
+      de en una nota al pie, porque una página sobre un plan es el lugar más fácil para que
+      quien lee confunda el plan con el producto.
+    </p>
+    <p class="body">
+      Lo que existe hoy es una especificación y una implementación <strong>en una rama de
+      desarrollo</strong>: ninguna parte está en la rama principal, ni en ninguna versión, ni
+      en ningún conjunto de herramientas instalado. El proyecto dice esto de sí mismo en lugar
+      de dejar que lo descubras — es la misma deuda en la que <code>runtime</code> estuvo un
+      tiempo, declarada y llevada en el artefacto mientras no hacía nada, antes de ser pagada.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Qué especifica la primera porción</h2>
+    <p class="body">
+      Dos cosas, ambas sobre <em>permiso</em> en lugar de sobre capacidad. Ninguna es una
+      función que puedas usar.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Una quinta dimensión</h3>
+        <p>
+          <code>choose</code> tenía cuatro dimensiones — qué capa puede usar el programa, cómo
+          recupera memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera
+          de sí mismo. <code>vm</code> sería la quinta, al responder a una pregunta distinta:
+          <strong>¿para qué modelo de ejecución es este programa?</strong> Sin escribirla es
+          <code>no_vm</code>, que es lo que todo era antes de que la dimensión existiera.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Una compuerta, no una función</h3>
+        <p>
+          En una compilación de <strong>versión</strong>, <code>choose vm</code> sería un error
+          de tiempo de compilación; solo el canal de desarrollo lo aceptaría. La regla que el
+          proyecto se impuso es tajante — hasta que exista la primera VM utilizable, cada
+          llamada a ella es ilegal en una versión — de modo que un conjunto de herramientas
+          instalado nunca pueda aceptar una promesa que no puede cumplir.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Por qué el valor no sería <code>vm_t0</code> ni similar.</strong> La misma regla
+      que sigue la dimensión <code>runtime</code>: el valor dice <em>si</em>, nunca
+      <em>cuál</em>. Lo que hay dentro cambiará con los años, y un nombre que codificara el
+      nivel de hoy tendría que renombrarse para añadir el de mañana.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Por qué una compuerta en absoluto</h2>
+    <p class="body">
+      Una dimensión que compila en una versión y luego no hace nada es una mentira bien
+      formateada. Ponerle una compuerta significa que la palabra no puede aparecer donde
+      induzca a error, y que el día que aterrice el motor se abre la compuerta en lugar de
+      adaptarse la promesa a posteriori.
+    </p>
+    <p class="body">
+      Una compuerta necesita una noción que el repositorio no tenía — ¿es este compilador una
+      compilación de versión o una de desarrollo? La especificación la pone en <em>una
+      constante</em>, un valor por lado, cambiada en el momento del empaquetado. Mantenerla en
+      una sola línea es deliberado: la guía del lenguaje empaquetada se copia en una
+      distribución sin modificar, de modo que "la copia del paquete es la copia del
+      repositorio" siga siendo comprobable, y una línea es la forma más pequeña de doblar esa
+      regla. El coste se enuncia con ella — la semilla del compilador enviada ya no sería igual
+      a la del repositorio byte por byte, así que el criterio baja de "idéntica" a
+      "reproduciblemente igual, y la diferencia es exactamente esa única constante".
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>En qué podría convertirse</h2>
+    <p class="body">
+      El registro de diseño describe una escala, con el mismo espíritu que la de recuperación:
+      primero un intérprete, luego retroalimentación recogida de ejecuciones reales, luego un
+      compilador base, luego un compilador optimizador que pueda abandonar una conjetura cuando
+      resulte equivocada. Ninguno de esos pasos es una función hoy, y esta página no
+      pretenderá lo contrario.
+    </p>
+    <p class="body">
+      Cuando llegue el motor, la dimensión ya es el lugar donde un nuevo modelo de ejecución
+      tiene que conectarse — y la compuerta ya es lo que impide que se anuncie antes de que
+      funcione.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Dónde está escrito</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Hoja de ruta</span>
+        <span class="what">Dónde se sitúa la LVM frente a las versiones — un plan, enunciado como un plan.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">Los registros de diseño. Cada uno es un documento numerado, y la mayoría están en chino.</span>
+      </a>
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">La escala de recuperación — un sistema que sí está construido, para comparar.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Volver a la página principal</span>
+        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

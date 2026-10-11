@@ -1,0 +1,162 @@
+<!doctype html>
+<!-- translated-from: examples.html -->
+<!-- source-sha256: 4df95b75a1d422f6ee365f2c0f0a32fe93868693c6a2ac7a35d58153ab4b5397 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>サンプル — Loment</title>
+<meta name="description" content="短く完結した Loment プログラム —— 最初のプログラム、関数、ループ、スライス。それぞれが実行できる完全なファイル。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/examples.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/examples.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/examples.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/examples.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/examples.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/examples.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html" aria-current="page">サンプル</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../examples.html" hreflang="en">English</a></li>
+        <li><a href="../zh/examples.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="examples.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/examples.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/examples.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <h1>サンプル</h1>
+    <p class="lede">
+      四つの短いプログラム。それぞれが完全なファイルである —— ひとつを <code>hello.lomt</code>
+      にコピーして実行せよ。それぞれの下に見えるのは、それが実際に出力したものだ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>最小のプログラム</h2>
+    <p class="body">
+      <code>_start</code> がエントリポイントである。sealed な成果物には、代わりに
+      エントリポイントを呼んでくれる runtime がないからだ。出力は <code>write</code>
+      システムコールを通る: ファイルディスクリプタ、ポインタ、長さ。二番目の呼び出しは
+      <code>exit</code>。
+    </p>
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+      <p class="out">hello from Loment</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>戻り値のある関数</h2>
+    <p class="body">
+      型は明示的に書かれ、決して推論されない。暗黙の数値変換はないので、別の幅である必要の
+      ある整数は <code>as</code> でそう言う。
+    </p>
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> funct</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> write_str(fd: <span class="t">u64</span>, s: <span class="t">str</span>) -&gt; <span class="t">i64</span> {</span><span class="ln" data-n="4">    <span class="k">return</span> syscall4(<span class="n">1</span>, fd, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="5">}</span><span class="ln" data-n="6"> </span><span class="ln" data-n="7"><span class="k">fn</span> larger(a: <span class="t">u32</span>, b: <span class="t">u32</span>) -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="8">    <span class="k">if</span> a &gt; b {</span><span class="ln" data-n="9">        <span class="k">return</span> a;</span><span class="ln" data-n="10">    }</span><span class="ln" data-n="11">    <span class="k">return</span> b;</span><span class="ln" data-n="12">}</span><span class="ln" data-n="13"> </span><span class="ln" data-n="14"><span class="k">fn</span> _start() {</span><span class="ln" data-n="15">    <span class="k">let</span> m: <span class="t">u32</span> = larger(<span class="n">7</span>, <span class="n">9</span>);</span><span class="ln" data-n="16">    <span class="k">if</span> m == <span class="n">9</span> {</span><span class="ln" data-n="17">        write_str(<span class="n">1</span>, <span class="s">"larger(7, 9) came back with 9\n"</span>);</span><span class="ln" data-n="18">        syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="19">    }</span><span class="ln" data-n="20">    write_str(<span class="n">1</span>, <span class="s">"unexpected\n"</span>);</span><span class="ln" data-n="21">    syscall4(<span class="n">60</span>, <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="22">}</span></code></pre>
+      <p class="out">larger(7, 9) came back with 9</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>定数とループ</h2>
+    <p class="body">
+      <code>for</code> は範囲を歩き、添字を束縛する。<code>const</code> はコンパイル時の値で、
+      境界として使える。
+    </p>
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> counting</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">const</span> LIMIT: <span class="t">u32</span> = <span class="n">5</span>;</span><span class="ln" data-n="4"> </span><span class="ln" data-n="5"><span class="k">fn</span> write_str(fd: <span class="t">u64</span>, s: <span class="t">str</span>) -&gt; <span class="t">i64</span> {</span><span class="ln" data-n="6">    <span class="k">return</span> syscall4(<span class="n">1</span>, fd, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="7">}</span><span class="ln" data-n="8"> </span><span class="ln" data-n="9"><span class="k">fn</span> _start() {</span><span class="ln" data-n="10">    <span class="k">let</span> sum: <span class="t">u32</span> = <span class="n">0</span>;</span><span class="ln" data-n="11">    <span class="k">for</span> i <span class="k">in</span> <span class="n">0</span>..LIMIT {</span><span class="ln" data-n="12">        sum = sum + i;</span><span class="ln" data-n="13">    }</span><span class="ln" data-n="14">    <span class="k">if</span> sum == <span class="n">10</span> {</span><span class="ln" data-n="15">        write_str(<span class="n">1</span>, <span class="s">"the loop summed 0 through 4\n"</span>);</span><span class="ln" data-n="16">        syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="17">    }</span><span class="ln" data-n="18">    write_str(<span class="n">1</span>, <span class="s">"unexpected\n"</span>);</span><span class="ln" data-n="19">    syscall4(<span class="n">60</span>, <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="20">}</span></code></pre>
+      <p class="out">the loop summed 0 through 4</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>スライスとして渡される配列</h2>
+    <p class="body">
+      <code>[u32; 3]</code> は長さを型に持つ配列である。<code>[u32]</code> はスライスで、
+      自分自身の長さを持たない。<code>&amp;xs</code> が配列をスライスとして渡し、
+      <code>slice_len</code> がその長さを問う。
+    </p>
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> slice</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> write_str(fd: <span class="t">u64</span>, s: <span class="t">str</span>) -&gt; <span class="t">i64</span> {</span><span class="ln" data-n="4">    <span class="k">return</span> syscall4(<span class="n">1</span>, fd, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="5">}</span><span class="ln" data-n="6"> </span><span class="ln" data-n="7"><span class="k">fn</span> sum(xs: [<span class="t">u32</span>]) -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="8">    <span class="k">let</span> acc: <span class="t">u32</span> = <span class="n">0</span>;</span><span class="ln" data-n="9">    <span class="k">let</span> i: <span class="t">u32</span> = <span class="n">0</span>;</span><span class="ln" data-n="10">    <span class="k">while</span> i &lt; slice_len(xs) {</span><span class="ln" data-n="11">        acc = acc + xs[i];</span><span class="ln" data-n="12">        i = i + <span class="n">1</span>;</span><span class="ln" data-n="13">    }</span><span class="ln" data-n="14">    <span class="k">return</span> acc;</span><span class="ln" data-n="15">}</span><span class="ln" data-n="16"> </span><span class="ln" data-n="17"><span class="k">fn</span> _start() {</span><span class="ln" data-n="18">    <span class="k">let</span> xs: [<span class="t">u32</span>; <span class="n">3</span>] = [<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>];</span><span class="ln" data-n="19">    <span class="k">let</span> s: <span class="t">u32</span> = sum(&amp;xs);</span><span class="ln" data-n="20">    <span class="k">if</span> s == <span class="n">6</span> {</span><span class="ln" data-n="21">        write_str(<span class="n">1</span>, <span class="s">"the slice summed to 6\n"</span>);</span><span class="ln" data-n="22">        syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="23">    }</span><span class="ln" data-n="24">    write_str(<span class="n">1</span>, <span class="s">"unexpected\n"</span>);</span><span class="ln" data-n="25">    syscall4(<span class="n">60</span>, <span class="n">1</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="26">}</span></code></pre>
+      <p class="out">the slice summed to 6</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>さらに</h2>
+    <p class="body">
+      リポジトリはより大きな一群を
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>
+      に置いている。そのすべてがこのリリースでリンクするわけではない。
+    </p>
+    <p class="note">
+      このページのすべては、公開された <code>0.1.4</code> パッケージでコンパイルし実行した。
+      ケイパビリティシステム —— <a href="index.html">フロントページ</a>が最初に掲げるもの ——
+      はこの四つには含まれない。このリリースではリンクしないからだ。それは、言語ではなく
+      セルフホストのリンカにある既知の欠陥である。参照実装は同じプログラムをリンクして実行する。
+      同じ種類の失敗については
+      <a href="https://github.com/FujoJTOP/loment/issues/102">イシュー #102</a> と
+      <a href="https://github.com/FujoJTOP/loment/issues/38">#38</a> を見よ。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

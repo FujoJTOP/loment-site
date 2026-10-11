@@ -1,0 +1,202 @@
+<!doctype html>
+<!-- translated-from: lvm.html -->
+<!-- source-sha256: e4da20427090d575932c1d32bf5d5c1552e98018dce75a5623ab62401e1119ba -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LVM — Loment VM — Loment</title>
+<meta name="description" content="Loment VM: 第五の choose 次元として設計され、既定は no_vm で、リリースビルドからはゲートで締め出される。エンジンはまだ存在しない。このページは、何を作っており何を作っていないかを述べる。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lvm.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lvm.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lvm.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lvm.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lvm.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lvm.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html" aria-current="page">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../lvm.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lvm.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="lvm.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/lvm.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/lvm.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">システム · 進行中</p>
+    <h1>Loment VM</h1>
+    <p class="lede">
+      VM は、言語が次に備えつつある実行モデルである。その最初の一片 —— ひとつの次元と
+      ひとつのゲート —— を作っている。<strong>エンジンは存在しない。</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>VM はない</h2>
+    <p class="body">
+      バイトコードも、インタプリタも、いかなる種類の実行エンジンもない。このことは脚注ではなく
+      冒頭に置く。計画についてのページは、読者が計画を製品と取り違える最も容易な場所だからだ。
+    </p>
+    <p class="body">
+      今日存在するのは、仕様と<strong>開発ブランチ上の実装</strong>である。そのどの部分も、
+      main ブランチにも、どのリリースにも、どのインストール済みツールチェインにもない。
+      プロジェクトは、あなたに見つけさせるのではなく、自分についてそう言う —— それは
+      <code>runtime</code> がしばらく抱えていたのと同じ借りであり、何もしないまま成果物に
+      宣言され運ばれ、やがて返済された。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>最初の一片が定めるもの</h2>
+    <p class="body">
+      二つのこと。どちらも capability ではなく<em>許可</em>についてである。どちらも使える
+      機能ではない。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>第五の次元</h3>
+        <p>
+          <code>choose</code> には四つの次元があった —— プログラムが使ってよい層、メモリを
+          どう回収するか、成果物が runtime を積んでよいか、自分自身の外に到達してよいか。
+          <code>vm</code> が第五となり、別の問いに答える: <strong>このプログラムはどの実行
+          モデル向けか?</strong>書かなければ <code>no_vm</code> になり、それはこの次元が存在する
+          前にはすべてがそうだったものである。
+        </p>
+      </div>
+      <div class="row">
+        <h3>機能ではなくゲート</h3>
+        <p>
+          <strong>リリース</strong>ビルドでは、<code>choose vm</code> はコンパイル時エラーに
+          なるだろう。それを受け入れるのは開発チャネルだけである。プロジェクトが自分に課した
+          規則はぶっきらぼうだ —— 使える最初の VM が存在するまでは、それへのあらゆる呼び出しは
+          リリースでは不正である —— そうすれば、インストール済みのツールチェインが、守れない
+          約束を受け入れることは決してない。
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>なぜその値が <code>vm_t0</code> のようなものにならないのか。</strong>
+      <code>runtime</code> 次元が従うのと同じ規則である: その値は<em>あるかどうか</em>を述べ、
+      決して<em>どれか</em>を述べない。中に何が座るかは何年もかけて変わるし、今日の段階を
+      符号化した名前は、明日のものを加えるのに改名を強いられることになる。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>そもそもなぜゲートなのか</h2>
+    <p class="body">
+      リリースでコンパイルが通り、それから何もしない次元は、行儀よく整えられた嘘である。
+      それをゲートするとは、その語が誤解を招く場所に現れえないということであり、エンジンが
+      着地した日に、約束を後付けするのではなくゲートが開くということである。
+    </p>
+    <p class="body">
+      ゲートには、リポジトリが持っていなかった概念が要る —— このコンパイラはリリースビルドか、
+      開発ビルドか?仕様はそれを<em>ひとつの定数</em>に置く。側ごとにひとつの値で、パッケージング
+      時に反転される。一行に留めるのは意図的である。パッケージされた言語ガイドは配布物へ
+      そのままコピーされ、「パッケージの中のコピーはリポジトリの中のコピーである」は検査可能な
+      ままであり、一行はその規則を曲げる最小の方法である。その代償も一緒に述べられている ——
+      出荷されるコンパイラのシードは、リポジトリのものとバイト単位では等しくなくなるので、判据は
+      「同一」から「再現可能に等しく、相違はちょうどそのひとつの定数」へと下がる。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>何になりうるか</h2>
+    <p class="body">
+      設計記録は、回収のはしごと同じ精神で、ひとつのはしごを描く: まずインタプリタ、次に実際の
+      実行から集めたフィードバック、次にベースラインコンパイラ、そして推測が誤りと分かったときに
+      それを手放せる最適化コンパイラ。それらの歩みはどれも今日の機能ではなく、このページは
+      そうでないふりをしない。
+    </p>
+    <p class="body">
+      エンジンが到来したとき、その次元はすでに、新しい実行モデルが差し込まれなければならない
+      場所であり —— ゲートはすでに、それが動く前に公表されるのを防ぐものになっている。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>どこに書き留められているか</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">ロードマップ</span>
+        <span class="what">LVM がバージョンに対してどこに位置するか —— 計画を、計画として述べたもの。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">設計記録。それぞれが番号付きの文書で、大半は中国語である。</span>
+      </a>
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">回収のはしご —— 比較のために、すでに作られたシステム。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類の成果物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

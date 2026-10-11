@@ -1,0 +1,258 @@
+<!doctype html>
+<!-- translated-from: lgc.html -->
+<!-- source-sha256: 6ed47a4333fc4e4b5941fd816d2a553aacb76a9e07477859fa29fece06af06e1 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LomentGC — Loment</title>
+<meta name="description" content="LomentGC: 回収はサイトごとの契約である。すべての alloc サイトはコンパイル時に四段のはしごのいずれかの段に割り当てられ、コレクタがどれだけのメモリに責任を負うかは、成果物が運ぶ数値である。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lgc.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lgc.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lgc.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lgc.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lgc.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lgc.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="lgc.html" aria-current="page">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../lgc.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lgc.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="lgc.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/lgc.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/lgc.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">システム</p>
+    <h1>LomentGC</h1>
+    <p class="lede">
+      回収は、ひとつのヒープに対するひとつのアルゴリズムではない。それは<strong>サイトごとの
+      契約</strong>である。プログラム中のすべての <code>alloc</code> はコンパイル時に四段の
+      はしごのいずれかの段に割り当てられ —— コレクタがどれだけのメモリに責任を負うかは、
+      成果物が運ぶ数値である。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>はしご</h2>
+    <p class="body">
+      最強から最弱へ。コンパイラは<em>証明</em>できる最も強い段を取る。より多くを証明すれば、
+      払うものは少ない。各段の値段は脚注に残すのではなく、その隣に書かれている。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>L0 — 静的</h3>
+        <p>
+          アロケーションはリテラルのサイズであり、ポインタはロード、ストア、アトミックの
+          第一引数として丸ごと渡されるだけである。ヒープには決して到達しないので、回収すべき
+          ものが何もない。<strong>値段:</strong>より大きなスタックフレーム。
+        </p>
+      </div>
+      <div class="row">
+        <h3>L1 — 最終使用</h3>
+        <p>
+          同じ形だが、関数本体のトップレベルで宣言されるので、最後の使用が<em>数えられる</em>。
+          コンパイラは、その後の最も早い return の前に <code>free</code> を挿入する。
+          <strong>値段:</strong>早期 return の経路では挿入点を取り逃すことがあり、その経路は
+          一度漏れる。漏れであって、バグではない。
+        </p>
+      </div>
+      <div class="row">
+        <h3>L2 — ブロックエポック</h3>
+        <p>
+          ループ本体の内側では、すべてのアロケーションは本体を決して出て行かないローカルである。
+          本体の終わりは、アロケータのフロントを巻き戻すことで、領域全体を一度に返す ——
+          リストも走査もない。エポックはブロック構造と脱出から<em>推論</em>され、手で書かれるのでは
+          ない。<strong>値段:</strong>本体内のアロケーションがひとつでも脱出すると、ブロック全体が
+          残らなければならない。
+        </p>
+      </div>
+      <div class="row">
+        <h3>L3 — runtime</h3>
+        <p>
+          コンパイラが証明できなかったすべて。コレクタの全コスト。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>三つの段階</h2>
+    <p class="body">
+      プログラムは、ルートユニットの一行で、はしごをどこまで下ることを許すかを選ぶ。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>choose gc_manual</code></h3>
+        <p>
+          既定。何も自動では回収されず、プログラムが自分のメモリを管理する。一行も書かなければ
+          これになる —— 既定とは、その次元が存在する前からの振る舞いであり、それはすべての次元が
+          従う規則である。
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>choose gc_auto</code></h3>
+        <p>
+          runtime コレクタが回収する: 正確なルートを持つマーク&スイープで、確保したバイト数に
+          よって起動される。
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>choose gc_auto_alpha</code></h3>
+        <p>
+          四つの段すべてが有効なので、コレクタはコンパイル時の段が証明できなかったものだけを
+          見る —— そしてそれは適応的である。しきい値はライブセットに従い、空間トリガーを備えるので、
+          上限は arena の固定された割合ではない。
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>発見されるのではなく明示される限界。</strong><code>gc_auto</code> では、トリガーは
+      固定の 32 KiB で、arena は 64 KiB なので、<em>ライブセット</em>がおよそ 32 KB を超える
+      プログラムはやはり尽きる。その隔たりを埋めるのが、適応的コレクタと、
+      <code>gc_auto_alpha</code> の下の世代別コレクタの役目である。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>L3 の内側</h2>
+    <p class="body">
+      runtime の段も、ひとつのアルゴリズムではない。それは三つの歩みで成長し、それぞれが、
+      計測可能なプログラム上でその前のものを打ち負かさなければならなかった。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>マーク&スイープ</h3>
+        <p>
+          ルートは<em>正確</em>である —— ルートテーブルはスロットのアドレスを保持する ——
+          一方で、ブロックの内部は保守的に扱われる。<code>alloc</code> が型を持たず、ブロックが
+          何を保持するかを何も記録しないからだ。
+        </p>
+      </div>
+      <div class="row">
+        <h3>適応的な起動</h3>
+        <p>
+          固定のしきい値は、ライブセットがどれだけ大きくなるかを推測しなければならない。
+          適応的なものはそれを読む: ライブセットが二倍になったとき、あるいは空間が尽きかけたときに
+          回収する。
+        </p>
+      </div>
+      <div class="row">
+        <h3>世代別</h3>
+        <p>
+          二つの世代を、オブジェクトの年齢ではなく<em>アドレス</em>で分ける —— 移動しない
+          コレクタは、各マイナーコレクションの終わりにフロンティアを進めることで昇格させる。
+          カードテーブルとライトバリアが、古い世代から若い世代へのポインタを捉える。それによって
+          節約されるのはマーク&伝播のパスで、それが若い世代だけを覆うようになる。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>なぜ成果物に残るのか</h2>
+    <p class="body">
+      各ユニットは、<code>gc_ladder</code> を運ぶ形式オブジェクトをエクスポートする: 各段が取った
+      <code>alloc</code> サイトの数と、合計。四つの数は合計に一致しなければならず、
+      <strong>二つの独立した検証器が、ソースを一行も読まずにその算術を照合する</strong>。だから
+      「このプログラムのメモリはどう管理されるか?」は、文書の中の主張ではなく、ビルド出力の中の
+      数値である。
+    </p>
+
+    <p class="limit">
+      <strong>何が主張され、何が主張されていないか。</strong>はしごは二度実装されている ——
+      参照実装のコンパイラとセルフホストのもの —— そして両者はバイト単位で一致しなければならない。
+      各段の背後の測定は、プロジェクト自身の判据、すなわち小さなプログラムから来ている。
+      コレクタは実ワークロードに対して走らされたことがなく、これはこの話を性能の主張として読む前に
+      知っておく価値がある。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>設計を読む</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/210-loment-gc-design.md">
+        <span class="who">docs/210</span>
+        <span class="what">設計記録: はしご、各段の判据、そして意図的に真似しなかったもの。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/202-loment-014-release-gate.md">
+        <span class="who">docs/202</span>
+        <span class="what">リリースゲート。これらの主張のどれがいつ出荷されたかを含む。</span>
+      </a>
+      <a class="doclink" href="lvm.html">
+        <span class="who">LVM</span>
+        <span class="what">実行モデルの次元 —— 宣言され、ゲートされ、まだエンジンではない。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類の成果物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

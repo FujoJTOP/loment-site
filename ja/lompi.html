@@ -1,0 +1,204 @@
+<!doctype html>
+<!-- translated-from: lompi.html -->
+<!-- source-sha256: fd3cdf47e8f0561268b8e584209fc835bdbc60ef01f61cdc279fcb98b644ddd2 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lompi — パッケージマネージャ — Loment</title>
+<meta name="description" content="lompi は Loment のパッケージマネージャである。ライブラリは Loment ファイルのディレクトリで、その依存はソースにすでにある use 行であり、その同一性は再帰的な内容ハッシュである。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lompi.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lompi.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lompi.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lompi.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lompi.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lompi.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html" aria-current="page">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../lompi.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lompi.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="lompi.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/lompi.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/lompi.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">システム</p>
+    <h1>lompi</h1>
+    <p class="lede">
+      Loment のパッケージマネージャ。ツールチェインに同梱されるが、<code>loment</code> の
+      サブコマンドでは<strong>ない</strong> —— 別のプログラムで、独自のバージョンと独自の
+      ガイドを持つ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>ライブラリとはディレクトリである</h2>
+    <p class="body">
+      学ぶべきマニフェスト形式も、それを書くための第二の言語もない。ライブラリとは<strong>Loment
+      ファイルでいっぱいのディレクトリ</strong>であり、パッケージシステムが普通は発明する三つの
+      ものは、すでに言語の中にあるか、そこから導かれるか、生成されるかである:
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>エクスポート —— すでに言語の中にある</h3>
+        <p>
+          <code>pub</code>。新たに宣言すべきものも、ソースと同期させ続けるものもない。
+        </p>
+      </div>
+      <div class="row">
+        <h3>依存 —— <code>use</code> の行</h3>
+        <p>
+          <strong>依存リストはない</strong>。解決器は、ソースがすでに持っているインポートを
+          読む。だから「宣言されているが使われていない」と「使われているが宣言されていない」は、
+          それが生み出しうるエラーですらない —— それらは存在しない状態である。
+        </p>
+      </div>
+      <div class="row">
+        <h3>同一性 —— 再帰的な内容ハッシュ</h3>
+        <p>
+          パッケージの同一性は、自分自身のソース<em>と</em>、それが依存するすべてのものの
+          同一性から、最後まで辿って計算される。パッケージ自身のファイルだけをハッシュするのは
+          誤りであろう。同じソースでも、異なる依存に束縛されれば別のものであり、誤って統合されて
+          しまう。
+        </p>
+      </div>
+    </div>
+
+    <p class="body">
+      最後のひとつが、複雑さのあるカテゴリを丸ごと取り除く。バージョン範囲の言語も、解決器も、
+      解決の衝突もない。あるライブラリの二つのバージョンは単に二つの同一性であり ——
+      そしてそれらは共存できるからだ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>ラベルファイルは Loment である</h2>
+    <p class="body">
+      パッケージは <code>.lomp</code> ファイルを運んでよい。それは通常の意味でのマニフェストでは
+      ない: それは<strong>Loment ソース</strong>で、報告するのはせいぜい名前とバージョンであり、
+      依存の節を持たない —— そもそも依存はファイルに宣言されたことがないからだ。省けば、
+      ディレクトリ名がパッケージ名になる。
+    </p>
+    <p class="body">
+      その中のバージョン番号は、人間のためのラベルである。機械はそれを使って何かを選んだり
+      しない。内容ハッシュがすでにそれを済ませている。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>なぜ通常の設計ではないのか</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>ライブラリはバイナリとして出荷できない</h3>
+        <p>
+          ジェネリクスはインスタンス化ごとに単相化されるので、コンパイラは何を生成するか決める
+          ためにソースを見なければならない。コンパイル済みの塊とヘッダ、という選択肢はない ——
+          ひとつのインターフェイスの二つの記述を歩調を合わせて保つ、という種類の問題も同様に
+          ない。
+        </p>
+      </div>
+      <div class="row">
+        <h3>レジストリサービスはない</h3>
+        <p>
+          拡張点はディスク上のファイルである。名前が何を意味するかを決める中央サーバーはない。
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>loment</code> の一部ではない</h3>
+        <p>
+          <code>lompi</code> はツールチェインと並んでインストールされ、<code>PATH</code> 上に
+          あるが、コマンドの面の外に留まる —— <code>loment help</code> はそれを載せず、
+          <code>loment</code> がそれに転送することも決してない。その分離は意図的で、
+          強制されている。
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>今日受け取るもの。</strong>Loment のソースライブラリ。実在の C ライブラリには
+      <code>choose hosted</code> を通じて到達できる —— ビルドでそのライブラリを名指しする ——
+      が、それらはまだ<em>インストール可能な依存</em>ではない。外部のライブラリをインストール
+      することこそ、パッケージマネージャの次のリリースの役目である。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>設計を読む</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/168-loment-library-system.md">
+        <span class="who">docs/168</span>
+        <span class="what">ライブラリシステム: ライブラリとは何か、同一性が何を意味するか、そして意図的に借りなかったもの。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/lompi">
+        <span class="who">FujoJTOP/lompi</span>
+        <span class="what">パッケージマネージャ自身のリポジトリと、そのガイド。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類の成果物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

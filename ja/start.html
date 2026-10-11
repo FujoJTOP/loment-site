@@ -1,0 +1,197 @@
+<!doctype html>
+<!-- translated-from: start.html -->
+<!-- source-sha256: 92250ed7469983711e89a77e11a2877ac11c9aff49df7228d11a92887f9a91fc -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>はじめに — Loment</title>
+<meta name="description" content="Loment をインストールして最初のプログラムを走らせる。Linux と Windows 向けのネイティブバイナリ。コンパイルと実行に Python も clang も WSL も要らない。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/start.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/start.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/start.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/start.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/start.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/start.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html" aria-current="page">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../start.html" hreflang="en">English</a></li>
+        <li><a href="../zh/start.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="start.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/start.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/start.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <h1>はじめに</h1>
+    <p class="lede">
+      このページは、プログラムを走らせることだけを扱う。言語そのものについては
+      <a href="index.html">フロントページ</a>を見よ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>インストールする</h2>
+    <p class="body">
+      Loment はパッケージとして配布される。自分のプラットフォーム向けのアーカイブを
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">最新リリース</a>から取れ。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Linux / WSL</h3>
+        <p>
+          <code>linux-x64.tar.gz</code>。展開して <code>sh install.sh</code> を実行する。
+          要求されるのは POSIX の <code>sh</code> だけだ。
+        </p>
+      </div>
+      <div class="row">
+        <h3>Windows</h3>
+        <p>
+          <code>windows-x64.zip</code> —— 展開して
+          <code>powershell -File install.ps1</code> を実行する —— あるいはダブルクリックする
+          <code>windows-x64-setup.exe</code>。
+        </p>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      <code>loment</code> コマンド、<code>lompi</code>、そして言語サーバーが手に入る。
+      コンパイルと実行には <strong>Python も clang も WSL も要らない</strong>。パッケージは
+      ネイティブバイナリと標準ライブラリであり、インストーラは何かを書き込む前に
+      <code>SHA256SUMS</code> を照合する。
+    </p>
+
+    <p class="note">
+      言語を使うのではなく変えたいなら、代わりにチェックアウトから作業せよ:
+      <code>git clone https://github.com/FujoJTOP/loment.git</code>。コンパイラは
+      Loment で書かれており、リポジトリにコミットされたシードから再ビルドする ——
+      <code>sh loment/bootstrap.sh</code> がそれをビルドし、シードが自分自身を
+      バイト単位で再現するかを確かめる。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>プログラムを書く</h2>
+    <p class="body">
+      これを <code>hello.lomt</code> に書く。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      <code>_start</code> がエントリポイントである。sealed な成果物には、代わりに
+      エントリポイントを呼んでくれる runtime がないからだ。<code>printf</code> もない:
+      出力は <code>write</code> システムコールを通り、その引数はファイルディスクリプタ、
+      文字列のポインタ、その長さである。二番目の呼び出しは <code>exit</code>。
+      <code>choose hosted</code> と書けば、成果物は代わりに C ランタイムのプログラムになり、
+      エントリポイントは <code>fn main() -&gt; u32</code> になる。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>コンパイルして実行する</h2>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment run hello.lomt          <span class="c"># compile, link, run</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment build hello.lomt -o hello</span><span class="ln" data-n="3"><span class="prompt">$ </span>loment check hello.lomt        <span class="c"># check only, nothing written</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment ir hello.lomt           <span class="c"># the LLVM IR it generates</span></span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      Windows ではターゲットは PE なので、出力を <code>.exe</code> と名付ける ——
+      リンカはその名前から形式を選ぶ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>言語を見て回る</h2>
+    <p class="body">
+      ツールチェインは自分自身を説明する。この四つがその大半を担う。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour   <span class="c"># the whole language in one file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment cheat          <span class="c"># the traps, ordered by how easily they bite</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins       <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment syntax         <span class="c"># syntax summary</span></span></code></pre>
+    </div>
+    <p class="caption">
+      <code>loment example tour</code> は言語全体を、コメント付きのひとつのソースファイル
+      として出力する。そのコメントは中国語で、<code>0.1.4</code> ではその特定のファイルは
+      リンクしない。<a href="examples.html">サンプル</a>にある四つのプログラムが、
+      実行できると検証済みのものである。
+    </p>
+
+    <div style="margin-top: var(--s5)">
+      <a class="doclink" href="examples.html">
+        <span class="who">サンプル</span>
+        <span class="what">このサイトの短いプログラムに加えて、リポジトリにある全部。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">このページの長い版。すべてのビルド経路と FFI の注意を含む。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
+        <span class="who">README</span>
+        <span class="what">その言語が何のためか、ほかに何が違うか、そして正直に言って何がまだ終わっていないか。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

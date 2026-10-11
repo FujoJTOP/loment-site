@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- translated-from: start.html -->
+<!-- source-sha256: 92250ed7469983711e89a77e11a2877ac11c9aff49df7228d11a92887f9a91fc -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primeros pasos — Loment</title>
+<meta name="description" content="Instala Loment y ejecuta tu primer programa. Binarios nativos para Linux y Windows; compilar y ejecutar no necesita Python, ni clang, ni WSL.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/start.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/start.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/start.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/start.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/start.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/start.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html" aria-current="page">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../start.html" hreflang="en">English</a></li>
+        <li><a href="../zh/start.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/start.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/start.html" hreflang="ru">Русский</a></li>
+        <li><a href="start.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <h1>Primeros pasos</h1>
+    <p class="lede">
+      Esta página solo trata de conseguir que un programa se ejecute. Para saber qué es el
+      lenguaje, ve a la <a href="index.html">página principal</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Instálalo</h2>
+    <p class="body">
+      Loment se distribuye como un paquete. Toma el archivo de tu plataforma de
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">la última versión</a>.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Linux / WSL</h3>
+        <p>
+          Un <code>linux-x64.tar.gz</code>. Descomprímelo y ejecuta <code>sh install.sh</code>.
+          POSIX <code>sh</code> es el único requisito.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Windows</h3>
+        <p>
+          Un <code>windows-x64.zip</code> — descomprímelo y ejecuta
+          <code>powershell -File install.ps1</code> — o un
+          <code>windows-x64-setup.exe</code> al que haces doble clic.
+        </p>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      Obtienes el comando <code>loment</code>, <code>lompi</code>, y el servidor de lenguaje.
+      Compilar y ejecutar no necesita <strong>ni Python, ni clang, ni WSL</strong>: el paquete
+      son binarios nativos más la biblioteca estándar, y el instalador comprueba
+      <code>SHA256SUMS</code> antes de escribir nada.
+    </p>
+
+    <p class="note">
+      Para cambiar el lenguaje mismo en lugar de usarlo, parte de una copia de trabajo:
+      <code>git clone https://github.com/FujoJTOP/loment.git</code>. El compilador está
+      escrito en Loment y se reconstruye a partir de una semilla comprometida en el
+      repositorio — <code>sh loment/bootstrap.sh</code> lo construye y comprueba que la
+      semilla se reproduce a sí misma byte por byte.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Escribe un programa</h2>
+    <p class="body">
+      Pon esto en <code>hello.lomt</code>.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      <code>_start</code> es el punto de entrada, porque un artefacto sealed no tiene runtime
+      que llame a uno por ti. Tampoco hay <code>printf</code>: la salida pasa por la llamada
+      al sistema <code>write</code>, cuyos argumentos son el descriptor de archivo, el
+      puntero de la cadena y su longitud. La segunda llamada es <code>exit</code>. Escribe
+      <code>choose hosted</code> y el artefacto pasa a ser un programa de runtime C, con
+      <code>fn main() -&gt; u32</code> como punto de entrada.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Compílalo y ejecútalo</h2>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment run hello.lomt          <span class="c"># compile, link, run</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment build hello.lomt -o hello</span><span class="ln" data-n="3"><span class="prompt">$ </span>loment check hello.lomt        <span class="c"># check only, nothing written</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment ir hello.lomt           <span class="c"># the LLVM IR it generates</span></span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      En Windows el destino es PE, así que nombra la salida <code>.exe</code> — el enlazador
+      elige el formato a partir de ese nombre.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Explora el lenguaje</h2>
+    <p class="body">
+      El conjunto de herramientas se explica a sí mismo. Estos cuatro cubren casi todo.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour   <span class="c"># the whole language in one file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment cheat          <span class="c"># the traps, ordered by how easily they bite</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins       <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment syntax         <span class="c"># syntax summary</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      <code>loment example tour</code> imprime todo el lenguaje como un único archivo fuente
+      comentado. Sus comentarios están en chino, y en <code>0.1.4</code> ese archivo en
+      particular no enlaza; los cuatro programas de <a href="examples.html">Ejemplos</a> son
+      los que están verificados para ejecutarse.
+    </p>
+
+    <div style="margin-top: var(--s5)">
+      <a class="doclink" href="examples.html">
+        <span class="who">Ejemplos</span>
+        <span class="what">Programas cortos en este sitio, más el conjunto completo en el repositorio.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">La versión larga de esta página, incluidas todas las vías de compilación y las notas de FFI.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
+        <span class="who">README</span>
+        <span class="what">Para qué sirve el lenguaje, qué más es distinto, y qué no está terminado, con honestidad.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

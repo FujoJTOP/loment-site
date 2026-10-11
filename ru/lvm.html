@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- translated-from: lvm.html -->
+<!-- source-sha256: e4da20427090d575932c1d32bf5d5c1552e98018dce75a5623ab62401e1119ba -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LVM — Loment VM — Loment</title>
+<meta name="description" content="Loment VM: задумана как пятое измерение choose, по умолчанию no_vm, и отсечена воротами от выпускных сборок. Движка пока нет. Эта страница говорит, что строится, а что нет.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lvm.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lvm.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lvm.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lvm.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lvm.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lvm.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Начало</a>
+      <a href="examples.html">Примеры</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html" aria-current="page">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>RU</summary>
+      <ul>
+        <li><a href="../lvm.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lvm.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/lvm.html" hreflang="ja">日本語</a></li>
+        <li><a href="lvm.html" hreflang="ru" aria-current="true">Русский</a></li>
+        <li><a href="../es/lvm.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Система · в работе</p>
+    <h1>Loment VM</h1>
+    <p class="lede">
+      VM — следующая модель выполнения, к которой готовят язык. Её первый кусок —
+      измерение и ворота — строится. <strong>Движка не существует.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>VM нет</h2>
+    <p class="body">
+      Ни байткода, ни интерпретатора, ни какого-либо движка выполнения. Это стоит вверху, а не
+      в сноске, потому что страница о плане — самое лёгкое место, где читатель примет план за
+      продукт.
+    </p>
+    <p class="body">
+      Что есть сегодня — это спецификация и реализация <strong>в ветке разработки</strong>:
+      ни одна их часть не в ветке main, ни в каком выпуске, ни в каком установленном
+      инструментарии. Проект говорит это о себе, а не даёт вам выяснить самому, — это тот же
+      долг, в котором какое-то время был <code>runtime</code>: объявлен и нёсся в артефакте,
+      ничего не делая, пока его не выплатили.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Что задаёт первый кусок</h2>
+    <p class="body">
+      Две вещи, обе о <em>разрешении</em>, а не о capability. Ни одна из них не функция,
+      которой можно пользоваться.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Пятое измерение</h3>
+        <p>
+          <code>choose</code> имел четыре измерения — какой слой программа может использовать,
+          как она возвращает память, может ли артефакт нести runtime и может ли он выходить за
+          свои пределы. <code>vm</code> стало бы пятым, отвечая на другой вопрос:
+          <strong>для какой модели выполнения эта программа?</strong> Если не написано, это
+          <code>no_vm</code> — то, чем всё было до появления измерения.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Ворота, а не функция</h3>
+        <p>
+          В <strong>выпускной</strong> сборке <code>choose vm</code> было бы ошибкой времени
+          компиляции; принять его принял бы только канал разработки. Правило, которое проект
+          задал себе, неотёсанно — пока не существует первой пригодной к использованию VM,
+          каждый вызов её недопустим в выпуске, — чтобы установленный инструментарий никогда
+          не мог принять обещание, которое не может сдержать.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Почему значение не было бы <code>vm_t0</code> или подобным.</strong> То же
+      правило, которому следует измерение <code>runtime</code>: значение говорит <em>ли</em>,
+      а не <em>какой</em>. То, что внутри, будет меняться годами, и имя, кодирующее
+      сегодняшний уровень, пришлось бы переименовывать, чтобы добавить завтрашний.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Зачем вообще ворота</h2>
+    <p class="body">
+      Измерение, которое компилируется в выпуске и затем ничего не делает, — это ложь с
+      хорошим форматированием. Ворота означают, что слово не может появиться там, где оно
+      ввело бы в заблуждение, и что в день, когда движок появится, ворота откроются, а не
+      будет задним числом приделано обещание.
+    </p>
+    <p class="body">
+      Воротам нужно понятие, которого у репозитория не было: этот компилятор — выпускная
+      сборка или сборка разработки? Спецификация помещает его в <em>одну константу</em>, одно
+      значение на каждую сторону, переключаемое во время упаковки. Сведение к одной строке
+      нарочно: упакованное руководство по языку копируется в дистрибутив без изменений,
+      чтобы «копия в пакете есть копия в репозитории» оставалась проверяемой, а одна строка —
+      наименьший способ обойти это правило. Цена заявлена вместе с ним — поставляемый сид
+      компилятора перестанет совпадать с репозиторным побайтово, поэтому критерий опускается
+      с «идентично» до «воспроизводимо равно, и разница — ровно эта одна константа».
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Чем оно могло бы стать</h2>
+    <p class="body">
+      Запись о проектировании описывает лестницу, в том же духе, что и лестница возврата
+      памяти: сначала интерпретатор, затем отзывы, собранные с реальных запусков, затем
+      базовый компилятор, затем оптимизирующий компилятор, который может отказаться от
+      догадки, когда она оказывается неверной. Ни один из этих шагов сегодня не функция, и
+      эта страница не будет притворяться иначе.
+    </p>
+    <p class="body">
+      Когда движок появится, измерение уже будет тем местом, куда новой модели выполнения
+      придётся подключиться, — а ворота уже будут тем, что не даёт объявить её прежде, чем
+      она заработает.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Где это записано</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Дорожная карта</span>
+        <span class="what">Где LVM находится относительно версий — план, заявленный как план.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">Записи о проектировании. Каждая — пронумерованный документ, и большинство на китайском.</span>
+      </a>
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">Лестница возврата памяти — построенная система, для сравнения.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Назад на главную</span>
+        <span class="what">Что такое Loment и два вида артефактов, которые он собирает.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment выпускается под лицензией Loment-Open. Программа — Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Исходники</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Релизы</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Вики</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Проблемы</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

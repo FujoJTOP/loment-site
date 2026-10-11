@@ -1,0 +1,266 @@
+<!doctype html>
+<!-- translated-from: lgc.html -->
+<!-- source-sha256: 6ed47a4333fc4e4b5941fd816d2a553aacb76a9e07477859fa29fece06af06e1 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LomentGC — Loment</title>
+<meta name="description" content="LomentGC: la recuperación es un contrato por sitio. Cada sitio de asignación se asigna en tiempo de compilación a un peldaño de una escala de cuatro niveles, y cuánta memoria es responsable el recolector es un número que lleva el artefacto.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lgc.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lgc.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lgc.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lgc.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lgc.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lgc.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="lgc.html" aria-current="page">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../lgc.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lgc.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/lgc.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/lgc.html" hreflang="ru">Русский</a></li>
+        <li><a href="lgc.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Sistema</p>
+    <h1>LomentGC</h1>
+    <p class="lede">
+      La recuperación no es un único algoritmo sobre un único montículo. Es un
+      <strong>contrato por sitio</strong>: cada <code>alloc</code> de un programa se asigna, en
+      tiempo de compilación, a un peldaño de una escala de cuatro niveles — y cuánta memoria
+      es responsable el recolector es un número que el artefacto lleva.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>La escala</h2>
+    <p class="body">
+      De la más fuerte a la más débil: el compilador toma el peldaño más fuerte que puede
+      <em>demostrar</em>. Demostrar más, pagar menos. El precio de cada peldaño se escribe a su
+      lado en lugar de dejarlo en una nota al pie.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>L0 — estático</h3>
+        <p>
+          La asignación es de tamaño literal, y el puntero solo se pasa entero como primer
+          argumento de una carga, un almacenamiento o una operación atómica. Nunca llega al
+          montículo, así que no hay nada que recuperar. <strong>El precio:</strong> un marco de
+          pila más grande.
+        </p>
+      </div>
+      <div class="row">
+        <h3>L1 — último uso</h3>
+        <p>
+          La misma forma, declarada en el nivel superior del cuerpo de una función, así que el
+          último uso es <em>contable</em>. El compilador inserta un <code>free</code> antes del
+          primer retorno posterior a él. <strong>El precio:</strong> en una vía de retorno
+          temprano el punto de inserción puede pasarse por alto, y esa vía fuga una vez. Una
+          fuga, no un bug.
+        </p>
+      </div>
+      <div class="row">
+        <h3>L2 — épocas de bloque</h3>
+        <p>
+          Dentro del cuerpo de un bucle, cada asignación es un local que nunca sale del cuerpo.
+          El final del cuerpo devuelve toda la región de una vez, rebobinando el frente del
+          asignador — sin lista, sin barrido. La época se <em>infiere</em> de la estructura de
+          bloque y del escape, no se escribe a mano. <strong>El precio:</strong> si una
+          asignación del cuerpo escapa, todo el bloque debe permanecer.
+        </p>
+      </div>
+      <div class="row">
+        <h3>L3 — runtime</h3>
+        <p>
+          Todo lo que el compilador no pudo demostrar. El coste pleno del recolector.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Tres niveles</h2>
+    <p class="body">
+      Un programa selecciona hasta qué punto de la escala está dispuesto a bajar, con una línea
+      en la unidad raíz.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>choose gc_manual</code></h3>
+        <p>
+          El valor por defecto. Nada se recupera automáticamente; el programa gestiona su
+          propia memoria. No escribir ninguna línea da esto — el valor por defecto es el
+          comportamiento que existía antes de que la dimensión existiera, que es la regla que
+          sigue cada dimensión.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>choose gc_auto</code></h3>
+        <p>
+          Un recolector en tiempo de ejecución recupera: marcado y barrido con raíces precisas,
+          disparado por el número de bytes asignados.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>choose gc_auto_alpha</code></h3>
+        <p>
+          Los cuatro peldaños están activos, así que el recolector solo ve lo que los peldaños
+          de tiempo de compilación no pudieron demostrar — y es adaptativo: el umbral sigue al
+          conjunto vivo, con un disparador por espacio, así que el techo no es una fracción
+          fija del arena.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Un límite que se enuncia en lugar de descubrirse.</strong> Bajo
+      <code>gc_auto</code> el disparador es de 32 KiB fijos mientras el arena es de 64 KiB, así
+      que un programa cuyo <em>conjunto vivo</em> supera aproximadamente 32 KB se queda sin
+      memoria igualmente. Cerrar esa brecha es para lo que sirven el recolector adaptativo, y
+      el generacional bajo <code>gc_auto_alpha</code>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Dentro de L3</h2>
+    <p class="body">
+      El peldaño de runtime tampoco es un único algoritmo. Ha crecido en tres pasos, cada uno
+      de los cuales tuvo que superar al anterior en un programa medible.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Marcado y barrido</h3>
+        <p>
+          Las raíces son <em>precisas</em> — la tabla de raíces guarda direcciones de ranura —
+          mientras que el interior de un bloque se trata de forma conservadora, porque
+          <code>alloc</code> no está tipado y nada registra qué contiene un bloque.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Disparo adaptativo</h3>
+        <p>
+          Un umbral fijo tiene que adivinar cuánto crecerá el conjunto vivo. Uno adaptativo lo
+          lee: recolecta cuando el conjunto vivo se ha duplicado, o cuando escasea el espacio.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Generacional</h3>
+        <p>
+          Dos generaciones, cortadas por <em>dirección</em> en lugar de por edad del objeto —
+          un recolector que no mueve promueve al final de cada recolección menor avanzando una
+          frontera. Una tabla de tarjetas y una barrera de escritura capturan los punteros de
+          viejo a joven. Lo que ahorra es la pasada de marcado y propagación, que entonces
+          cubre solo la generación joven.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Por qué queda en el artefacto</h2>
+    <p class="body">
+      Cada unidad exporta un objeto de forma que lleva <code>gc_ladder</code>: cuántos sitios
+      <code>alloc</code> tomó cada peldaño, más el total. Los cuatro recuentos deben sumar el
+      total, y <strong>dos validadores independientes comprueban esa aritmética sin leer una
+      línea de código fuente</strong>. Así, "cómo se gestiona la memoria de este programa" es
+      un número en la salida de compilación en lugar de una afirmación en un documento.
+    </p>
+
+    <p class="limit">
+      <strong>Lo que se afirma, y lo que no.</strong> La escala está implementada dos veces —
+      el compilador de referencia y el autoalojado — y los dos deben coincidir byte por byte.
+      Las mediciones detrás de los peldaños vienen de los propios criterios del proyecto, que
+      son programas pequeños; el recolector no se ha ejecutado contra una carga de trabajo
+      real, y eso vale la pena saberlo antes de leer nada de esto como una afirmación de
+      rendimiento.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lee el diseño</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/210-loment-gc-design.md">
+        <span class="who">docs/210</span>
+        <span class="what">El registro de diseño: la escala, el criterio de cada peldaño, y las cosas que deliberadamente no copió.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/202-loment-014-release-gate.md">
+        <span class="who">docs/202</span>
+        <span class="what">La compuerta de la versión, incluido cuál de estas afirmaciones ya estaba publicada y cuándo.</span>
+      </a>
+      <a class="doclink" href="lvm.html">
+        <span class="who">LVM</span>
+        <span class="what">La dimensión del modelo de ejecución — declarada, con compuerta, y todavía sin motor.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Volver a la página principal</span>
+        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

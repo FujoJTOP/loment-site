@@ -1,0 +1,190 @@
+<!doctype html>
+<!-- translated-from: start.html -->
+<!-- source-sha256: 92250ed7469983711e89a77e11a2877ac11c9aff49df7228d11a92887f9a91fc -->
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>入门 — Loment</title>
+<meta name="description" content="安装 Loment 并跑起你的第一个程序。面向 Linux 和 Windows 的原生二进制；编译和运行不需要 Python、不需要 clang、不需要 WSL。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/start.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/start.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/start.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/start.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/start.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/start.html">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html" aria-current="page">入门</a>
+      <a href="examples.html">示例</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>中文</summary>
+      <ul>
+        <li><a href="../start.html" hreflang="en">English</a></li>
+        <li><a href="start.html" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+        <li><a href="../ja/start.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/start.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/start.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <h1>入门</h1>
+    <p class="lede">
+      这一页只讲怎么让一个程序跑起来。想知道这门语言是什么，请看<a href="index.html">首页</a>。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>安装它</h2>
+    <p class="body">
+      Loment 以包的形式发布。从<a href="https://github.com/FujoJTOP/loment/releases/latest">最新发布</a>里取对应你平台的压缩包。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Linux / WSL</h3>
+        <p>
+          一个 <code>linux-x64.tar.gz</code>。解开它，运行 <code>sh install.sh</code>。
+          唯一的要求是 POSIX <code>sh</code>。
+        </p>
+      </div>
+      <div class="row">
+        <h3>Windows</h3>
+        <p>
+          一个 <code>windows-x64.zip</code> —— 解开它，运行
+          <code>powershell -File install.ps1</code> —— 或一个双击即可的
+          <code>windows-x64-setup.exe</code>。
+        </p>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      你会得到 <code>loment</code> 命令、<code>lompi</code>，以及语言服务器。
+      编译和运行<strong>不需要 Python、不需要 clang、不需要 WSL</strong>：这个包是原生二进制
+      加上标准库，安装器在写入任何东西之前会核对 <code>SHA256SUMS</code>。
+    </p>
+
+    <p class="note">
+      如果你想改动这门语言本身，而不是使用它，那就从一个检出开始：
+      <code>git clone https://github.com/FujoJTOP/loment.git</code>。编译器是用 Loment
+      写的，从仓库里提交的一颗种子重建 —— <code>sh loment/bootstrap.sh</code> 会构建它，
+      并核对种子能否逐字节地重现自己。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>写一个程序</h2>
+    <p class="body">
+      把这段放进 <code>hello.lomt</code>。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      <code>_start</code> 是入口点，因为 sealed 产物没有 runtime 来替你调用入口。这里也没有
+      <code>printf</code>：输出走 <code>write</code> 系统调用，它的参数是文件描述符、字符串的
+      指针和它的长度。第二次调用是 <code>exit</code>。写上 <code>choose hosted</code>，
+      产物就变成一个 C runtime 程序，入口点是 <code>fn main() -&gt; u32</code>。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>编译并运行它</h2>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment run hello.lomt          <span class="c"># compile, link, run</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment build hello.lomt -o hello</span><span class="ln" data-n="3"><span class="prompt">$ </span>loment check hello.lomt        <span class="c"># check only, nothing written</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment ir hello.lomt           <span class="c"># the LLVM IR it generates</span></span></code></pre>
+    </div>
+
+    <p class="body" style="margin-top: var(--s4)">
+      在 Windows 上目标是 PE，所以把输出命名为 <code>.exe</code> —— 链接器从这个名字来判断格式。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>四处看看这门语言</h2>
+    <p class="body">
+      工具链会解释它自己。这四条覆盖了其中大半。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour   <span class="c"># the whole language in one file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment cheat          <span class="c"># the traps, ordered by how easily they bite</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins       <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment syntax         <span class="c"># syntax summary</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      <code>loment example tour</code> 把整门语言打印成一个带注释的源码文件。它的注释是中文，
+      而在 <code>0.1.4</code> 上那个文件链接不过；<a href="examples.html">示例</a>页上那四个
+      程序才是已验证能跑的。
+    </p>
+
+    <div style="margin-top: var(--s5)">
+      <a class="doclink" href="examples.html">
+        <span class="who">示例</span>
+        <span class="what">本站上的短程序，加上仓库里的完整集合。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">这一页的加长版，包含每一条构建路径和 FFI 注意事项。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
+        <span class="who">README</span>
+        <span class="what">这门语言是做什么用的、还有什么不一样、以及什么诚实地还没做完。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment 依据 Loment-Open License 发布。由 Fujo 编写。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">源码</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">发布</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

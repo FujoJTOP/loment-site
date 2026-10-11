@@ -1,0 +1,192 @@
+<!doctype html>
+<!-- translated-from: lvm.html -->
+<!-- source-sha256: e4da20427090d575932c1d32bf5d5c1552e98018dce75a5623ab62401e1119ba -->
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LVM — Loment VM — Loment</title>
+<meta name="description" content="Loment VM：被设计成第五个 choose 维度，默认 no_vm，并在发布构建中被闸门挡掉。引擎尚不存在。这一页说明在建什么、什么不在建。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lvm.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lvm.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lvm.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lvm.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lvm.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lvm.html">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">入门</a>
+      <a href="examples.html">示例</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html" aria-current="page">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>中文</summary>
+      <ul>
+        <li><a href="../lvm.html" hreflang="en">English</a></li>
+        <li><a href="lvm.html" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+        <li><a href="../ja/lvm.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/lvm.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/lvm.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">系统 · 进行中</p>
+    <h1>Loment VM</h1>
+    <p class="lede">
+      VM 是这门语言正在为之做准备的下一个执行模型。它的第一片 —— 一个维度和一道闸门 ——
+      正在建。<strong>引擎并不存在。</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>没有 VM</h2>
+    <p class="body">
+      没有字节码，没有解释器，没有任何种类的执行引擎。这句话放在最上面而不是脚注里，因为讲
+      计划的一页，最容易让读者把计划当成产品。
+    </p>
+    <p class="body">
+      今天存在的，是一份规范和一个<strong>在开发分支上</strong>的实现：它的任何部分都不在
+      主分支、不在任何发布里、不在任何已安装的工具链里。项目自己把这件事说出来，而不是等着
+      你去发现 —— 这跟 <code>runtime</code> 曾经背过一阵子的债是同一种：已声明、被产物携带，
+      却什么也不做，直到后来被偿还。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>第一片规定了什么</h2>
+    <p class="body">
+      两件事，都关于<em>许可</em>，而不是能力。两者都不是你能用的功能。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>一个第五维度</h3>
+        <p>
+          <code>choose</code> 曾有四个维度 —— 程序可用哪一层、如何回收内存、产物能否携带一个
+          runtime、以及能否向自身之外伸手。<code>vm</code> 会是第五个，回答一个不同的问题：
+          <strong>这个程序是为哪个执行模型而写的？</strong>不写就是 <code>no_vm</code>，
+          也就是这个维度存在之前一切东西的状态。
+        </p>
+      </div>
+      <div class="row">
+        <h3>一道闸门，不是一个功能</h3>
+        <p>
+          在<strong>发布</strong>构建里，<code>choose vm</code> 会是一个编译期错误；只有开发
+          通道会接受它。项目给自己立的规则很硬 —— 在第一个可用的 VM 出现之前，对它的任何调用
+          在发布里都非法 —— 这样一个已安装的工具链就永远不会接受一个它兑现不了的承诺。
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>为什么这个值不会是 <code>vm_t0</code> 或类似的写法。</strong>与
+      <code>runtime</code> 维度遵循同一条规则：这个值说的是<em>是否</em>，从不是<em>哪一个</em>。
+      里面装的东西会随年份变化，而一个编码了今天这一档的名字，要在明天加新档时就得改名。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>为什么非要有闸门</h2>
+    <p class="body">
+      一个在发布里能编译、然后又什么都不做的维度，是一句排版漂亮的谎言。给它设闸门，意味着
+      这个词不会出现在会误导人的地方，也意味着引擎落地那天，闸门是打开，而不是承诺被事后补上。
+    </p>
+    <p class="body">
+      一道闸门需要一个仓库此前没有的概念 —— 这个编译器是发布构建还是开发构建？规范把它放进
+      <em>一个常量</em>，每一边一个值，在打包时翻转。把它控制在一行是有意为之：打包好的语言
+      指南未经修改就被拷进发行版，这样"包里的副本就是仓库里的副本"才保持可核对，而一行是弯曲
+      这条规则的最小办法。代价随它一起被说出来 —— 随包发出的编译器种子就不再逐字节等于仓库里
+      的，于是判据从"完全相同"降为"可复现地相等，且差异恰好是那一个常量"。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>它可能变成什么</h2>
+    <p class="body">
+      设计记录描述的是一座阶梯，与回收那座精神相同：先是解释器，然后是从真实运行里收集反馈，
+      然后是基线编译器，然后是一个优化编译器，它在某个猜测被证明是错的时候能放弃它。这些步骤
+      在今天没有一个是功能，这一页也不会假装它们是。
+    </p>
+    <p class="body">
+      等到引擎到来时，这个维度已经是新的执行模型必须接入的地方 —— 而闸门已经是那个防止它还没
+      能用就被宣布出去的东西。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>它写在哪儿</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">路线图</span>
+        <span class="what">LVM 相对各个版本处在什么位置 —— 一份计划，就按计划来说。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">设计记录。每一份都是有编号的文档，其中大多数是中文。</span>
+      </a>
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">回收阶梯 —— 一个已经建成的系统，供对照。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">回到首页</span>
+        <span class="what">Loment 是什么，以及它构建的两类产物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment 依据 Loment-Open License 发布。由 Fujo 编写。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">源码</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">发布</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

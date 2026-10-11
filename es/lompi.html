@@ -1,0 +1,209 @@
+<!doctype html>
+<!-- translated-from: lompi.html -->
+<!-- source-sha256: fd3cdf47e8f0561268b8e584209fc835bdbc60ef01f61cdc279fcb98b644ddd2 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lompi — el gestor de paquetes — Loment</title>
+<meta name="description" content="lompi es el gestor de paquetes de Loment. Una biblioteca es un directorio de archivos Loment, sus dependencias son las líneas use que ya están en el código fuente, y su identidad es un hash de contenido recursivo.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/lompi.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/lompi.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/lompi.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/lompi.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/lompi.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/lompi.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html" aria-current="page">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../lompi.html" hreflang="en">English</a></li>
+        <li><a href="../zh/lompi.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/lompi.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/lompi.html" hreflang="ru">Русский</a></li>
+        <li><a href="lompi.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Sistema</p>
+    <h1>lompi</h1>
+    <p class="lede">
+      El gestor de paquetes de Loment. Viene con el conjunto de herramientas y
+      <strong>no</strong> es un subcomando de <code>loment</code> — un programa aparte, con su
+      propia versión y su propia guía.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Una biblioteca es un directorio</h2>
+    <p class="body">
+      No hay ningún formato de manifiesto que aprender ni un segundo lenguaje en el que
+      escribirlo. Una biblioteca es <strong>un directorio lleno de archivos Loment</strong>, y
+      las tres cosas que un sistema de paquetes normalmente inventa ya están en el lenguaje, se
+      derivan de él o se generan:
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Exportaciones — ya en el lenguaje</h3>
+        <p>
+          <code>pub</code>. Nada nuevo que declarar, nada que mantener sincronizado con el
+          código fuente.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Dependencias — las líneas <code>use</code></h3>
+        <p>
+          No hay <strong>ninguna lista de dependencias</strong>. El resolutor lee las
+          importaciones que el código fuente ya tiene, así que "declarado pero no usado" y
+          "usado pero no declarado" no son errores que pueda siquiera producir — no son estados
+          que existan.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Identidad — un hash de contenido recursivo</h3>
+        <p>
+          La identidad de un paquete se calcula a partir de su propio código fuente <em>y</em>
+          de las identidades de todo aquello de lo que depende, hasta el fondo. Hashear solo
+          los archivos propios de un paquete sería erróneo: el mismo código fuente ligado a
+          dependencias distintas es otra cosa, y se fusionaría por error.
+        </p>
+      </div>
+    </div>
+
+    <p class="body">
+      Eso último es lo que elimina toda una categoría de complejidad. No hay lenguaje de rangos
+      de versión, ni resolutor, ni conflicto de resolución, porque dos versiones de una
+      biblioteca son simplemente dos identidades — y pueden coexistir.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>El archivo de etiqueta es Loment</h2>
+    <p class="body">
+      Un paquete puede llevar un archivo <code>.lomp</code>. No es un manifiesto en el sentido
+      habitual: es <strong>código fuente Loment</strong>, con a lo sumo un nombre y una versión
+      que reportar, y no tiene sección de dependencias — porque las dependencias nunca se
+      declararon en un archivo para empezar. Si se omite, el nombre del directorio es el nombre
+      del paquete.
+    </p>
+    <p class="body">
+      Los números de versión que contiene son etiquetas para las personas. La máquina no los
+      usa para elegir nada; el hash de contenido ya lo hizo.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Por qué no el diseño habitual</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>Las bibliotecas no pueden distribuirse como binarios</h3>
+        <p>
+          Los genéricos se monomorfizan por instanciación, así que el compilador tiene que ver
+          el código fuente para decidir qué generar. Un blob compilado más cabeceras no es una
+          opción — y tampoco la clase de problemas que trae mantener en sintonía dos
+          descripciones de una misma interfaz.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Sin servicio de registro</h3>
+        <p>
+          Los puntos de extensión son archivos en disco. No hay un servidor central que decida
+          qué significa un nombre.
+        </p>
+      </div>
+      <div class="row">
+        <h3>No forma parte de <code>loment</code></h3>
+        <p>
+          <code>lompi</code> se instala junto al conjunto de herramientas y está en tu
+          <code>PATH</code>, pero se mantiene fuera de la superficie de comandos —
+          <code>loment help</code> no lo lista, y <code>loment</code> nunca le reenvía nada.
+          Esa separación es deliberada y se hace cumplir.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Lo que acepta hoy.</strong> Bibliotecas de código fuente Loment. Las bibliotecas
+      C reales se alcanzan mediante <code>choose hosted</code> — tú nombras la biblioteca en la
+      compilación —, pero todavía no son una <em>dependencia instalable</em>. Instalar
+      bibliotecas ajenas es para lo que sirve la próxima versión del gestor de paquetes.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Lee el diseño</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/168-loment-library-system.md">
+        <span class="who">docs/168</span>
+        <span class="what">El sistema de bibliotecas: qué es una biblioteca, qué significa la identidad, y qué deliberadamente no tomó prestado.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/lompi">
+        <span class="who">FujoJTOP/lompi</span>
+        <span class="what">El repositorio propio del gestor de paquetes, y su guía.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Volver a la página principal</span>
+        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

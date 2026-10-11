@@ -1,0 +1,319 @@
+<!doctype html>
+<!-- translated-from: index.html -->
+<!-- source-sha256: c631c904e075754ee7b4ede54d3b10e72d6475f5ab67ba92fc3caef5b5ac5896 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loment — un lenguaje de programación de sistemas</title>
+<meta name="description" content="Loment compila a ejecutables nativos x86-64. sealed (sellado) por defecto — sin runtime, sin libc, sin símbolos no definidos — y hosted (alojado) cuando así lo indicas. El propio conjunto de herramientas está escrito en Loment.">
+<meta property="og:title" content="Loment — un lenguaje de programación de sistemas">
+<meta property="og:description" content="sealed por defecto: sin runtime, sin libc, sin símbolos no definidos. hosted cuando así lo indicas. El conjunto de herramientas está escrito en Loment.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/index.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/index.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/index.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/index.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/index.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../index.html" hreflang="en">English</a></li>
+        <li><a href="../zh/index.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/index.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/index.html" hreflang="ru">Русский</a></li>
+        <li><a href="index.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Un lenguaje de programación de sistemas</p>
+    <h1>Loment</h1>
+    <p class="lede">
+      Compila a ejecutables nativos x86-64 — ELF de Linux, PE de Windows, o un objeto
+      autónomo para bare metal. <strong>Lo que entra en un artefacto es decisión del
+      programa, y la compilación lo registra.</strong> El propio conjunto de herramientas
+      está escrito en Loment.
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Descargar</a>
+      <a class="btn btn-quiet" href="start.html">Primeros pasos</a>
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
+      <p class="out"><span class="prompt">$</span> loment run hello.lomt<br><b>hello from Loment</b></p>
+    </div>
+
+    <p class="caption">
+      <code>_start</code> es el punto de entrada, porque un artefacto sealed no tiene runtime
+      que llame a uno por ti. Tampoco hay <code>printf</code> — la salida pasa por la
+      llamada al sistema <code>write</code>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Un código fuente, dos clases de artefacto</h2>
+    <p class="body">
+      Casi todos los ajustes de compilación viven fuera del lenguaje, donde quien lee el
+      código fuente nunca los ve. Loment pone este <em>dentro</em> del programa — una línea,
+      en la unidad raíz — y luego lo traslada al objeto de forma que la unidad exporta. Así,
+      qué clase de artefacto se compiló es algo que puede responder incluso algo que no puede
+      leer el código fuente en absoluto.
+    </p>
+
+    <div class="split">
+      <div class="pane pane-sealed">
+        <p class="pane-tag">choose sealed</p>
+        <dl>
+          <dt>Qué es</dt>
+          <dd>El valor por defecto. Un artefacto sin puertos hacia el mundo.</dd>
+          <dt>Punto de entrada</dt>
+          <dd><code>fn _start()</code></dd>
+          <dt>Enlaza</dt>
+          <dd>Nada. Un símbolo no definido es un error, no una advertencia — así que un
+              artefacto sealed no tiene, de forma demostrable, ni runtime ni libc.</dd>
+          <dt>Alcanza</dt>
+          <dd>Solo el código compilado dentro de él, más cualquier objeto que le entregues al
+              enlazador y que ya sea autocontenido.</dd>
+        </dl>
+      </div>
+      <div class="pane pane-hosted">
+        <p class="pane-tag">choose hosted</p>
+        <dl>
+          <dt>Qué es</dt>
+          <dd>La otra vía. Un artefacto declarado con permiso para alcanzar fuera de sí mismo.</dd>
+          <dt>Punto de entrada</dt>
+          <dd><code>fn main() -&gt; u32</code></dd>
+          <dt>Enlaza</dt>
+          <dd>Bibliotecas reales. La compilación entrega el IR al conjunto de herramientas C
+              del anfitrión en lugar del enlazador incluido.</dd>
+          <dt>Alcanza</dt>
+          <dd>libc, bibliotecas compartidas, y un runtime del anfitrión que incrustes. Los
+              propios criterios del proyecto enlazan <code>libstdc++</code> y <code>libz</code>
+              e incrustan CPython.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Dónde está realmente la frontera.</strong> Alcanzar una biblioteca real implica
+      pasar por el conjunto de herramientas del anfitrión tú mismo — tú nombras la biblioteca
+      en la compilación. Una biblioteca C real todavía no es una <em>dependencia
+      instalable</em>: el gestor de paquetes aún solo acepta bibliotecas de código fuente
+      Loment. Esa parte se está construyendo.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Quién puede ejecutar qué, y en qué ámbito</h2>
+    <p class="body">
+      Casi todos los lenguajes responden a <em>¿qué puede hacer este programa?</em> Loment se
+      organiza en torno a una pregunta más estrecha — <strong>quién puede ejecutar qué, en qué
+      ámbito, y puede eso resolverse sin leer el código fuente?</strong> Tres cosas la
+      sostienen.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> native_cap</span><span class="ln" data-n="2"> </span><span class="ln ln-mark" data-n="3"><span class="k">capability</span> blk_write : disk[<span class="rng">0..4</span>] revocable</span><span class="ln" data-n="4"> </span><span class="ln" data-n="5"><span class="k">fn</span> write(slot: <span class="t">u32</span>) -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="6">    <span class="k">guard</span> blk_write(slot);</span><span class="ln" data-n="7">    <span class="k">return</span> slot;</span><span class="ln" data-n="8">}</span><span class="ln" data-n="9"> </span><span class="ln" data-n="10"><span class="k">fn</span> literal_ok() -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="11">    <span class="k">guard</span> blk_write(<span class="rng">2</span>);</span><span class="ln" data-n="12">    <span class="k">return</span> <span class="n">2</span>;</span><span class="ln" data-n="13">}</span></code></pre>
+    </div>
+
+    <p class="caption">
+      La línea 3 declara el rango que una unidad puede alcanzar. La línea 6 comprueba
+      <code>slot</code> contra él en tiempo de ejecución, donde un índice fuera de rango
+      aborta. La línea 11 es un literal, así que el compilador lo resuelve y no se emite nada.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Dominios de capacidad</h3>
+        <p>
+          Una unidad declara el rango que puede alcanzar, y una <code>guard</code> comprueba un
+          índice contra él — en tiempo de compilación cuando el índice es un literal, y si no
+          en tiempo de ejecución. La frontera se enuncia en lugar de disimularse: una guard
+          acota el <em>índice</em>, no el sujeto, y no es una autorización.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Objetos de forma</h3>
+        <p>
+          Cada unidad exporta un resumen declarado y legible por máquina de lo que contiene y
+          lo que alcanza, juzgado por dos validadores independientes — así "qué puede tocar
+          esto" puede responderse sin leer el código fuente.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Una capa de compatibilidad</h3>
+        <p>
+          C, C++, Rust y Zig tras el C ABI; Go, Python, Java, JavaScript, Perl y Lua sobre un
+          puente de procesos. En un artefacto sealed, lo que se enlaza debe ser autocontenido.
+          <code>choose hosted</code> es la vía que alcanza bibliotecas reales, y los criterios
+          la ejercitan contra libstdc++, libz y un CPython incrustado.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Qué más es distinto</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Un modo de proyecto, no un atributo de crate</h3>
+        <p>
+          <code>choose</code> tiene cuatro dimensiones — qué capa puede usar el programa, cómo
+          recupera memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera
+          de sí mismo. Cada una se escribe a lo sumo una vez, en la unidad raíz, y cada una
+          pasa a ser una propiedad de todo el programa: un par contradictorio se rechaza, y el
+          diagnóstico nombra el par y el motivo en lugar de decir "combinación ilegal".
+        </p>
+      </div>
+      <div class="row">
+        <h3>Escrito en otras seis sintaxis</h3>
+        <p>
+          C, C++, Java, C#, Go o Python. Solo cambia la grafía; el significado es siempre el de
+          Loment — es una sintaxis, no una semántica, y cada front end lo dice en su primera
+          línea.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Una biblioteca que se importa módulo a módulo</h3>
+        <p>
+          La biblioteca estándar viene con el conjunto de herramientas y se alcanza como
+          <code>use vec</code>, <code>use map</code>, <code>use fs</code>. Hay una importación
+          de todo el paquete, pero arrastra todo a una sola unidad, y la documentación lo
+          desaconseja.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Todo es personalizable</h3>
+        <p>
+          El sufijo del código fuente, la superficie de comandos, las bibliotecas — un
+          directorio cuya identidad es un hash de contenido — y el propio conjunto de
+          herramientas. No hay registro; los puntos de extensión son archivos en disco.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Qué no está terminado.</strong> El conjunto de herramientas es autoalojado en
+      tiempo de ejecución — compila y se ejecuta sin Python y sin libc — pero el lado de
+      desarrollo no lo es: la implementación de referencia y sus conjuntos de pruebas siguen
+      en el repositorio, y el repositorio todavía no es "solo Loment". Las notas de la versión
+      dicen en qué mitad está cada elemento pendiente.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Tres sistemas</h2>
+    <p class="body">
+      Tres partes de Loment que son lo bastante grandes como para tener sus propios registros
+      de diseño — y sus propias líneas de estado honestas.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">La recuperación como contrato por sitio: una escala de cuatro niveles, y cuánto es responsable el recolector, escrito en el artefacto.</span>
+      </a>
+      <a class="doclink" href="lvm.html">
+        <span class="who">LVM — Loment VM</span>
+        <span class="what">Una quinta dimensión y una compuerta, en construcción. El motor no existe, y la página lo dice primero.</span>
+      </a>
+      <a class="doclink" href="lompi.html">
+        <span class="who">lompi</span>
+        <span class="what">Una biblioteca es un directorio de archivos Loment. Sin lenguaje de manifiesto, sin resolutor de versiones, y una identidad que es un hash de contenido.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Dónde leer más</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="start.html">
+        <span class="who">Primeros pasos</span>
+        <span class="what">Instálalo y ejecuta tu primer programa. Binarios nativos; sin Python, sin clang, sin WSL.</span>
+      </a>
+      <a class="doclink" href="examples.html">
+        <span class="who">Ejemplos</span>
+        <span class="what">Programas cortos, cada uno con la salida que imprimió — y lo que no está entre ellos.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">
+        <span class="who">Más ejemplos</span>
+        <span class="what">El conjunto completo en el repositorio. No todos enlazan hoy.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/">
+        <span class="who">Wiki</span>
+        <span class="what">El lenguaje, el conjunto de herramientas y la hoja de ruta, página a página.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
+        <span class="who">README</span>
+        <span class="what">Para qué sirve, qué más es distinto, y qué no está terminado, con honestidad.</span>
+      </a>
+      <a class="doclink" href="https://discord.gg/rGw7NRNU">
+        <span class="who">Discord</span>
+        <span class="what">Donde el proyecto conversa. Las preguntas son tan bienvenidas como los informes de errores.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
