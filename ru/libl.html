@@ -1,0 +1,367 @@
+<!doctype html>
+<!-- translated-from: libl.html -->
+<!-- source-sha256: 5b58146998e2c657a84cf9033901caa93d0507a20205bf37484f7bd1b09512d8 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LibL — грань libc стандартной библиотеки — Loment</title>
+<meta name="description" content="LibL — это грань libc стандартной библиотеки Loment: имена libc, порядок аргументов libc, семантика возврата libc — судимые по настоящей glibc системы, побайтово, а не по Python. Пока нет в выпуске.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/libl.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/libl.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/libl.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/libl.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/libl.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/libl.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Начало</a>
+      <a href="examples.html">Примеры</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html" aria-current="page">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>RU</summary>
+      <ul>
+        <li><a href="../libl.html" hreflang="en">English</a></li>
+        <li><a href="../zh/libl.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/libl.html" hreflang="ja">日本語</a></li>
+        <li><a href="libl.html" hreflang="ru" aria-current="true">Русский</a></li>
+        <li><a href="../es/libl.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Система · не выпущено</p>
+    <h1>LibL</h1>
+    <p class="lede">
+      <strong>Грань libc</strong> стандартной библиотеки Loment. Те же имена, тот же порядок
+      аргументов и та же семантика возврата, что у libc, &mdash; для тех, кто уже знает
+      C. Это вторая грань одной библиотеки, а не вторая библиотека.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Не в выпуске</h2>
+    <p class="body">
+      LibL реализован в ветке разработки и открыт как пул-реквест. <strong>Ни одна его часть
+      не в ветке main, ни в каком выпуске, ни в каком установленном инструментарии</strong>
+      &mdash; так что сегодня им нельзя <code>use</code>, и ничто на этой странице нельзя
+      запустить.
+    </p>
+    <p class="limit">
+      <strong>Почему оно вообще есть на этом сайте.</strong> Потому что это первый ответ на
+      вопрос, который язык оставлял открытым: как стандартная библиотека выглядит для того,
+      кто приходит из C. Пул-реквест — это и есть состояние, и ссылка на него внизу этой
+      страницы.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Почему вторая грань</h2>
+    <p class="body">
+      Стандартная библиотека уже существовала, и в ней <strong>не было ни одного имени
+      libc</strong> &mdash; ни <code>strlen</code>, ни <code>printf</code>, ни
+      <code>malloc</code>. Это было не упущение, а форма. Её функции принимают явную длину, а
+      не ищут терминатор, адресуют буфер со смещением и никогда не принимают переменное число
+      аргументов. В языке нет строк, завершающихся NUL, и нет функций с переменным числом
+      аргументов, поэтому библиотека написана так, как устроен язык.
+    </p>
+    <p class="body">
+      Эта форма верна для тех, кто пишет на Loment, и она — стена для тех, кто знает C. Вторая
+      грань отвечает на другой вопрос: <strong>как это называлось бы, если бы вы никогда не
+      слышали о Loment?</strong> <code>strcmp</code>, возвращающий то же, что и в C.
+      <code>qsort</code>. <code>isdigit</code>. Учить нечего.
+    </p>
+    <p class="body">
+      Обе грани указывают на <strong>одни и те же байты</strong>. <code>isdigit</code>
+      вызывает собственный предикат символа библиотеки; <code>memcpy</code> вызывает
+      собственную процедуру копирования. Так что сбой, которого можно было бы ждать от двух
+      граней, &mdash; один и тот же байт отвечает по-разному в зависимости от того, по какому
+      имени спросили, &mdash; структурно невозможен, а не просто избегнут.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Два входа</h2>
+    <p class="body">
+      <strong>LibL — имя библиотеки; <code>std</code> по-прежнему имя пакета.</strong> Оба
+      входа ведут в один и тот же пакет и различаются тем, сколько они тянут за собой.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>use std</code></h3>
+        <p>
+          Весь пакет. То, что уже делает всё написанное до LibL, и продолжает работать. Цена —
+          вход на уровне всего пакета стягивает каждый модуль в <em>одну</em> единицу, а
+          пространство испускаемых символов в этом языке плоское, поэтому все эти имена
+          верхнего уровня должны быть уникальны вместе, и время компиляции растёт быстрее
+          числа модулей.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>use libl</code></h3>
+        <p>
+          Четыре грани libc и то, от чего они зависят, — шесть модулей. Маленькая грань:
+          компилируется быстро, и сталкиваться почти не с чем. Это вход, когда нужны только
+          имена libc.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Что он покрывает</h2>
+    <p class="body">
+      Один заголовок libc отображается на один модуль, и само это отображение — часть
+      следования libc.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>&lt;string.h&gt;</code></h3>
+        <p>
+          <code>strlen</code>, <code>strcpy</code>, <code>strncpy</code>, <code>strcat</code>,
+          <code>strcmp</code>, <code>strncmp</code>, <code>strchr</code>, <code>strrchr</code>,
+          <code>strstr</code>, <code>strspn</code>, <code>strcspn</code>, <code>strpbrk</code>,
+          <code>strtok_r</code>, <code>memchr</code>, <code>memcmp</code>, <code>memcpy</code>,
+          <code>memmove</code>, <code>memset</code>.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;ctype.h&gt;</code></h3>
+        <p>
+          <code>isdigit</code>, <code>isalpha</code>, <code>isalnum</code>,
+          <code>isspace</code>, <code>isupper</code>, <code>islower</code>,
+          <code>isxdigit</code>, <code>ispunct</code>, <code>isprint</code>, и остальной
+          набор, с <code>toupper</code> и <code>tolower</code>.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;stdlib.h&gt;</code></h3>
+        <p>
+          Та половина, которую можно построить без кучи: <code>atoi</code>, <code>atol</code>,
+          <code>strtol</code>, <code>strtoul</code>, <code>abs</code>, <code>labs</code>,
+          <code>llabs</code>, <code>qsort</code>, <code>bsearch</code>.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;stdio.h&gt;</code></h3>
+        <p>
+          Только половина форматирования: <code>snprintf</code> и <code>sprintf</code>. В этом
+          выпуске нет <code>FILE</code>, и причины ниже.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      Плюс одна функция, которой нет в libc, — и она самая интересная; см. ниже.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Контрольный образец — сама libc</h2>
+    <p class="body">
+      Каждая другая часть стандартной библиотеки судится сравнением того, что вычисляет Loment,
+      с тем, что вычисляет <em>Python</em>. Это неверный контрольный образец для этого вопроса,
+      и доказуемо: ровно на гранях, которые определяют «ведёт себя как libc», &mdash; обнуляет
+      ли <code>strncpy</code>, возвращает ли <code>strcmp</code> знак или <em>разность</em>,
+      находит ли <code>strchr</code> терминатор, безопасен ли <code>memmove</code> при
+      перекрытии диапазонов, &mdash; Python и libc дают не один и тот же ответ. Сравнение с
+      Python позволило бы двум реализациям ошибиться вместе и пройти.
+    </p>
+    <p class="body">
+      Поэтому критерий компилирует программу на C против настоящей glibc системы, прогоняет
+      один и тот же набор вызовов с обеих сторон и <strong>сравнивает стандартный вывод
+      побайтово</strong>, сообщая первую отличающуюся строку. Две нормализации нарочны, иначе
+      тест измерял бы детали реализации, а не семантику: стандарт обещает только <em>знак</em>
+      <code>strcmp</code>, поэтому проверяются и знак, и разность; а предикаты символов glibc
+      возвращают <em>битовую маску</em>, а не 1, поэтому обе стороны сводятся к «да или нет»
+      перед сравнением.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Что навязал язык</h2>
+    <p class="body">
+      Правилом для этой работы было «как libc это реализует, так LibL это и реализует». Язык —
+      не C, поэтому в четырёх местах пришлось отойти и в одном — добавить. Каждое записано, а
+      не спрятано.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Строковый литерал не несёт терминатор</h3>
+        <p>
+          Поэтому <code>strlen</code> на литерале читает за концом. В первом зонде он вернул
+          <strong>17</strong> для пустой строки, пройдя дальше, пока случайно не встретил
+          нулевой байт. C не нуждается здесь в функции, потому что <code>"abc"</code> в C уже
+          несёт свой NUL. <strong>Это не упущение &mdash; два типа <code>str</code> не одно и
+          то же:</strong> <code>str</code> этого языка несёт длину, <code>str</code> в C — нет.
+          LibL добавляет <code>cstr_of</code>, чтобы преобразовать одно в другое, и каждая
+          NUL-строковая функция в библиотеке в нём нуждается.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Нет функций с переменным числом аргументов</h3>
+        <p>
+          Поэтому <code>snprintf</code> принимает на один аргумент больше, чем в libc:
+          <code>snprintf(buf, cap, fmt, args, nargs)</code>, где <code>args</code> указывает на
+          массив 64-битных значений. Спецификатор преобразования по-прежнему решает, как
+          прочитано каждое, точно как в libc. <strong>Это единственная сигнатура в библиотеке,
+          которая отклоняется</strong>, и это не чистая потеря: libc не может посчитать свои
+          аргументы, поэтому при слишком малом их числе читается что угодно из стека; здесь же
+          при слишком малом числе преобразование останавливается, а произведённое до сих пор
+          завершается правильно.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Нет указателей на функцию</h3>
+        <p>
+          Поэтому четвёртый аргумент <code>qsort</code> — перечисление, говорящее, по чему
+          сравнивать, а не функция сравнения. Это настоящее различие, и оно не понижение в одну
+          сторону: оно переносит «по чему сравнивает эта сортировка» из адреса времени
+          выполнения в <strong>константу в артефакте</strong>, так что на это можно ответить,
+          не читая исходник. <strong>Цена заявлена вместе с этим:</strong> порядок, который не
+          один из встроенных видов, выразить нельзя &mdash; цикл пишете сами.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Нет изменяемой глобальной на уровне модуля</h3>
+        <p>
+          Поэтому <code>strtok</code> становится <code>strtok_r</code>, с курсором у
+          вызывающего, &mdash; что POSIX уже предлагает, так что это не понижение.
+          <code>rand</code>, хранящий скрытое зерно, тоже не может существовать; форма, которую
+          использует этот язык, берёт состояние у вызывающего, и она нарочно <em>не</em> названа
+          <code>rand</code>. И нет <code>errno</code>: <code>strtol</code> насыщается до
+          граничного значения и возвращается нормально, так что вызывающий вместо этого
+          сравнивает с границей.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Чем оно не является</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Не замена libc</h3>
+        <p>
+          LibL — это <strong>библиотека исходного кода</strong>, а не архив, против которого
+          можно слинковать объектный файл C. Код C не может вызвать её; для этого нужен путь
+          «Loment в объектный файл», которого не существует. То, что она заменяет, — уже, и это
+          стоит сказать точно: <strong>программу на Loment, которой приходилось бы писать
+          <code>strcmp</code> вручную.</strong>
+        </p>
+      </div>
+      <div class="row">
+        <h3>Не вся libc</h3>
+        <p>
+          Нет <code>malloc</code>, <code>calloc</code>, <code>realloc</code> или
+          <code>free</code> &mdash; их версии в libc опираются на дескриптор кучи, хранимый в
+          глобальном слоте, который языку некуда поместить, здешняя библиотека берёт свою арену
+          у вызывающего, а собственная раскладка кучи компилятора приватна: залезть в неё из
+          библиотеки значило бы вморозить деталь реализации в библиотеку. Нет <code>FILE</code>,
+          нет <code>fopen</code> или <code>fread</code>. Ничего из семейств процесса или
+          окружения: <code>exit</code>, <code>abort</code>, <code>getenv</code>. И нет
+          форматирования с плавающей точкой, потому что в языке нет типа с плавающей точкой.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Не завершено и не притворяется завершённым</h3>
+        <p>
+          Написание её выявило дефекты в окружающей системе &mdash; среди них помощник, чья
+          проверка перекрытия сравнивала смещения там, где libc сравнивает адреса, форматтер,
+          испускающий IR, который отвергает системный ассемблер, и проверка зависимостей,
+          которая винит не тот модуль. Они заведены как issues, а не исправлены мимоходом, и
+          собственный критерий библиотеки нарочно узок: он заявляет, что эти модули —
+          допустимые единицы, и <em>не</em> заявляет, что таковы их зависимости.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Где это записано</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/pull/245">
+        <span class="who">Пул-реквест</span>
+        <span class="what">Всё целиком: библиотека, критерий, прогнанный против glibc, и запись о проектировании. Открыт, не слит.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/issues/246">
+        <span class="who">Проблема #246</span>
+        <span class="what">Один из выявленных дефектов &mdash; проверка зависимостей, которая сообщает о невинном листовом модуле. Заведён отдельно, здесь не исправлен.</span>
+      </a>
+      <a class="doclink" href="lompi.html">
+        <span class="who">lompi</span>
+        <span class="what">Где живёт такая библиотека: каталог, адресуемый хешем своего содержимого.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Назад на главную</span>
+        <span class="what">Что такое Loment и два вида артефактов, которые он собирает.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment выпускается под лицензией Loment-Open. Программа — Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Исходники</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Релизы</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Вики</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Проблемы</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!doctype html>
+<!-- translated-from: libl.html -->
+<!-- source-sha256: 5b58146998e2c657a84cf9033901caa93d0507a20205bf37484f7bd1b09512d8 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LibL — 標準ライブラリの libc の面 — Loment</title>
+<meta name="description" content="LibL は Loment の標準ライブラリの libc の面である: libc の名前、libc の引数順、libc の戻り値の意味論 —— 判定基準は Python ではなく、システムの実物の glibc とのバイト単位の比較である。まだリリースには入っていない。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/libl.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/libl.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/libl.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/libl.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/libl.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/libl.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html" aria-current="page">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../libl.html" hreflang="en">English</a></li>
+        <li><a href="../zh/libl.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="libl.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/libl.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/libl.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">システム · 未リリース</p>
+    <h1>LibL</h1>
+    <p class="lede">
+      Loment の標準ライブラリの<strong>libc の面</strong>である。libc と同じ名前、同じ
+      引数順、同じ戻り値の意味論 —— すでに C を知っている人のために。ひとつのライブラリの
+      第二の面であり、第二のライブラリではない。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>リリースには入っていない</h2>
+    <p class="body">
+      LibL は開発ブランチで実装され、プルリクエストとして開かれている。<strong>そのどの部分も、
+      main ブランチにも、どのリリースにも、どのインストール済みツールチェインにもない</strong>
+      —— だから今日それを <code>use</code> することはできず、このページの何ものも、あなたが
+      走らせられるものではない。
+    </p>
+    <p class="limit">
+      <strong>そもそもなぜこれがこのサイトにあるのか。</strong>それは、言語が開いたままにしていた
+      問いへの最初の答えだからである: C からやって来た人に標準ライブラリがどう見えるか。
+      プルリクエストが現状であり、このページの末尾でリンクされている。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>なぜ第二の面か</h2>
+    <p class="body">
+      標準ライブラリはすでに存在していたが、そこには<strong>libc の名前がひとつもなかった</strong>
+      —— <code>strlen</code> も、<code>printf</code> も、<code>malloc</code> も。それは省略では
+      なかった。ひとつの形であった。その関数は、終端文字を探すのではなく明示的な長さを取り、
+      バッファにはオフセットでアドレスし、可変個の引数を決して取らない。言語には NUL 終端文字列も
+      可変長引数関数もないので、ライブラリは言語のあるがままの形で書かれた。
+    </p>
+    <p class="body">
+      その形は Loment を書く人には正しいが、C を知っている人には壁である。第二の面は別の
+      問いに答える: <strong>もしあなたが Loment を聞いたことがなかったら、これは何と
+      呼ばれるだろうか?</strong> C のものと同じものを返す <code>strcmp</code>。
+      <code>qsort</code>。<code>isdigit</code>。学ぶものは何もない。
+    </p>
+    <p class="body">
+      二つの面は<strong>同じバイト</strong>を指す。<code>isdigit</code> はライブラリ自身の
+      文字判定を呼び、<code>memcpy</code> は自身のコピールーチンを呼ぶ。だから二つの面から
+      予想される破綻 —— 同じバイトが、どの名前で尋ねたかによって違う答えを返す —— は、
+      単に避けられているのではなく、構造的に不可能である。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>二つの入り口</h2>
+    <p class="body">
+      <strong>LibL はライブラリの名前であり、<code>std</code> は今もパッケージの名前である。</strong>
+      どちらの入り口も同じパッケージに届くが、どれだけを一緒に引き込むかが異なる。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>use std</code></h3>
+        <p>
+          パッケージ全体。LibL より前に書かれたすべてがすでにそうしており、それはこれからも
+          動く。代償は、パッケージ全体の入り口がすべてのモジュールを<em>ひとつの</em>単位に
+          引き込むことであり、この言語の出力シンボル空間は平坦である —— だからそれらすべての
+          トップレベルの名前は互いに一意でなければならず、コンパイル時間はモジュール数より
+          速く増える。
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>use libl</code></h3>
+        <p>
+          四つの libc の面と、それらが依存するもの —— 六つのモジュール。小さな面である:
+          素早くコンパイルし、衝突するものがほとんどない。libc の名前だけが欲しかったときの
+          入り口はこれである。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>何を覆うか</h2>
+    <p class="body">
+      libc のヘッダひとつがモジュールひとつに対応し、その対応そのものが libc に従うことの
+      一部である。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3><code>&lt;string.h&gt;</code></h3>
+        <p>
+          <code>strlen</code>, <code>strcpy</code>, <code>strncpy</code>, <code>strcat</code>,
+          <code>strcmp</code>, <code>strncmp</code>, <code>strchr</code>, <code>strrchr</code>,
+          <code>strstr</code>, <code>strspn</code>, <code>strcspn</code>, <code>strpbrk</code>,
+          <code>strtok_r</code>, <code>memchr</code>, <code>memcmp</code>, <code>memcpy</code>,
+          <code>memmove</code>, <code>memset</code>.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;ctype.h&gt;</code></h3>
+        <p>
+          <code>isdigit</code>, <code>isalpha</code>, <code>isalnum</code>,
+          <code>isspace</code>, <code>isupper</code>, <code>islower</code>,
+          <code>isxdigit</code>, <code>ispunct</code>, <code>isprint</code>, そしてその集合の
+          残りすべて、<code>toupper</code> と <code>tolower</code> を伴って。
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;stdlib.h&gt;</code></h3>
+        <p>
+          ヒープなしで作れる半分: <code>atoi</code>, <code>atol</code>,
+          <code>strtol</code>, <code>strtoul</code>, <code>abs</code>, <code>labs</code>,
+          <code>llabs</code>, <code>qsort</code>, <code>bsearch</code>.
+        </p>
+      </div>
+      <div class="row">
+        <h3><code>&lt;stdio.h&gt;</code></h3>
+        <p>
+          整形の半分だけ: <code>snprintf</code> と <code>sprintf</code>。このリリースには
+          <code>FILE</code> がない。その理由は下にある。
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      加えて、libc が持っていない関数がひとつ。そしてそれこそが面白い —— 下を見よ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>対照物は libc 自身である</h2>
+    <p class="body">
+      標準ライブラリの他のあらゆる部分は、Loment が計算するものを <em>Python</em> が計算するものと
+      比べて判定される。それはこの問いにとって間違った対照物であり、証明可能にそうである:
+      「libc のように振る舞う」を定義するまさにその縁 —— <code>strncpy</code> がゼロ埋めするか、
+      <code>strcmp</code> が符号を返すか<em>差</em>を返すか、<code>strchr</code> が終端文字を
+      見つけるか、範囲が重なったとき <code>memmove</code> が安全か —— において、Python と libc は
+      同じ答えではない。Python と比べれば、二つの実装が一緒に間違っていても通ってしまう。
+    </p>
+    <p class="body">
+      そこで判定基準は、システムの実物の glibc に対して C プログラムをコンパイルし、両側で同じ
+      呼び出しの組を走らせ、<strong>標準出力をバイト単位で比較し</strong>、最初に異なる行を報告する。
+      二つの正規化は意図的である。さもなければテストは意味論ではなく実装の細部を測ることになる
+      からだ: 標準は <code>strcmp</code> の<em>符号</em>しか約束しないので、符号と差の両方を検査し;
+      glibc の文字判定は 1 ではなく<em>ビットマスク</em>を返すので、比較の前に両側を yes-or-no に
+      還元する。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>言語が強いたもの</h2>
+    <p class="body">
+      この作業の規則は「libc がどう実装していようと、LibL はその通りに実装する」であった。
+      言語は C ではないので、四か所は異ならざるを得ず、ひとつは加えざるを得なかった。それぞれは、
+      隠されるのではなく書き留められている。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>文字列リテラルは終端文字を運ばない</h3>
+        <p>
+          だからリテラルに対する <code>strlen</code> は末尾を越えて読む。最初の探針では、空文字列に
+          対して<strong>17</strong> を返した —— たまたまゼロバイトに出会うまで走り続けたのである。
+          C では <code>"abc"</code> がすでに自分の NUL を運んでいるので、このための関数は要らない。
+          <strong>これは省略ではない —— 二つの <code>str</code> 型は同じものではない:</strong>
+          この言語のものは長さを運び、C のものは運ばない。LibL は一方をもう一方へ変換するために
+          <code>cstr_of</code> を加える。ライブラリのすべての NUL 文字列関数はそれを必要とする。
+        </p>
+      </div>
+      <div class="row">
+        <h3>可変長引数関数はない</h3>
+        <p>
+          だから <code>snprintf</code> は libc のものより引数をひとつ多く取る:
+          <code>snprintf(buf, cap, fmt, args, nargs)</code>、ここで <code>args</code> は
+          64 ビット値の配列を指す。変換指定子は libc とまったく同じく、それぞれをどう読むかを
+          決める。<strong>これはライブラリで唯一食い違うシグネチャである</strong>、そしてそれは
+          純粋な損失ではない: libc は自分の引数を数えられないので、少なすぎるとスタック上にある
+          ものを読んでしまう; ここでは、少なすぎれば変換が止まり、それまでに作られたものが
+          正しく仕上げられる。
+        </p>
+      </div>
+      <div class="row">
+        <h3>関数ポインタはない</h3>
+        <p>
+          だから <code>qsort</code> の第四引数は、比較関数ではなく、何で比較するかを述べる列挙で
+          ある。それは実際の違いであり、一方方向への格下げではない: 「このソートは何で比較するか」
+          を実行時のアドレスから<strong>成果物の中の定数</strong>へと移すので、ソースを読まずに
+          答えられる。<strong>代償も一緒に述べられている:</strong> 組み込みの種類のどれでもない
+          順序は表現できない —— ループは自分で書く。
+        </p>
+      </div>
+      <div class="row">
+        <h3>モジュールレベルの可変グローバルはない</h3>
+        <p>
+          だから <code>strtok</code> は <code>strtok_r</code> になり、カーソルは呼び出し側が
+          持つ —— これは POSIX がすでに提供しているので、格下げではない。隠れた種を保つ
+          <code>rand</code> も存在できない; この言語が使う形は呼び出し側から状態を取るのであり、
+          意図的に <code>rand</code> とは名付けられて<em>いない</em>。そして <code>errno</code> も
+          ない: <code>strtol</code> は境界値へ飽和して正常に戻るので、呼び出し側は代わりに
+          境界と比較する。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>何ではないか</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>libc の置き換えではない</h3>
+        <p>
+          LibL は<strong>ソースライブラリ</strong>であり、C のオブジェクトファイルがリンクできる
+          アーカイブではない。C のコードからそれを呼ぶことはできない; それには「Loment から
+          オブジェクトファイルへ」の道が要るが、それは存在しない。置き換えるものはもっと狭く、
+          正確に言う価値がある: <strong>Loment のプログラムが <code>strcmp</code> を手書き
+          しなければならないこと、である。</strong>
+        </p>
+      </div>
+      <div class="row">
+        <h3>libc の全体ではない</h3>
+        <p>
+          <code>malloc</code>、<code>calloc</code>、<code>realloc</code>、<code>free</code> は
+          ない —— libc のものは、言語に置き場所のないグローバルスロットに保たれたヒープハンドルに
+          依っており、ここのライブラリはアリーナを呼び出し側から取り、そしてコンパイラ自身の
+          ヒープレイアウトは非公開である: ライブラリからそれに手を伸ばすことは、実装の細部を
+          ライブラリに固定してしまう。<code>FILE</code> も、<code>fopen</code> も
+          <code>fread</code> もない。プロセスや環境の一族からは何もない: <code>exit</code>、
+          <code>abort</code>、<code>getenv</code>。そして浮動小数点の整形もない。言語に
+          浮動小数点型がないからである。
+        </p>
+      </div>
+      <div class="row">
+        <h3>完成しておらず、そう装ってもいない</h3>
+        <p>
+          それを書くことで、周囲のシステムの欠陥が露わになった —— その中には、重なりの検査で
+          libc がアドレスを比べるところをオフセットで比べてしまうヘルパー、システムのアセンブラが
+          拒む IR を出すフォーマッタ、そして間違ったモジュールを責める依存検査がある。それらは
+          通りがかりに直されるのではなく、イシューとして起票されている。そしてライブラリ自身の
+          判定基準は意図的に狭い: これらのモジュールが正しい単位であることは主張するが、それらの
+          依存がそうであることは<em>主張しない</em>。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>どこに書き留められているか</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/pull/245">
+        <span class="who">プルリクエスト</span>
+        <span class="what">すべてがここにある: ライブラリ、glibc に対して走らせる判定基準、そして設計記録。オープンで、未マージ。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/issues/246">
+        <span class="who">イシュー #246</span>
+        <span class="what">それが露わにした欠陥のひとつ —— 無実の葉モジュールを報告する依存検査。別に起票されており、ここでは直されていない。</span>
+      </a>
+      <a class="doclink" href="lompi.html">
+        <span class="who">lompi</span>
+        <span class="what">このようなライブラリが住む場所: ディレクトリであり、その内容のハッシュで指定される。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類の成果物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

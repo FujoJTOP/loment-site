@@ -48,10 +48,14 @@ LANGS = [
 ]
 
 #: 英文页在根目录；译文各占一个子目录，页面名相同。
-PAGES = ["index.html", "start.html", "examples.html", "lgc.html", "lvm.html", "lompi.html"]
+PAGES = ["index.html", "start.html", "examples.html", "lgc.html", "lvm.html", "lompi.html",
+         "libl.html"]
 
 #: 语言切换器与 alternate 组不进"散文面"：它们是镶边，不是内容。
 SKIP_CLASSES = {"codewrap", "lang"}
+
+#: 译文页允许链到的**仓根资源**，就这两个。其余任何"链出自己目录"都是错的。
+ROOT_ASSETS = {"style.css", "mark.svg"}
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
         "link", "meta", "param", "source", "track", "wbr"}
@@ -235,14 +239,20 @@ def local_hrefs(d: str, text: str) -> tuple[list[str], list[str]]:
             ok.append(rel[len(d) + 1:] if d and rel.startswith(d + "/") else rel)
         else:
             missing.append(f"{d}/{h}" if d else h)
-    return sorted(ok), sorted(set(missing))
+    # 按**文档顺序**返回，不排序：比集合只能看出"少了一条/多了一条"，
+    # 看不出"这条挪到别处去了" —— 而挪位子正是把一块内容插错地方时最先出现的症状。
+    return ok, sorted(set(missing))
 
 
 def repair_asset_hrefs(d: str, text: str) -> str:
-    """子目录页指向仓根资源的那几条相对路径（`style.css` / `mark.svg`）要带 `../`。
+    """子目录页指向**仓根资源**的那几条相对路径要带 `../`。只认 `ROOT_ASSETS` 里的。
 
-    只修一种形状：**按页所在目录解析落不到实文件上、而按仓根解析正好落得到一个存在的
-    文件**。页内链接本来就解析得到，所以不会被误伤；也不存在凭空造链接的情况。"""
+    早先它判的是"这个链接现在落不到实文件上、而加到仓根上就有" —— 那是个**启发式**，
+    它会误伤：译文页刚写好、同目录的某个页面还没落盘时，一条本来正确的页内链接
+    （`libl.html`）会被改写成 `../libl.html`。更糟的是改完之后**它自己也认为对了**
+     —— 解析后那个文件确实存在 —— 而判据的链接比对也看不出，于是那条链接悄悄指到了
+    **英文页**上。2026-10-11 实测：18 个页面中招。白名单把这类误伤从"靠运气"变成
+    "不可能"。"""
     if not d:
         return text
 
@@ -251,11 +261,37 @@ def repair_asset_hrefs(d: str, text: str) -> str:
         if href.startswith(("http://", "https://", "#", "mailto:", "/")) or "://" in href:
             return m.group(0)
         target = href.split("#", 1)[0]
-        if (ROOT / d / target).exists():
+        if target not in ROOT_ASSETS or (ROOT / d / target).exists():
             return m.group(0)
         return f'href="../{href}"' if (ROOT / target).exists() else m.group(0)
 
     return HREF_RE.sub(sub, text)
+
+
+def escapes_dir(d: str, text: str) -> list[str]:
+    """译文页里**链出自己目录**、又不是仓根资源的那些链接。
+
+    译文页的导航与正文链接一律是页内相对（`zh/lib.l` 里也写 `libl.html`）；
+    跨语言那一组由切换器负责，而它已经被 `local_hrefs` 排除在外。所以这一条是干净的：
+    凡是不在自己目录下、又不是 `ROOT_ASSETS` 的，都是错的 —— 而"错"的后果是跳到英文页，
+    链接还能点，最坏的那种错。"""
+    if not d:
+        return []
+    out = []
+    for h in HREF_RE.findall(LANG_RE.sub("", text)):
+        if h.startswith(("http://", "https://", "#", "mailto:", "/")):
+            continue
+        parts: list[str] = []
+        for seg in f"{d}/{h.split('#', 1)[0]}".split("/"):
+            if seg == "..":
+                if parts:
+                    parts.pop()
+            elif seg not in ("", "."):
+                parts.append(seg)
+        rel = "/".join(parts)
+        if not rel.startswith(d + "/") and rel not in ROOT_ASSETS:
+            out.append(h)
+    return sorted(set(out))
 
 
 # ------------------------------------------------------------------- --fix
@@ -367,7 +403,7 @@ def check() -> int:
     # 2..5 逐页
     mis_lang, mis_head, mis_switcher, mis_struct = [], [], [], []
     mis_code, mis_link, mis_stamp, mis_missing = [], [], [], []
-    mis_skel, mis_nav, untranslated = [], [], []
+    mis_skel, mis_nav, mis_escape, untranslated = [], [], [], []
 
     for page in PAGES:
         en_text = page_path("", page).read_text(encoding="utf-8")
@@ -424,6 +460,9 @@ def check() -> int:
             if page_hrefs != en_hrefs:
                 mis_link.append(tag)
 
+            for h in escapes_dir(d, text):
+                mis_escape.append(f"{tag} -> {h}")
+
             stamps = STAMP_ANY_RE.findall(text)
             m = STAMP_RE.search(text)
             if len(stamps) != 1 or not m or m.group(1) != page or m.group(2) != en_sha:
@@ -445,14 +484,15 @@ def check() -> int:
     group("顶栏导航文字已译", mis_nav)
     group("section 结构与英文一致", mis_struct)
     group("代码块与英文逐字节一致", mis_code)
-    group("本地链接目标与英文一致", mis_link)
+    group("本地链接目标与顺序都同英文一致", mis_link)
     group("每个本地链接都落得到实文件", mis_missing)
+    group("译文链接不越出自己的目录", mis_escape)
     group("翻译戳恰好一张、且对着英文散文面", mis_stamp)
 
     if untranslated:
         rep.soft("这几页的散文面与英文**逐字相同**，疑似整页没译：" + "、".join(untranslated[:8]))
 
-    total = len(LANGS[1:]) * len(PAGES) + 11
+    total = len(LANGS[1:]) * len(PAGES) + 12
     print(f"\ni18n_check: {total - rep.bad}/{total} 通过"
           + (f"，{rep.warn} 条提示" if rep.warn else ""))
     return 1 if rep.bad else 0

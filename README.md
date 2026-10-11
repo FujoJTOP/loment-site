@@ -14,6 +14,7 @@ Español `/es/`。**英文是唯一的源**，其余四种是它的译文 ——
 | `start.html` | 安装与第一个程序（`QUICKSTART.md` 的短版） |
 | `examples.html` | 四个短程序，各带真跑出来的输出 |
 | `lgc.html` `lvm.html` `lompi.html` | 三个系统各一页，各带自己的状态行 |
+| `lgc.html` `lvm.html` `lompi.html` `libl.html` | 四个系统各一页，**各带自己的状态行**（LVM 是"引擎不存在"，LibL 是"不在任何发布里"） |
 | `style.css` | 全部样式。配色、字体、那个"边界"母题，以及按语言关掉的那几处拉丁排印习惯，都在文件头的注释里说明了理由 |
 | `examples/*.lomt` | `examples.html` 上那四个程序的**源**，可重跑 |
 | `mark.svg` | 站点图标与顶栏的 mark |
@@ -55,6 +56,19 @@ python tools/i18n_check.py --stamp  # 重盖翻译戳
 
 **站址只写在一个地方** —— `tools/i18n_check.py` 顶部的 `ORIGIN`。换域名时改那一行，
 跑 `--fix`，30 个页面的 `hreflang` 会一起重写，跑不出"漏掉某一页"这种形状。
+
+**加一个页面要动的地方**（今天**工具只管 head 段、顶栏切换器与代码块，不管导航**）：
+
+1. `tools/i18n_check.py` 的 `PAGES` 加一条；
+2. 五种语言各写一份；
+3. **顶栏导航要在 30 个页面里各加一行** —— 导航是手写的，而且各语言的"入门/示例"
+   那两项文字不同，所以不能靠工具统一生成。链法是页内相对（`zh/` 里也写 `libl.html`，
+   不是 `../libl.html`）；**只有仓根资源**（`style.css`、`mark.svg`）才带 `../`。
+   插错位置这件事发生过一次：正则先撞上导航里那条 `lompi` 链接，于是新项落到了
+   第一个 `</a>` 后面、跑到别的条目中间去了 —— 判据因此从"比链接集合"改成
+   **按文档顺序逐条比**，这类挪位子现在会红。
+4. 首页 `Systems` 那一节如果有新条目，**别把条数写进标题**（原来叫 "Three systems"，
+   加了第四个就过期了 —— 这正是硬约定第 1 条要防的）。
 
 **字体不带 CJK。** `Bitter` / `Public Sans` / `JetBrains Mono` 只有拉丁字形，
 三种栈的末尾都接了系统 CJK 字体（`style.css` 的 `:root`）。这是故意的：CJK webfont
