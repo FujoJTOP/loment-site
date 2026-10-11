@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: e4da20427090d575932c1d32bf5d5c1552e98018dce75a5623ab62401e1119ba -->
+<!-- source-sha256: 4942ad5bbd6c17db638053afce23cba46826319bb8e5886e36257b761e4158f1 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LVM — Loment VM — Loment</title>
-<meta name="description" content="La Loment VM: diseñada como una quinta dimensión de choose, por defecto no_vm, y con compuerta fuera de las compilaciones de versión. El motor todavía no existe. Esta página dice qué se está construyendo y qué no.">
+<title>LVM — la VM de Loment — Loment</title>
+<meta name="description" content="La VM de Loment no es una ruta más rápida ni una forma de escribir programas con más facilidad. Es una segunda forma de ejecutar uno: un artefacto que un ejecutor puede adoptar bajo demanda, juzgándolo por lo que ya lleva. El motor todavía no existe.">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,109 +60,289 @@
     <p class="eyebrow">Sistema · en curso</p>
     <h1>Loment VM</h1>
     <p class="lede">
-      La VM es el siguiente modelo de ejecución para el que se está preparando el lenguaje. Su
-      primera porción — una dimensión y una compuerta — se está construyendo. <strong>El motor
-      no existe.</strong>
+      No es una ruta más rápida, ni una forma de escribir programas con más facilidad. Una
+      <strong>segunda forma de ejecutar uno</strong>: un artefacto puede entregarse a un ejecutor
+      que lo adopta y lo pagina bajo demanda &mdash; y que decide si adoptarlo leyendo lo que el
+      artefacto ya lleva. <strong>El motor no existe.</strong>
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>No hay VM</h2>
+    <h2>No hay ningún motor</h2>
     <p class="body">
-      Ni bytecode, ni intérprete, ni motor de ejecución de ningún tipo. Eso va arriba en lugar
-      de en una nota al pie, porque una página sobre un plan es el lugar más fácil para que
-      quien lee confunda el plan con el producto.
+      Ningún formato de bytecode, ningún intérprete, ningún ejecutor de ninguna clase. Eso va
+      arriba en lugar de en una nota al pie, porque una página sobre un plan es el lugar más fácil
+      para que quien lee confunda el plan con el producto.
     </p>
     <p class="body">
-      Lo que existe hoy es una especificación y una implementación <strong>en una rama de
-      desarrollo</strong>: ninguna parte está en la rama principal, ni en ninguna versión, ni
-      en ningún conjunto de herramientas instalado. El proyecto dice esto de sí mismo en lugar
-      de dejar que lo descubras — es la misma deuda en la que <code>runtime</code> estuvo un
-      tiempo, declarada y llevada en el artefacto mientras no hacía nada, antes de ser pagada.
+      Lo que existe es un registro de diseño y una primera porción todavía en construcción.
+      <strong>Ninguna parte está en la rama principal, ni en ninguna versión, ni en ningún
+      conjunto de herramientas instalado.</strong> Todo lo que hay debajo de esta línea es el
+      diseño &mdash; lo que la cosa pretende ser, y lo que pretende no ser &mdash; y nada de ello
+      es una función que se pueda usar.
+    </p>
+    <p class="limit">
+      <strong>Una deuda que el proyecto ya arrastró antes.</strong> La dimensión
+      <code>runtime</code> se declaró en el artefacto durante un tiempo antes de hacer nada, y
+      después se puso a la altura de lo que prometía. Esta es otra vez esa forma: declarada,
+      arrastrada, debida. El diseño lo dice por sí mismo en lugar de dejar que quien lee lo
+      descubra.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>Qué especifica la primera porción</h2>
+    <h2>Lo que no es</h2>
     <p class="body">
-      Dos cosas, ambas sobre <em>permiso</em> en lugar de sobre capacidad. Ninguna es una
-      función que puedas usar.
+      Tres lecturas son erróneas, y cada una es una con la que se llega. Van antes del diseño,
+      porque enunciarlas mal convierte esto en algo que intenta hacerlo todo y no hace bien nada.
     </p>
 
     <div class="rows">
       <div class="row">
+        <h3>No es la ruta rápida</h3>
+        <p>
+          Al revés. La ruta nativa de Loment ya cambia velocidad por independencia, y no es rápida
+          de por sí: frente a C <code>-O2</code> en el benchmark de arrays de
+          <a href="https://github.com/FujoJTOP/loment/blob/main/docs/212-loment-offload.md">docs/212</a>
+          va <strong>10.7&times; por detrás</strong> &mdash; una medición registrada, no una
+          promesa en pie. Una VM es una capa por encima de eso. <strong>El eje de esta línea no es
+          el rendimiento</strong>, y la vía de escape es una línea completamente distinta.
+        </p>
+      </div>
+      <div class="row">
+        <h3>No es escribir una vez, ejecutar en cualquier parte</h3>
+        <p>
+          Ese trabajo se le encomendó hace tiempo al <em>tiempo de compilación</em>: un IR, tres
+          salidas &mdash; Linux ELF, Windows PE, o un objeto autónomo. Un formato de bytecode no
+          está más cerca de la portabilidad que eso, y la afirmación falla su propia prueba: si la
+          portabilidad fuera el objetivo, el criterio sería "añadir un objetivo no necesita un back
+          end nuevo", y hay dos objetivos.
+        </p>
+      </div>
+      <div class="row">
+        <h3>No es una forma de escribir programas más rápido</h3>
+        <p>
+          Eso es otro conjunto de cosas y esto no toca ninguna de ellas: las otras seis sintaxis de
+          superficie, el formateador, el servidor de lenguaje, las definiciones de sintaxis en
+          tiempo de compilación, la guía escrita para agentes de programación. LVM llega
+          <em>después</em> de que el programa esté escrito.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>El diseño, en tres partes</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>El bytecode no es una invención nueva</h3>
+        <p>
+          Es una <strong>serialización del IR que el compilador ya emite</strong>. El back end
+          incluido es una máquina de pila &mdash; una ranura de pila por valor SSA, los argumentos
+          en la pila, los agregados a través de un puntero de resultado oculto &mdash; así que ya
+          existe un modelo de ejecución completo para ese subconjunto del IR, y ya se ejercita. Lo
+          que falta es el paso que lo <em>ejecuta</em>. LVM sería un <strong>cuarto lector</strong>
+          del mismo IR: ningún front end nuevo, ningún IR nuevo, ningún sistema de tipos nuevo.
+        </p>
+      </div>
+      <div class="row">
         <h3>Una quinta dimensión</h3>
         <p>
-          <code>choose</code> tenía cuatro dimensiones — qué capa puede usar el programa, cómo
-          recupera memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera
-          de sí mismo. <code>vm</code> sería la quinta, al responder a una pregunta distinta:
-          <strong>¿para qué modelo de ejecución es este programa?</strong> Sin escribirla es
-          <code>no_vm</code>, que es lo que todo era antes de que la dimensión existiera.
+          <code>choose</code> tenía cuatro &mdash; qué capa puede usar el programa, cómo recupera
+          memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera de sí mismo.
+          <code>vm</code> sería la quinta, al responder a <strong>¿para qué modelo de ejecución es
+          este programa?</strong> Sin escribirla es <code>no_vm</code>, que es lo que todo era
+          antes de que la dimensión existiera.
+        </p>
+        <p>
+          El valor dice <em>si</em>, nunca <em>cuál</em>. Esa es la regla que la dimensión
+          <code>runtime</code> ya sigue: lo que hay dentro cambiará con los años, y un nombre que
+          codificara el peldaño de hoy tendría que renombrarse para añadir el de mañana.
         </p>
       </div>
       <div class="row">
         <h3>Una compuerta, no una función</h3>
         <p>
-          En una compilación de <strong>versión</strong>, <code>choose vm</code> sería un error
-          de tiempo de compilación; solo el canal de desarrollo lo aceptaría. La regla que el
-          proyecto se impuso es tajante — hasta que exista la primera VM utilizable, cada
-          llamada a ella es ilegal en una versión — de modo que un conjunto de herramientas
-          instalado nunca pueda aceptar una promesa que no puede cumplir.
+          En una compilación de <strong>versión</strong>, <code>choose vm</code> sería un error de
+          tiempo de compilación; solo el canal de desarrollo lo aceptaría. La regla es tajante
+          &mdash; hasta que exista el primer motor utilizable, cada llamada a él es ilegal en una
+          versión &mdash; de modo que un conjunto de herramientas instalado nunca pueda aceptar una
+          promesa que no puede cumplir. <strong>Una promesa incumplida es peor que una
+          negativa.</strong>
+        </p>
+        <p>
+          La compuerta necesita una noción que el repositorio no tenía: ¿es este compilador una
+          compilación de versión o una de desarrollo? El diseño la reduce a <strong>una
+          constante</strong>, un valor por lado, cambiada en el momento del empaquetado. Que sea
+          una sola línea es deliberado &mdash; la guía del lenguaje empaquetada se copia en una
+          distribución sin modificar, de modo que "la copia del paquete es la copia del repositorio"
+          siga siendo comprobable, y una línea es la forma más pequeña de doblar esa regla. El coste
+          se enuncia junto con ella: la semilla del compilador enviada ya no sería igual a la del
+          repositorio byte por byte, así que el criterio baja de <em>idéntica</em> a
+          <em>reproduciblemente igual, y la diferencia es exactamente esa única constante</em>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>La escala</h2>
+    <p class="body">
+      La VM se lee como peldaños, no como una sola cosa que construir. Cada peldaño tiene que ser
+      superable y cada uno tiene que ser falsable &mdash; "escribe un JIT" no es un peldaño, porque
+      nada podría refutarlo. La lista de piezas se toma de dos sistemas que han hecho esto a
+      escala; la implementación sería la propia del proyecto, y si se mantiene así es una decisión
+      abierta.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>T0 &mdash; bytecode y un intérprete directo</h3>
+        <p>
+          El suelo. <strong>Criterio:</strong> un programa ejecutado así produce una salida idéntica
+          byte a byte y el mismo código de salida que el artefacto nativo.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T1 &mdash; retroalimentación</h3>
+        <p>
+          Perfiles de tipos, ramas y puntos de llamada. <strong>Criterio:</strong> el perfil
+          aterriza <em>en el artefacto</em> y un tercero puede leerlo &mdash; y desactivarlo deja el
+          artefacto idéntico byte a byte.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T2 &mdash; un compilador base</h3>
+        <p>
+          Elimina el coste de la interpretación sin optimizar. <strong>Criterio:</strong> mediblemente
+          más rápido que T0, semánticamente idéntico.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T3 &mdash; un compilador optimizador con una forma de volver</h3>
+        <p>
+          Una conjetura que resulta equivocada tiene que abandonarse. <strong>Ese es el único
+          criterio duro en este peldaño:</strong> después de abandonar una conjetura, el resultado
+          del programa coincide con el artefacto nativo.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T4 &mdash; recuperación generacional y concurrente</h3>
+        <p>
+          El único peldaño que no es una extensión de los demás. El diseño de recuperación actual
+          dice sin rodeos que la recolección generacional <em>no</em> está hecha, y dice por qué
+          &mdash; no hay dónde poner la barrera de escritura. Este peldaño no puede recogerse de
+          paso.
         </p>
       </div>
     </div>
 
     <p class="limit">
-      <strong>Por qué el valor no sería <code>vm_t0</code> ni similar.</strong> La misma regla
-      que sigue la dimensión <code>runtime</code>: el valor dice <em>si</em>, nunca
-      <em>cuál</em>. Lo que hay dentro cambiará con los años, y un nombre que codificara el
-      nivel de hoy tendría que renombrarse para añadir el de mañana.
+      <strong>La primera versión que llevaría algo de esto aterriza en T0</strong> &mdash; bytecode
+      y un intérprete, nada más. Los peldaños por encima son la forma del plan, no un calendario.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>Por qué una compuerta en absoluto</h2>
+    <h2>Para qué sirve</h2>
     <p class="body">
-      Una dimensión que compila en una versión y luego no hace nada es una mentira bien
-      formateada. Ponerle una compuerta significa que la palabra no puede aparecer donde
-      induzca a error, y que el día que aterrice el motor se abre la compuerta en lugar de
-      adaptarse la promesa a posteriori.
+      Primero, agua fría: las dos cosas que los proyectos grandes quieren con más frecuencia
+      &mdash; compilar más rápido, ejecutar más rápido &mdash; están ambas fuera de alcance. El
+      tiempo de compilación es un problema <em>dentro</em> del compilador, y el tiempo de ejecución
+      es el eje equivocado para esta línea.
     </p>
     <p class="body">
-      Una compuerta necesita una noción que el repositorio no tenía — ¿es este compilador una
-      compilación de versión o una de desarrollo? La especificación la pone en <em>una
-      constante</em>, un valor por lado, cambiada en el momento del empaquetado. Mantenerla en
-      una sola línea es deliberado: la guía del lenguaje empaquetada se copia en una
-      distribución sin modificar, de modo que "la copia del paquete es la copia del
-      repositorio" siga siendo comprobable, y una línea es la forma más pequeña de doblar esa
-      regla. El coste se enuncia con ella — la semilla del compilador enviada ya no sería igual
-      a la del repositorio byte por byte, así que el criterio baja de "idéntica" a
-      "reproduciblemente igual, y la diferencia es exactamente esa única constante".
+      Pero lo "grande" ya ha expuesto un problema que es estructural más que un defecto, y esto es
+      lo único que puede curarlo. <strong>Los símbolos emitidos son planos:</strong> cien módulos
+      significa que los nombres de función tienen que volverse únicos a nivel global a mano, y dos
+      módulos que definen cada uno el mismo nombre corto se rechazan. Es una consecuencia de "un
+      solo enlazado estático" como modelo &mdash; el clásico muro de escalabilidad de un proyecto
+      grande, empujado directamente a la cara del usuario por la propia estructura del lenguaje. El
+      repositorio ya ejecuta un corpus de proyecto sobredimensionado como criterio, así que esto se
+      mide en lugar de suponerse.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Adoptar un módulo en tiempo de ejecución</h3>
+        <p>
+          Añadir un módulo a un artefacto nativo significa reenlazar todo el programa. Aquí
+          significa cargar una unidad.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Reemplazar uno sin reenlazar</h3>
+        <p>
+          Cambiar un módulo, recargarlo, y dejar el resto del programa donde está.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Ejecutar código que uno no escribió</h3>
+        <p>
+          Una extensión de terceros, o una que escribió una máquina. <strong>Aquí es donde las
+          ideas propias del proyecto tienen por primera vez un trabajo que hacer.</strong> En tiempo
+          de enlazado, la tabla de puertos, los dominios de capacidad, el registro de lo que está
+          ausente y el libro de recuperación son <em>auditoría</em> &mdash; algo que leer después.
+          En tiempo de carga se vuelven una <em>compuerta</em> &mdash; algo con lo que decidir, antes
+          de que nada se ejecute.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      Que es la única frase que esta página respalda, y es falsable: <strong>añadir un módulo de
+      extensión no significa reenlazar todo el programa &mdash; y antes de cargarlo, se puede saber
+      si puede alcanzar lo que no debería.</strong>
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>En qué podría convertirse</h2>
+    <h2>Lo que no afirma</h2>
     <p class="body">
-      El registro de diseño describe una escala, con el mismo espíritu que la de recuperación:
-      primero un intérprete, luego retroalimentación recogida de ejecuciones reales, luego un
-      compilador base, luego un compilador optimizador que pueda abandonar una conjetura cuando
-      resulte equivocada. Ninguno de esos pasos es una función hoy, y esta página no
-      pretenderá lo contrario.
+      El registro de diseño mantiene esta lista, y corresponde a la página más que a él.
     </p>
-    <p class="body">
-      Cuando llegue el motor, la dimensión ya es el lugar donde un nuevo modelo de ejecución
-      tiene que conectarse — y la compuerta ya es lo que impide que se anuncie antes de que
-      funcione.
-    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Que sea nuevo</h3>
+        <p>
+          Nada en él es un ladrillo nuevo. La evidencia de ejecución llevada en el artefacto y
+          juzgada en tiempo de carga es de los años noventa; negarse a cargar lo que no puede
+          probarse es como funcionan los runtimes en sandbox; una entrada con varios modelos de
+          ejecución es lo que hace el mayor runtime móvil. Lo que podría estar colocado de otra
+          forma es la costura, no las piezas.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Que nadie haya hecho esas dos cosas</h3>
+        <p>
+          La formulación en todo el texto es <em>no encontrado en una búsqueda</em>, que no es lo
+          mismo que <em>no hecho</em>. Dos búsquedas que matarían la afirmación están anotadas como
+          criterios abiertos, con la nota honesta de que no se ejecutaron de forma exhaustiva.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Que sea útil</h3>
+        <p>
+          La caja está vacía hoy. Y el tercer papel de arriba se apoya en un número que nadie ha
+          medido &mdash; cuánto de ese corpus sobredimensionado es en realidad código que debería
+          haberse cargado tarde. Si el número sale cerca de cero, el papel es una historia bonita.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -170,17 +350,21 @@
   <div class="wrap">
     <h2>Dónde está escrito</h2>
     <div style="margin-top: var(--s4)">
-      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
-        <span class="who">Hoja de ruta</span>
-        <span class="what">Dónde se sitúa la LVM frente a las versiones — un plan, enunciado como un plan.</span>
+      <a class="doclink" href="https://loment.fandom.com/wiki/LVM">
+        <span class="who">LVM</span>
+        <span class="what">El mismo terreno en la wiki, junto al resto del lenguaje.</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
         <span class="who">docs/</span>
-        <span class="what">Los registros de diseño. Cada uno es un documento numerado, y la mayoría están en chino.</span>
+        <span class="what">Los registros de diseño. <strong>Este diseño todavía no está en la rama pública</strong> &mdash; así que por ahora, esta página es el resumen público.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Roadmap</span>
+        <span class="what">Dónde se sitúa la VM frente a las versiones &mdash; un plan, enunciado como un plan.</span>
       </a>
       <a class="doclink" href="lgc.html">
         <span class="who">LomentGC</span>
-        <span class="what">La escala de recuperación — un sistema que sí está construido, para comparar.</span>
+        <span class="what">La escala de recuperación &mdash; un sistema que sí está construido, para comparar.</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Volver a la página principal</span>

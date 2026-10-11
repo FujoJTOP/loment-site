@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LVM — Loment VM — Loment</title>
-<meta name="description" content="The Loment VM: designed as a fifth choose dimension, default no_vm, and gated out of release builds. The engine does not exist yet. This page says what is being built and what is not.">
+<meta name="description" content="The Loment VM is not a faster path and not a way to write programs more easily. It is a second way to run one: an artifact an executor can adopt on demand, judging it by what it already carries. The engine does not exist yet.">
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,105 +58,281 @@
     <p class="eyebrow">System · in progress</p>
     <h1>Loment VM</h1>
     <p class="lede">
-      The VM is the next execution model the language is being readied for. Its first slice —
-      a dimension and a gate — is being built. <strong>The engine does not exist.</strong>
+      Not a faster path, and not a way to write programs more easily. A <strong>second way to
+      run one</strong>: an artifact can be handed to an executor that adopts and pages it on
+      demand &mdash; and that decides whether to adopt it by reading what the artifact already
+      carries. <strong>The engine does not exist.</strong>
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>There is no VM</h2>
+    <h2>There is no engine</h2>
     <p class="body">
-      No bytecode, no interpreter, no execution engine of any kind. That goes at the top
-      rather than in a footnote, because a page about a plan is the easiest place for a
-      reader to mistake the plan for the product.
+      No bytecode format, no interpreter, no executor of any kind. That goes at the top rather
+      than in a footnote, because a page about a plan is the easiest place for a reader to
+      mistake the plan for the product.
     </p>
     <p class="body">
-      What exists today is a specification and an implementation <strong>on a development
-      branch</strong>: no part of it is on the main branch, in any release, or in any
-      installed toolchain. The project says this about itself rather than letting you find
-      out — it is the same debt <code>runtime</code> was in for a while, declared and
-      carried in the artifact while doing nothing, before it was paid.
+      What exists is a design record and a first slice still being built. <strong>No part of it
+      is on the main branch, in any release, or in any installed toolchain.</strong> Everything
+      below this line is the design &mdash; what the thing is meant to be, and what it is meant
+      not to be &mdash; and none of it is a feature you can use.
+    </p>
+    <p class="limit">
+      <strong>A debt the project has carried before.</strong> The <code>runtime</code> dimension
+      was declared in the artifact for a while before it did anything, and was later brought up
+      to what it claimed. This is that shape again: declared, carried, owed. The design says so
+      itself rather than leaving a reader to find out.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>What the first slice specifies</h2>
+    <h2>What it is not</h2>
     <p class="body">
-      Two things, both about <em>permission</em> rather than capability. Neither is a feature
-      you can use.
+      Three readings are wrong, and each is one a reader arrives with. They come before the
+      design, because saying them wrong turns this into something that tries to do everything
+      and does none of it well.
     </p>
 
     <div class="rows">
       <div class="row">
+        <h3>Not the fast path</h3>
+        <p>
+          Backwards. Loment's native path already trades speed for independence, and it is not
+          fast to begin with: against C <code>-O2</code> on the array benchmark in
+          <a href="https://github.com/FujoJTOP/loment/blob/main/docs/212-loment-offload.md">docs/212</a>
+          it runs <strong>10.7&times; behind</strong> &mdash; a recorded measurement, not a
+          standing promise. A VM is a layer on top of that. <strong>The axis of this line is not
+          performance</strong>, and the escape hatch is a different line entirely.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Not write once, run anywhere</h3>
+        <p>
+          That job was given to <em>compile time</em> long ago: one IR, three outputs &mdash;
+          Linux ELF, Windows PE, or a freestanding object. A bytecode format is no closer to
+          portability than that, and the claim fails its own test: if portability were the point,
+          the criterion would be "adding a target needs no new back end", and there are two
+          targets.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Not a way to write programs faster</h3>
+        <p>
+          That is a different set of things and this touches none of them: the six other surface
+          syntaxes, the formatter, the language server, the compile-time syntax definitions, the
+          guide written for coding agents. LVM arrives <em>after</em> the program is written.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>The design, in three parts</h2>
+
+    <div class="rows">
+      <div class="row">
+        <h3>The bytecode is not a new invention</h3>
+        <p>
+          It is a <strong>serialisation of the IR the compiler already emits</strong>. The
+          bundled back end is a stack machine &mdash; one stack slot per SSA value, arguments on
+          the stack, aggregates through a hidden result pointer &mdash; so a complete execution
+          model for that IR subset already exists and is already exercised. What is missing is
+          the step that <em>executes</em> it. LVM would be a <strong>fourth reader</strong> of
+          the same IR: no new front end, no new IR, no new type system.
+        </p>
+      </div>
+      <div class="row">
         <h3>A fifth dimension</h3>
         <p>
-          <code>choose</code> had four dimensions — which layer the program may use, how it
-          reclaims memory, whether the artifact may carry a runtime, and whether it may reach
-          outside itself. <code>vm</code> would be the fifth, answering a different question:
-          <strong>which execution model is this program for?</strong> Left unwritten it is
-          <code>no_vm</code>, which is what everything was before the dimension existed.
+          <code>choose</code> had four &mdash; which layer the program may use, how it reclaims
+          memory, whether the artifact may carry a runtime, and whether it may reach outside
+          itself. <code>vm</code> would be the fifth, answering <strong>which execution model is
+          this program for?</strong> Left unwritten it is <code>no_vm</code>, which is what
+          everything was before the dimension existed.
+        </p>
+        <p>
+          The value says <em>whether</em>, never <em>which</em>. That is the rule the
+          <code>runtime</code> dimension already follows: what sits inside will change over the
+          years, and a name that encoded today's rung would have to be renamed to add tomorrow's.
         </p>
       </div>
       <div class="row">
         <h3>A gate, not a feature</h3>
         <p>
           In a <strong>release</strong> build, <code>choose vm</code> would be a compile-time
-          error; only the development channel would accept it. The rule the project set itself
-          is blunt — until the first usable VM exists, every call to it is illegal in a
-          release — so that an installed toolchain can never accept a promise it cannot keep.
+          error; only the development channel would accept it. The rule is blunt &mdash; until
+          the first usable engine exists, every call to it is illegal in a release &mdash; so
+          that an installed toolchain can never accept a promise it cannot keep.
+          <strong>A promise that falls through is worse than a refusal.</strong>
+        </p>
+        <p>
+          The gate needs a notion the repository did not have: is this compiler a release build,
+          or a development one? The design keeps it to <strong>one constant</strong>, one value
+          per side, flipped at packaging time. One line is deliberate &mdash; the packaged
+          language guide is copied into a distribution unmodified, so that "the copy in the
+          package is the copy in the repository" stays checkable, and one line is the smallest
+          way to bend that rule. The cost is stated with it: the shipped compiler seed would no
+          longer equal the repository's byte for byte, so the criterion drops from
+          <em>identical</em> to <em>reproducibly equal, and the difference is exactly that one
+          constant</em>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>The ladder</h2>
+    <p class="body">
+      Read the VM as rungs, not as one thing to build. Each rung has to be beatable and each has
+      to be falsifiable &mdash; "write a JIT" is not a rung, because nothing could disprove it.
+      The parts list is taken from two systems that have done this at scale; the implementation
+      would be the project's own, and whether it stays that way is an open decision.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>T0 &mdash; bytecode and a direct interpreter</h3>
+        <p>
+          The floor. <strong>Criterion:</strong> a program run this way produces byte-identical
+          output and the same exit code as the native artifact.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T1 &mdash; feedback</h3>
+        <p>
+          Profiles of types, branches and call sites. <strong>Criterion:</strong> the profile
+          lands <em>in the artifact</em> and a third party can read it &mdash; and switching it
+          off leaves the artifact byte-identical.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T2 &mdash; a baseline compiler</h3>
+        <p>
+          Removes the cost of interpretation without optimising. <strong>Criterion:</strong>
+          measurably faster than T0, semantically identical.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T3 &mdash; an optimising compiler with a way back</h3>
+        <p>
+          A guess that turns out wrong has to be given up. <strong>That is the only hard
+          criterion at this rung:</strong> after a guess is abandoned, the program's result
+          matches the native artifact.
+        </p>
+      </div>
+      <div class="row">
+        <h3>T4 &mdash; generational and concurrent reclamation</h3>
+        <p>
+          The one rung that is not an extension of the others. The current reclamation design
+          says plainly that generational collection is <em>not</em> done, and says why &mdash;
+          there is nowhere to put the write barrier. This rung cannot be picked up in passing.
         </p>
       </div>
     </div>
 
     <p class="limit">
-      <strong>Why the value would not be <code>vm_t0</code> or similar.</strong> The same rule
-      the <code>runtime</code> dimension follows: the value says <em>whether</em>, never
-      <em>which</em>. What sits inside will change over the years, and a name that encoded
-      today's tier would have to be renamed to add tomorrow's.
+      <strong>The first release that would carry any of this lands at T0</strong> &mdash;
+      bytecode and an interpreter, nothing more. The rungs above it are the shape of the plan,
+      not a schedule.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>Why a gate at all</h2>
+    <h2>What it is for</h2>
     <p class="body">
-      A dimension that compiles in a release and then does nothing is a lie with good
-      formatting. Gating it means the word cannot appear somewhere it would mislead, and
-      that the day the engine lands the gate opens rather than the promise being
-      retrofitted.
+      Cold water first: the two things large projects most often want &mdash; build faster, run
+      faster &mdash; are both out of scope. Build time is a problem <em>inside</em> the
+      compiler, and run time is the wrong axis for this line.
     </p>
     <p class="body">
-      A gate needs a notion the repository did not have — is this compiler a release build or
-      a development one? The spec puts it in <em>one constant</em>, one value per side, flipped
-      at packaging time. Keeping it to a single line is deliberate: the packaged language
-      guide is copied into a distribution unmodified so that "the copy in the package is the
-      copy in the repository" stays checkable, and one line is the smallest way to bend that
-      rule. The cost is stated with it — the shipped compiler seed would no longer equal the
-      repository's byte for byte, so the criterion drops from "identical" to "reproducibly
-      equal, and the difference is exactly that one constant".
+      But "large" has already exposed one problem that is structural rather than a defect, and
+      this is the only thing that can cure it. <strong>Emitted symbols are flat:</strong> a
+      hundred modules means the function names have to be made globally unique by hand, and two
+      modules that each define the same small name are refused. That is a consequence of "one
+      static link" as a model &mdash; the classic scalability wall of a large project, pushed
+      directly into the user's face by the language's own structure. The repository already runs
+      an oversized-project corpus as a criterion, so this is measured rather than guessed.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Adopting a module at run time</h3>
+        <p>
+          Adding a module to a native artifact means relinking the whole program. Here it means
+          loading a unit.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Replacing one without relinking</h3>
+        <p>
+          Change a module, reload it, and leave the rest of the program where it is.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Running code you did not write</h3>
+        <p>
+          A third-party extension, or one a machine wrote. <strong>This is where the project's
+          own ideas first have a job to do.</strong> At link time the port table, the capability
+          domains, the record of what is absent and the reclamation ledger are
+          <em>audit</em> &mdash; something to read afterwards. At load time they become a
+          <em>gate</em> &mdash; something to decide with, before anything runs.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      Which is the one sentence this page will stand behind, and it is falsifiable:
+      <strong>adding an extension module does not mean relinking the whole program &mdash; and
+      before it is loaded, you can tell whether it can reach what it should not.</strong>
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>What it could become</h2>
+    <h2>What it does not claim</h2>
     <p class="body">
-      The design record describes a ladder, in the same spirit as the reclamation one: an
-      interpreter first, then feedback collected from real runs, then a baseline compiler,
-      then an optimising compiler that can give a guess up when it turns out wrong. None of
-      those steps is a feature today, and this page will not pretend otherwise.
+      The design record keeps this list, and it belongs on the page rather than in it.
     </p>
-    <p class="body">
-      When the engine arrives, the dimension is already the place a new execution model has to
-      plug in — and the gate is already the thing that keeps it from being announced before it
-      works.
-    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>That it is new</h3>
+        <p>
+          Nothing in it is a new brick. Execution evidence carried in the artifact and judged at
+          load time is from the 1990s; refusing to load what cannot be proved is how sandboxed
+          runtimes work; one input with several execution models is what the largest mobile
+          runtime does. What might be placed differently is the seam, not the parts.
+        </p>
+      </div>
+      <div class="row">
+        <h3>That nobody has done those two things</h3>
+        <p>
+          The wording throughout is <em>not found in a search</em>, which is not the same as
+          <em>not done</em>. Two searches that would kill the claim are written down as open
+          criteria, with the honest note that they were not run exhaustively.
+        </p>
+      </div>
+      <div class="row">
+        <h3>That it is useful</h3>
+        <p>
+          The box is empty today. And the third role above rests on a number nobody has measured
+          &mdash; how much of that oversized corpus is really code that should have been loaded
+          late. If the number comes out near zero, the role is a nice story.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -164,17 +340,21 @@
   <div class="wrap">
     <h2>Where it is written down</h2>
     <div style="margin-top: var(--s4)">
-      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
-        <span class="who">Roadmap</span>
-        <span class="what">Where the LVM sits against the versions — a plan, stated as a plan.</span>
+      <a class="doclink" href="https://loment.fandom.com/wiki/LVM">
+        <span class="who">LVM</span>
+        <span class="what">The same ground on the wiki, beside the rest of the language.</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
         <span class="who">docs/</span>
-        <span class="what">The design records. Each one is a numbered document, and most are in Chinese.</span>
+        <span class="what">The design records. <strong>This design is not on the public branch yet</strong> &mdash; so for now, this page is the public summary.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Roadmap</span>
+        <span class="what">Where the VM sits against the versions &mdash; a plan, stated as a plan.</span>
       </a>
       <a class="doclink" href="lgc.html">
         <span class="who">LomentGC</span>
-        <span class="what">The reclamation ladder — a system that is built, for comparison.</span>
+        <span class="what">The reclamation ladder &mdash; a system that is built, for comparison.</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Back to the front page</span>
