@@ -1,48 +1,53 @@
 /*  Loment — site design system
 
-    Canvas is indigo-black, not neutral black: the language's own mark is a
-    blue rounded square, and the whole page keeps that bias rather than
-    dropping a bright accent onto grey. One accent, --blue, and it is spent
-    only where the page is talking about a *range* or a *hop out* — a
-    capability declaration, a link, the compiler settling an index. It is
-    never chrome.
+    Aesthetic direction: the authority of a language's front page — a slab
+    serif that carries weight, ink on paper, generous vertical rhythm, a rule
+    between every section. Deliberately NOT a copy of any other language's
+    site: different faces, different accent, and one motif that comes from
+    Loment's own idea rather than from anyone's house style.
 
-    Type does the personality: IBM Plex Mono carries the display and every
-    piece of code, because on a language's site the material is the source.
-    IBM Plex Sans carries prose. Two families of one design, so the page
-    reads as one voice across code and argument.
+    The motif is the boundary. Loment's central distinction is a sealed
+    artifact against a hosted one, so the page draws that everywhere: a solid
+    hairline encloses what is closed, a dashed one marks what is open. Nothing
+    else is decorated.
+
+    Type: Bitter (slab display) for the wordmark and section heads, Public
+    Sans for prose, JetBrains Mono for code and for small structural labels —
+    that last pair is the one place the page admits it is about a machine.
 */
 
 /* ------------------------------------------------------------- tokens */
 
 :root {
-  --ink:      #0e1222;
-  --ink-2:    #141a2c;
-  --ink-3:    #1b2237;
-  --line:     #252d47;
-  --line-2:   #333c5c;
+  --ink:      #1d2733;   /* body text, and the slab heads        */
+  --ink-2:    #55606f;   /* secondary prose                      */
+  --faint:    #8891a0;   /* captions, gutter numbers             */
 
-  --paper:    #e8ecf7;
-  --dim:      #98a0b8;
-  --faint:    #626c88;
+  --paper:    #ffffff;
+  --wash:     #f7f9fc;   /* the one tint, for panels and code    */
+  --line:     #e3e8ef;   /* hairlines                            */
+  --line-2:   #cbd4e0;   /* a boundary you are meant to notice   */
 
-  --blue:     #5468ff;
-  --blue-2:   #8494ff;
+  --blue:     #2f4bff;   /* the accent, and it is spent sparingly */
+  --blue-dk:  #1b34d6;
+  --ochre:    #8a5a00;   /* used only to mark an honest boundary  */
 
-  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
-          "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", "SF Mono",
-          Menlo, Consolas, monospace;
+  --display: "Bitter", Georgia, "Times New Roman", serif;
+  --sans:    "Public Sans", ui-sans-serif, system-ui, -apple-system,
+             "Segoe UI", sans-serif;
+  --mono:    "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono",
+             Menlo, Consolas, monospace;
 
-  --t-hero: clamp(2.6rem, 7vw, 4.75rem);
-  --t-h2:   clamp(1.5rem, 3.2vw, 2.1rem);
-  --t-h3:   1.0625rem;
+  --t-hero: clamp(3rem, 9vw, 6.5rem);
+  --t-h2:   clamp(1.75rem, 3.6vw, 2.5rem);
+  --t-h3:   1.125rem;
   --t-body: 1.0625rem;
   --t-sm:   0.9375rem;
+  --t-xs:   0.8125rem;
   --t-code: 0.875rem;
 
   --page:    1120px;
-  --measure: 62ch;
+  --measure: 64ch;
 
   --s1: 8px;
   --s2: 16px;
@@ -53,8 +58,7 @@
   --s7: 96px;
   --s8: 128px;
 
-  --r-sm: 4px;
-  --r-md: 8px;
+  --r: 6px;
 }
 
 /* --------------------------------------------------------------- base */
@@ -62,30 +66,44 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  background: var(--ink);
-  color-scheme: dark;
+  background: var(--paper);
+  color-scheme: light;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   font: 400 var(--t-body) / 1.65 var(--sans);
-  font-feature-settings: "kern" 1;
   text-rendering: optimizeLegibility;
 }
 
-a { color: var(--blue-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--paper); }
+a { color: var(--blue-dk); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
 
-h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
 
 p { margin: 0; }
 p + p { margin-top: var(--s2); }
 
+code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--wash);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
 :focus-visible {
-  outline: 2px solid var(--blue-2);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -104,60 +122,66 @@ p + p { margin-top: var(--s2); }
   padding-inline: clamp(20px, 5vw, 48px);
 }
 
-/* ---------------------------------------------------------------- bar */
+/* --------------------------------------------------------------- bar */
 
 .bar {
   position: sticky; top: 0; z-index: 5;
-  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
 .bar .wrap {
   display: flex; align-items: center; gap: var(--s3);
-  min-height: 60px;
+  min-height: 64px;
 }
 .brand {
   display: inline-flex; align-items: center; gap: 10px;
   margin-right: auto;
-  color: var(--paper); text-decoration: none;
-  font: 600 1.0625rem/1 var(--mono); letter-spacing: -0.01em;
+  color: var(--ink); text-decoration: none;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
 }
-.brand svg { display: block; }
-.brand:hover { color: var(--paper); }
+.brand svg { display: block; border-radius: 6px; }
+.brand:hover { color: var(--ink); }
 
 .bar nav { display: flex; align-items: center; gap: var(--s3); }
 .bar nav a {
-  color: var(--dim); text-decoration: none;
+  color: var(--ink-2); text-decoration: none;
   font-size: var(--t-sm); font-weight: 500;
 }
-.bar nav a:hover { color: var(--paper); }
-.bar nav a[aria-current="page"] { color: var(--paper); }
+.bar nav a:hover { color: var(--ink); }
+.bar nav a[aria-current="page"] { color: var(--ink); }
 
 /* --------------------------------------------------------------- hero */
 
-.hero { padding-block: clamp(var(--s6), 9vw, var(--s8)) var(--s6); }
+.hero { padding-block: clamp(var(--s6), 8vw, var(--s8)) var(--s7); }
+
+.eyebrow {
+  font: 500 var(--t-xs)/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: var(--s3);
+}
 
 .hero h1 {
-  font: 600 var(--t-hero) / 1 var(--mono);
-  letter-spacing: -0.035em;
+  font-size: var(--t-hero);
+  letter-spacing: -0.03em;
 }
 
-/* Inner pages: the same head, at the size a page title needs rather than
-   the size a front page needs. */
 .head { padding-block: clamp(var(--s5), 6vw, var(--s7)) var(--s5); }
-.head h1 {
-  font: 600 var(--t-h2) / 1.15 var(--mono);
-  letter-spacing: -0.025em;
-}
+.head h1 { font-size: var(--t-h2); }
 
 .hero .lede, .head .lede {
   max-width: var(--measure);
   margin-top: var(--s3);
-  font-size: clamp(1.125rem, 1.8vw, 1.3125rem);
-  line-height: 1.6;
-  color: var(--paper);
+  font-size: clamp(1.125rem, 1.9vw, 1.375rem);
+  line-height: 1.55;
+  color: var(--ink-2);
 }
-.head .lede { font-size: var(--t-body); color: var(--dim); }
+.head .lede { font-size: var(--t-body); }
 
 .actions {
   display: flex; flex-wrap: wrap; align-items: center;
@@ -166,34 +190,98 @@ p + p { margin-top: var(--s2); }
 }
 .btn {
   display: inline-flex; align-items: center;
-  padding: 11px 20px;
-  border-radius: var(--r-sm);
-  font: 600 var(--t-sm)/1 var(--sans);
+  padding: 12px 26px;
+  border-radius: 4px;
+  font: 700 var(--t-sm)/1 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   text-decoration: none;
+  border: 1px solid transparent;
 }
 .btn-solid { background: var(--blue); color: #fff; }
-.btn-solid:hover { background: var(--blue-2); color: #fff; }
-.btn-quiet { color: var(--paper); border: 1px solid var(--line-2); }
-.btn-quiet:hover { border-color: var(--blue); color: var(--paper); }
+.btn-solid:hover { background: var(--blue-dk); color: #fff; }
+.btn-quiet { color: var(--ink); border-color: var(--line-2); }
+.btn-quiet:hover { border-color: var(--ink); color: var(--ink); }
+
+/* --------------------------------------------------------- the split
+
+   Sealed against hosted, drawn as the page's one motif: a closed pane has a
+   solid edge, an open one has a dashed edge. Nothing else on the page is
+   allowed to use a dashed border, so the idea stays readable. */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: var(--s5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.pane { padding: var(--s4) var(--s4) var(--s4); }
+.pane + .pane { border-left: 1px solid var(--line-2); }
+.pane-sealed { background: var(--paper); }
+.pane-hosted { background: var(--wash); }
+
+.pane-tag {
+  font: 600 var(--t-sm)/1.4 var(--mono);
+  color: var(--ink);
+  margin: 0 0 var(--s3);
+  padding-bottom: var(--s2);
+  border-bottom: 1px solid var(--line-2);
+}
+.pane-sealed .pane-tag::before {
+  content: ""; display: inline-block;
+  width: 9px; height: 9px; margin-right: 8px;
+  border: 2px solid var(--blue);         /* closed  */
+  vertical-align: baseline;
+}
+.pane-hosted .pane-tag::before {
+  content: ""; display: inline-block;
+  width: 9px; height: 9px; margin-right: 8px;
+  border: 2px dashed var(--ink-2);       /* open    */
+  vertical-align: baseline;
+}
+
+.pane dl { margin: 0; }
+.pane dt {
+  font: 600 var(--t-xs)/1.5 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: var(--s3);
+}
+.pane dt:first-child { margin-top: 0; }
+.pane dd { margin: 4px 0 0; color: var(--ink-2); font-size: var(--t-sm); }
+.pane dd code { background: none; border: none; padding: 0; color: var(--ink); }
+
+@media (max-width: 760px) {
+  .split { grid-template-columns: 1fr; }
+  .pane + .pane { border-left: none; border-top: 1px solid var(--line-2); }
+}
 
 /* ---------------------------------------------------------------- code */
 
 .codewrap {
-  margin-top: var(--s5);
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--ink-2);
+  margin-top: var(--s4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--wash);
   overflow: hidden;
 }
 
 pre.code {
   margin: 0;
-  padding: var(--s3) 0 var(--s3);
+  padding: var(--s3) 0;
   overflow-x: auto;
   font: 400 var(--t-code) / 1.75 var(--mono);
   tab-size: 4;
 }
-pre.code code { display: block; }
+pre.code code {
+  display: block;
+  background: none; border: none; padding: 0;
+  font-size: inherit;
+}
 
 .ln {                     /* one line: real gutter numbers, no faked ones */
   display: block;
@@ -209,59 +297,49 @@ pre.code code { display: block; }
   user-select: none;
 }
 
-/* The one boldness: a guard line is marked by a blue rule down its left
-   edge — the page's single structural device, and it encodes the only thing
-   the language is really about. */
+/* The one emphasis: a guard line is marked by a rule down its left edge. */
 .ln-mark {
   border-left: 2px solid var(--blue);
   padding-left: calc(var(--s3) - 2px);
-  background: color-mix(in srgb, var(--blue) 7%, transparent);
+  background: color-mix(in srgb, var(--blue) 5%, transparent);
 }
 .ln-mark::before { margin-left: 0; }
 
-.k { color: var(--blue-2); }        /* keyword   */
-.s { color: #9fd6a8; }              /* string    */
-.n { color: #e6c07b; }              /* number    */
-.c { color: var(--faint); font-style: italic; }
-.t { color: #7fd4e0; }              /* type      */
-.rng { color: var(--blue-2); font-weight: 600; }   /* a declared range */
+.k   { color: var(--blue-dk); }     /* keyword  */
+.s   { color: #1d6b3a; }            /* string   */
+.n   { color: #8a5a00; }            /* number   */
+.c   { color: var(--faint); font-style: italic; }
+.t   { color: #0b6a75; }            /* type     */
+.rng { color: var(--blue-dk); font-weight: 600; }   /* a declared range */
 
 .out {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-2);
   padding: var(--s2) var(--s3);
-  background: var(--ink);
+  background: var(--paper);
   font: 400 var(--t-code) / 1.7 var(--mono);
-  color: var(--dim);
+  color: var(--ink-2);
 }
-.out b { color: var(--paper); font-weight: 400; }
+.out b { color: var(--ink); font-weight: 500; }
 .out .prompt { color: var(--faint); }
 
 /* ------------------------------------------------------------ sections */
 
 .sec { padding-block: var(--s7); border-top: 1px solid var(--line); }
-.sec h2 {
-  font: 600 var(--t-h2) / 1.2 var(--mono);
-  letter-spacing: -0.025em;
-  max-width: 34ch;
-}
-.sec .body { max-width: var(--measure); margin-top: var(--s3); color: var(--dim); }
-.sec .body strong { color: var(--paper); font-weight: 600; }
+.sec h2 { font-size: var(--t-h2); max-width: 30ch; }
+.sec .body { max-width: var(--measure); margin-top: var(--s3); color: var(--ink-2); }
+.sec .body strong { color: var(--ink); font-weight: 600; }
 
-/* Rows, not cards: a hairline between items and nothing else. A rounded
-   box with a soft shadow per item is the default this brief does not need. */
+/* Rows, not cards: a hairline between items and nothing else. */
 .rows { margin-top: var(--s5); border-top: 1px solid var(--line); }
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
   gap: var(--s2) var(--s4);
   padding: var(--s4) 0;
   border-bottom: 1px solid var(--line);
 }
-.row h3 {
-  font: 600 var(--t-h3) / 1.4 var(--mono);
-  color: var(--paper);
-}
-.row p { color: var(--dim); max-width: var(--measure); }
+.row h3 { font-size: var(--t-h3); }
+.row p { color: var(--ink-2); max-width: var(--measure); }
 .row p + p { margin-top: var(--s2); }
 
 @media (max-width: 720px) {
@@ -272,20 +350,23 @@ pre.code code { display: block; }
 
 .doclink {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
   gap: var(--s2) var(--s4);
   padding: var(--s3) 0;
   border-bottom: 1px solid var(--line);
   text-decoration: none;
   color: inherit;
 }
-.doclink:hover { background: var(--ink-2); }
-.doclink .who { font: 500 var(--t-sm)/1.5 var(--mono); color: var(--blue-2); }
-.doclink .what { color: var(--dim); font-size: var(--t-sm); }
+.doclink:hover { background: var(--wash); }
+.doclink .who {
+  font: 600 var(--t-sm)/1.5 var(--mono);
+  color: var(--blue-dk);
+}
+.doclink .what { color: var(--ink-2); font-size: var(--t-sm); }
 @media (max-width: 720px) { .doclink { grid-template-columns: 1fr; gap: 4px; } }
 
 footer {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-2);
   padding-block: var(--s5);
   color: var(--faint);
   font-size: var(--t-sm);
@@ -294,9 +375,23 @@ footer .wrap {
   display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
   align-items: baseline; justify-content: space-between;
 }
-footer a { color: var(--dim); text-decoration: none; }
-footer a:hover { color: var(--paper); text-decoration: underline; }
+footer a { color: var(--ink-2); text-decoration: none; }
+footer a:hover { color: var(--ink); text-decoration: underline; }
 footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
+
+/* The honest-boundary marker. One job: flag a limit the page is stating about
+   itself, so a reader can never mistake a promise for a fact. */
+.limit {
+  margin-top: var(--s4);
+  padding: var(--s3) var(--s3) var(--s3) var(--s4);
+  border-left: 3px solid var(--ochre);
+  background: color-mix(in srgb, #b8860b 6%, var(--paper));
+  border-radius: 0 var(--r) var(--r) 0;
+  color: var(--ink-2);
+  font-size: var(--t-sm);
+  max-width: var(--measure);
+}
+.limit strong { color: var(--ochre); }
 
 .note {
   margin-top: var(--s4);
@@ -307,15 +402,14 @@ footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
   max-width: var(--measure);
 }
 
-/* A line of prose that belongs to the block above it. No rule of its own —
-   the block already has one, and a second would read as a second block. */
+/* A line of prose that belongs to the block above it. No rule of its own. */
 .caption {
   margin-top: var(--s2);
   color: var(--faint);
   font-size: var(--t-sm);
   max-width: var(--measure);
 }
-.caption code { font-size: inherit; }
+.caption code { font-size: inherit; background: none; border: none; padding: 0; color: var(--ink-2); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -325,16 +419,14 @@ footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
   }
 }
 
-/* Narrow phones: the nav is the first thing to break, and a wrapped
-   two-line "Get / started" in a 60px bar is worse than a smaller one. */
+/* Narrow phones: the nav is the first thing to break, and a wrapped two-line
+   "Get / started" in a 64px bar is worse than a smaller one. */
 @media (max-width: 560px) {
   .bar .wrap { padding-inline: 16px; gap: var(--s2); }
   .bar nav { gap: var(--s2); }
   .bar nav a { font-size: 0.8125rem; white-space: nowrap; }
-  .brand { font-size: 1rem; }
+  .brand { font-size: 1.0625rem; }
 
-  /* Gutter and code inset are pure overhead on a 375px screen: the code is
-     scrolling sideways regardless, so give it the room. */
   .ln { padding-inline: var(--s2); }
   .ln::before { margin-right: var(--s2); }
   .ln-mark { padding-left: calc(var(--s2) - 2px); }

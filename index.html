@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loment — a systems programming language</title>
-<meta name="description" content="Loment is a systems programming language. It emits native x86-64 executables — Linux ELF, Windows PE, or a freestanding object for bare metal — with no runtime and no libc. The toolchain is itself written in Loment.">
+<meta name="description" content="Loment compiles to native x86-64 executables. Sealed by default — no runtime, no libc, no undefined symbols — and hosted when you say so. The toolchain is itself written in Loment.">
 <meta property="og:title" content="Loment — a systems programming language">
-<meta property="og:description" content="Native x86-64 with no runtime and no libc. The toolchain is written in Loment.">
+<meta property="og:description" content="Sealed by default: no runtime, no libc, no undefined symbols. Hosted when you say so. The toolchain is written in Loment.">
 <meta property="og:type" content="website">
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,8 +21,8 @@
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <rect width="64" height="64" rx="14" fill="#5468ff"/>
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
         <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
       </svg>
       Loment
@@ -39,11 +39,12 @@
 
 <section class="hero">
   <div class="wrap">
+    <p class="eyebrow">A systems programming language</p>
     <h1>Loment</h1>
     <p class="lede">
-      A systems programming language. It emits native x86-64 executables — Linux ELF,
-      Windows PE, or a freestanding object for bare metal — with no runtime and no libc.
-      The toolchain is itself written in Loment.
+      It compiles to native x86-64 executables — Linux ELF, Windows PE, or a freestanding
+      object for bare metal. <strong>What goes into one is the program's decision, and the
+      build records it.</strong> The toolchain is itself written in Loment.
     </p>
     <p class="actions">
       <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Download</a>
@@ -55,10 +56,62 @@
       <p class="out"><span class="prompt">$</span> loment run hello.lomt<br><b>hello from Loment</b></p>
     </div>
 
-    <p class="note">
-      <code>_start</code> is the entry point, because there is no runtime to call one for you.
-      There is no <code>printf</code> either — output goes through the <code>write</code>
-      system call.
+    <p class="caption">
+      <code>_start</code> is the entry point, because a sealed artifact has no runtime to call
+      one for you. There is no <code>printf</code> either — output goes through the
+      <code>write</code> system call.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>One source, two kinds of artifact</h2>
+    <p class="body">
+      Most build settings live outside the language, where a reader of the source never sees
+      them. Loment puts this one <em>in</em> the program — one line, in the root unit — and
+      then carries it into the form object the unit exports. So which kind of artifact was
+      built is answerable by something that cannot read the source at all.
+    </p>
+
+    <div class="split">
+      <div class="pane pane-sealed">
+        <p class="pane-tag">choose sealed</p>
+        <dl>
+          <dt>What it is</dt>
+          <dd>The default. An artifact with no ports to the world.</dd>
+          <dt>Entry point</dt>
+          <dd><code>fn _start()</code></dd>
+          <dt>Links</dt>
+          <dd>Nothing. An undefined symbol is an error, not a warning — so a sealed artifact
+              provably has no runtime and no libc.</dd>
+          <dt>Reaches</dt>
+          <dd>Only the code compiled into it, plus any object you hand the linker that is
+              already self-contained.</dd>
+        </dl>
+      </div>
+      <div class="pane pane-hosted">
+        <p class="pane-tag">choose hosted</p>
+        <dl>
+          <dt>What it is</dt>
+          <dd>The other path. An artifact declared allowed to reach outside itself.</dd>
+          <dt>Entry point</dt>
+          <dd><code>fn main() -&gt; u32</code></dd>
+          <dt>Links</dt>
+          <dd>Real libraries. The build hands the IR to the host C toolchain instead of the
+              bundled linker.</dd>
+          <dt>Reaches</dt>
+          <dd>libc, shared libraries, and a host runtime you embed. The project's own criteria
+              link <code>libstdc++</code> and <code>libz</code> and embed CPython.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Where the boundary actually sits.</strong> Reaching a real library means going
+      through the host toolchain yourself — you name the library in the build. A real C
+      library is not yet an <em>installable dependency</em>: the package manager still takes
+      Loment source libraries only. That part is being built.
     </p>
   </div>
 </section>
@@ -69,8 +122,7 @@
     <p class="body">
       Most languages answer <em>what can this program do?</em> Loment is arranged around a
       narrower question — <strong>who can run what, in what scope, and can that be settled
-      without reading the source?</strong> The rest of the language exists to keep that
-      question answerable.
+      without reading the source?</strong> Three things carry it.
     </p>
 
     <div class="codewrap">
@@ -89,7 +141,7 @@
           A unit declares the range it may reach, and a <code>guard</code> checks an index
           against it — at compile time when the index is a literal, otherwise at run time.
           The boundary is stated rather than glossed: a guard bounds the <em>index</em>,
-          not the subject.
+          not the subject, and it is not authorisation.
         </p>
       </div>
       <div class="row">
@@ -103,9 +155,10 @@
       <div class="row">
         <h3>A compat layer</h3>
         <p>
-          Ten languages' libraries, callable end to end: C, C++, Rust and Zig behind the C
-          ABI by static linking, then Go, Python, Java, JavaScript, Perl and Lua over a
-          process bridge. Dynamic libraries and embedding a runtime are not started.
+          C, C++, Rust and Zig behind the C ABI; Go, Python, Java, JavaScript, Perl and Lua
+          over a process bridge. On a sealed artifact what links in must be self-contained.
+          <code>choose hosted</code> is the path that reaches real libraries, and the
+          criteria exercise it against libstdc++, libz and an embedded CPython.
         </p>
       </div>
     </div>
@@ -118,6 +171,16 @@
 
     <div class="rows">
       <div class="row">
+        <h3>A project mode, not a crate attribute</h3>
+        <p>
+          <code>choose</code> has four dimensions — which layer the program may use, how it
+          reclaims memory, whether the artifact may carry a runtime, and whether it may reach
+          outside itself. Each is written at most once, in the root unit, and each becomes a
+          property of the whole program: a contradictory pair is refused, and the diagnostic
+          names the pair and the reason rather than saying "illegal combination".
+        </p>
+      </div>
+      <div class="row">
         <h3>Written in six other syntaxes</h3>
         <p>
           C, C++, Java, C#, Go or Python. Only the spelling changes; the meaning is always
@@ -128,18 +191,10 @@
       <div class="row">
         <h3>A library you import one module at a time</h3>
         <p>
-          <code>lompi/store/</code> ships with the toolchain: a standard library and a host
-          layer, reached as <code>use vec</code>, <code>use map</code>, <code>use fs</code>.
-          Per module is the intended way — a package-wide import is slow and
-          collision-prone, and says so in the documentation.
-        </p>
-      </div>
-      <div class="row">
-        <h3>A project mode, not a crate attribute</h3>
-        <p>
-          <code>choose std</code> or <code>choose no_std</code>, at most once, in the root
-          unit. "Hosted or freestanding" becomes a property of the whole program — the
-          compiler can refuse a half-hosted one.
+          The standard library ships with the toolchain and is reached as
+          <code>use vec</code>, <code>use map</code>, <code>use fs</code>. There is a
+          package-wide import, but it pulls everything into one unit, and the documentation
+          advises against it.
         </p>
       </div>
       <div class="row">
@@ -151,36 +206,44 @@
         </p>
       </div>
     </div>
+
+    <p class="limit">
+      <strong>What is not finished.</strong> The toolchain is self-hosted at run time — it
+      compiles and runs with no Python and no libc — but the development side is not: the
+      reference implementation and its test suites are still in the repository, and the
+      repository is not yet "only Loment". The release notes say which half each remaining
+      item is in.
+    </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
     <h2>Where to read more</h2>
-    <div style="margin-top: var(--s5)">
+    <div style="margin-top: var(--s4)">
       <a class="doclink" href="start.html">
         <span class="who">Get started</span>
         <span class="what">Install it and run your first program. Native binaries; no Python, no clang, no WSL.</span>
       </a>
       <a class="doclink" href="examples.html">
         <span class="who">Examples</span>
-        <span class="what">Four programs, each with the output it printed — and what is not among them.</span>
+        <span class="what">Short programs, each with the output it printed — and what is not among them.</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">
         <span class="who">More examples</span>
-        <span class="what">The full set in the repository. Not every one of them links in 0.1.4.</span>
+        <span class="what">The full set in the repository. Not every one of them links today.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/">
+        <span class="who">Wiki</span>
+        <span class="what">The language, the toolchain and the roadmap, page by page.</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/README.md">
         <span class="who">README</span>
         <span class="what">What it is for, what else is different, and what is honestly not finished.</span>
       </a>
-      <a class="doclink" href="https://github.com/FujoJTOP/loment/issues">
-        <span class="who">Issues</span>
-        <span class="what">Questions are as welcome as bug reports.</span>
-      </a>
       <a class="doclink" href="https://discord.gg/rGw7NRNU">
         <span class="who">Discord</span>
-        <span class="what">Where the project talks.</span>
+        <span class="what">Where the project talks. Questions are as welcome as bug reports.</span>
       </a>
     </div>
   </div>
@@ -190,11 +253,12 @@
 
 <footer>
   <div class="wrap">
-    <span>Loment is MIT licensed. Program by Fujo.</span>
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
     <nav>
       <a href="https://github.com/FujoJTOP/loment">Source</a>
       <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
       <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
       <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
     </nav>
   </div>

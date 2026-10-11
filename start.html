@@ -8,7 +8,7 @@
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
   <div class="wrap">
     <a class="brand" href="index.html">
       <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <rect width="64" height="64" rx="14" fill="#5468ff"/>
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
         <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
       </svg>
       Loment
@@ -99,10 +99,12 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      <code>_start</code> is the entry point, because there is no runtime to call one for
-      you. There is no <code>printf</code> either: output goes through the
+      <code>_start</code> is the entry point, because a sealed artifact has no runtime to
+      call one for you. There is no <code>printf</code> either: output goes through the
       <code>write</code> system call, whose arguments are the file descriptor, the
-      string's pointer and its length. The second call is <code>exit</code>.
+      string's pointer and its length. The second call is <code>exit</code>. Write
+      <code>choose hosted</code> and the artifact is a C-runtime program instead, with
+      <code>fn main() -&gt; u32</code> as its entry point.
     </p>
   </div>
 </section>
@@ -160,7 +162,7 @@
 
 <footer>
   <div class="wrap">
-    <span>Loment is MIT licensed. Program by Fujo.</span>
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
     <nav>
       <a href="https://github.com/FujoJTOP/loment">Source</a>
       <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>

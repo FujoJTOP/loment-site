@@ -8,7 +8,7 @@
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
   <div class="wrap">
     <a class="brand" href="index.html">
       <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <rect width="64" height="64" rx="14" fill="#5468ff"/>
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
         <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
       </svg>
       Loment
@@ -48,9 +48,9 @@
   <div class="wrap">
     <h2>The smallest program</h2>
     <p class="body">
-      <code>_start</code> is the entry point, because there is no runtime to call one for
-      you. Output goes through the <code>write</code> system call: file descriptor, pointer,
-      length. The second call is <code>exit</code>.
+      <code>_start</code> is the entry point, because a sealed artifact has no runtime to
+      call one for you. Output goes through the <code>write</code> system call: file
+      descriptor, pointer, length. The second call is <code>exit</code>.
     </p>
     <div class="codewrap">
 <pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
@@ -128,7 +128,7 @@
 
 <footer>
   <div class="wrap">
-    <span>Loment is MIT licensed. Program by Fujo.</span>
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
     <nav>
       <a href="https://github.com/FujoJTOP/loment">Source</a>
       <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
