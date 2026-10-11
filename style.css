@@ -32,11 +32,28 @@
   --blue-dk:  #1b34d6;
   --ochre:    #8a5a00;   /* used only to mark an honest boundary  */
 
-  --display: "Bitter", Georgia, "Times New Roman", serif;
+  /* The three webfonts carry Latin only. Every stack therefore ends in the
+     system CJK faces, so a Chinese or Japanese page sets its Latin in Public
+     Sans and its CJK in whatever the reader's platform does best — which is
+     also why the site ships no CJK webfont: those are megabytes, and the
+     system faces are better than a subset nobody tuned.
+
+     Two things to know before changing these. The CJK end of `--display` is a
+     **gothic** face, not a serif one: the serif CJK that a Windows reader
+     actually has is SimSun, and SimSun at 6.5rem looks like a blurry
+     newspaper. And `--sans` therefore also ends in gothic, so CJK headings and
+     CJK body differ by size and weight rather than by family, which is how CJK
+     type is normally set anyway. Pinning the face rather than letting `serif`
+     resolve is what keeps a Japanese heading looking the same on every
+     platform — see the `:lang(ja)` override below for the second half of that. */
+  --display: "Bitter", Georgia, "Times New Roman", "PingFang SC",
+             "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   --sans:    "Public Sans", ui-sans-serif, system-ui, -apple-system,
-             "Segoe UI", sans-serif;
+             "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+             "Noto Sans CJK SC", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+             "Meiryo", sans-serif;
   --mono:    "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono",
-             Menlo, Consolas, monospace;
+             Menlo, Consolas, "Noto Sans Mono CJK SC", monospace;
 
   --t-hero: clamp(3rem, 9vw, 6.5rem);
   --t-h2:   clamp(1.75rem, 3.6vw, 2.5rem);
@@ -153,6 +170,61 @@ code {
 }
 .bar nav a:hover { color: var(--ink); }
 .bar nav a[aria-current="page"] { color: var(--ink); }
+
+/* ------------------------------------------------------------- language
+
+   A native <details>, so switching language works with no JavaScript and
+   degrades to a plain disclosure. It sits last in the bar and the menu hangs
+   off its right edge, because that is the edge nearest the window. */
+
+.lang { position: relative; }
+.lang > summary {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  cursor: pointer;
+  list-style: none;
+  font: 600 var(--t-xs) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+.lang > summary::-webkit-details-marker { display: none; }
+.lang > summary::after {
+  content: ""; width: 5px; height: 5px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.lang > summary:hover { color: var(--ink); border-color: var(--ink); }
+.lang[open] > summary { color: var(--ink); border-color: var(--ink); }
+
+.lang ul {
+  position: absolute; right: 0; top: calc(100% + 6px);
+  z-index: 20;
+  margin: 0; padding: 4px;
+  list-style: none;
+  min-width: 12rem;
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  box-shadow: 0 12px 28px rgb(29 39 51 / 14%);
+}
+.lang li a {
+  display: block;
+  padding: 7px 10px;
+  border-radius: 4px;
+  color: var(--ink-2); text-decoration: none;
+  font-size: var(--t-sm);
+}
+.lang li a:hover { background: var(--wash); color: var(--ink); }
+.lang li a[aria-current="true"] { color: var(--ink); font-weight: 600; }
+.lang li a[aria-current="true"]::after {
+  content: ""; display: inline-block;
+  width: 7px; height: 7px; margin-left: 9px;
+  border: 2px solid var(--blue); border-radius: 50%;
+  vertical-align: middle;
+}
 
 /* --------------------------------------------------------------- hero */
 
@@ -411,6 +483,50 @@ footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
 }
 .caption code { font-size: inherit; background: none; border: none; padding: 0; color: var(--ink-2); }
 
+/* -------------------------------------------------------- per language
+
+   Four things in the Latin design carry over badly, and each is switched off
+   per language rather than globally so the English pages keep them.
+
+   Uppercase does nothing to a Han glyph, and the 0.14em tracking that reads
+   as "small structural label" in Latin reads as broken spacing on a wide one.
+   Negative tracking is a Latin display habit that only crowds a Han glyph.
+   A CJK line wants to be looser and the box wider. And Japanese must not fall
+   through to a Chinese face: macOS ships Songti SC, so without the override a
+   Japanese page would set its kanji in Chinese glyph variants. */
+
+html:lang(zh-Hans), html:lang(ja) { --measure: 78ch; }
+
+:lang(zh-Hans) body, :lang(ja) body { line-height: 1.85; }
+:lang(zh-Hans) .hero .lede, :lang(zh-Hans) .head .lede,
+:lang(ja) .hero .lede, :lang(ja) .head .lede { line-height: 1.75; }
+
+:lang(zh-Hans) h1, :lang(zh-Hans) h2, :lang(zh-Hans) h3,
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3,
+:lang(zh-Hans) .hero h1, :lang(ja) .hero h1 { letter-spacing: 0; }
+
+:lang(zh-Hans) .sec h2, :lang(ja) .sec h2 { max-width: 46ch; }
+
+:lang(zh-Hans) .eyebrow, :lang(ja) .eyebrow {
+  text-transform: none; letter-spacing: 0.08em;
+}
+:lang(zh-Hans) .btn, :lang(ja) .btn {
+  text-transform: none; letter-spacing: 0.02em;
+}
+:lang(zh-Hans) .pane-tag, :lang(ja) .pane-tag { text-transform: none; }
+
+:lang(ja) {
+  --display: "Bitter", Georgia, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+             "Yu Gothic", "Meiryo", "Noto Sans CJK JP", sans-serif;
+  --sans:    "Public Sans", ui-sans-serif, system-ui, -apple-system,
+             "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic",
+             "Meiryo", "Noto Sans CJK JP", sans-serif;
+}
+
+/* Russian runs long. Let the browser hyphenate it rather than push a word
+   past the measure. */
+html:lang(ru) { hyphens: auto; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -431,7 +547,10 @@ footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
    "Get / started" in a 64px bar is worse than a smaller one. */
 @media (max-width: 560px) {
   .bar .wrap { padding-inline: 16px; gap: var(--s2); }
-  .bar nav { gap: var(--s2); }
+  /* The language chip belongs on the first line, against the right edge, and
+     the nav belongs on its own line below — so the nav is ordered after it.
+     Absolute positioning would do the same job and need a magic offset. */
+  .bar nav { order: 2; gap: var(--s2); }
   .bar nav a { font-size: 0.8125rem; white-space: nowrap; }
   .brand { font-size: 1.0625rem; }
 
