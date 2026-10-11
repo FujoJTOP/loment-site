@@ -49,7 +49,8 @@ LANGS = [
 
 #: 英文页在根目录；译文各占一个子目录，页面名相同。
 PAGES = ["index.html", "start.html", "examples.html", "lgc.html", "lvm.html", "lompi.html",
-         "libl.html"]
+         "libl.html",
+         "releases.html"]
 
 #: 语言切换器与 alternate 组不进"散文面"：它们是镶边，不是内容。
 SKIP_CLASSES = {"codewrap", "lang"}

@@ -540,17 +540,19 @@ html:lang(ru) { hyphens: auto; }
    two lines' worth of chrome into the top of every page. */
 @media (max-width: 860px) {
   .bar .wrap { flex-wrap: wrap; padding-block: 10px; row-gap: var(--s1); min-height: 0; }
-  .bar nav { flex-wrap: wrap; }
+  /* The language chip belongs on the first line, against the right edge, and the nav
+     belongs on its own line below — so the nav is ordered after it. Without this the
+     bar wraps into three lines as soon as the nav stops fitting beside the brand.
+     Absolute positioning would do the same job and need a magic offset that drifts
+     with the padding. */
+  .bar nav { order: 2; flex-wrap: wrap; }
 }
 
 /* Narrow phones: the nav is the first thing to break, and a wrapped two-line
    "Get / started" in a 64px bar is worse than a smaller one. */
 @media (max-width: 560px) {
   .bar .wrap { padding-inline: 16px; gap: var(--s2); }
-  /* The language chip belongs on the first line, against the right edge, and
-     the nav belongs on its own line below — so the nav is ordered after it.
-     Absolute positioning would do the same job and need a magic offset. */
-  .bar nav { order: 2; gap: var(--s2); }
+  .bar nav { gap: var(--s2); }
   .bar nav a { font-size: 0.8125rem; white-space: nowrap; }
   .brand { font-size: 1.0625rem; }
 

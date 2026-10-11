@@ -1,0 +1,280 @@
+<!doctype html>
+<!-- translated-from: releases.html -->
+<!-- source-sha256: b9d9467e8c36f64d8a620992f14c28f6efdc5ced1d4866ffa3aaaa435c10fd75 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>リリース履歴 — Loment</title>
+<meta name="description" content="最初のものから、いま作られているものまでのすべての Loment リリース、そしてそれぞれが何のためだったか。最も初期のバージョンは別のリポジトリからリリースされており、このページは記録が完全であるふりをせず、そう述べている。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/releases.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/releases.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/releases.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/releases.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/releases.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/releases.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="releases.html" aria-current="page">リリース</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../releases.html" hreflang="en">English</a></li>
+        <li><a href="../zh/releases.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="releases.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/releases.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/releases.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">リリース</p>
+    <h1>リリース履歴</h1>
+    <p class="lede">
+      最初の Loment から、いま作られているものまで。各項目は、そのバージョンが何の
+      <em>ため</em>だったか —— そしてその記録がどこにあるかを述べる。最も初期のものは
+      別のリポジトリからリリースされており、このリポジトリはそれらのタグを持っていないからである。
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">ダウンロード</a>
+      <a class="btn btn-quiet" href="start.html">はじめに</a>
+    </p>
+    <p class="limit">
+      <strong>これはこのサイトで唯一、バージョンを名指しするページである。</strong>他のどこでも
+      ダウンロードリンクは <code>releases/latest</code> と言う。ページに書かれたバージョン番号は
+      賞味期限つきの事実だからである。ここではバージョン<em>こそが</em>主題なので、それらは
+      名指しされ、それぞれが実際に公開されたものを指し示す。<strong>そのいずれも、まだ出荷されて
+      いないバージョンについての約束ではない。</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>このリポジトリより前</h2>
+    <p class="body">
+      最初の六つのバージョンは、プロジェクトの以前のリポジトリから出た。それらのタグも日付も
+      このリポジトリにはないので、以下に続くのは日付つきの記録ではなく、線の形である ——
+      そしてここでは何もどこにもリンクしない。リンクする先が何もないからである。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.1 —— 最初の Loment</h3>
+        <p>
+          <strong>Rust の構文の厳密な部分集合</strong>。それは様式ではなく、出発点の制約だった:
+          言語は Rust がすでに決着させたものによって定義され、だから議論すべきことはごくわずかで、
+          作るべきコンパイラがあった。もはや部分集合であるとは主張していない —— 重なりは
+          いまもあるが、表層がそれを越えて育ったときにその主張は取り下げられた。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 Alpha —— 最初のセルフホスト</h3>
+        <p>
+          言語がそれ自身で書かれ始める。それで得られるものは優雅さではない: 自分がコンパイルする
+          言語で書かれたコンパイラだけが、その言語が表現できないものを見つけ出す唯一の方法である。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre1 —— 修復</h3>
+        <p>
+          最初のセルフホストが明らかにした問題。その種のことはプレリリースで起きるものとされている。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre2 —— いまも立ち続ける基盤</h3>
+        <p>
+          それ以降のあらゆるリリースがその上に建てられているブートストラップの基盤: リポジトリに
+          コミットされた種から自分自身を再構築するコンパイラ、そして再構築された種が始めたときの
+          ものと等しいことの検査。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3 Alpha —— マルチシンタックスの発想が到来する</h3>
+        <p>
+          別の言語のソースを Loment として読める最初のバージョン。意味はつねにこの言語のものであり、
+          借りているのは綴りだけである。それは後から足された機能ではなく、プロジェクトの創設の論で
+          あり、だから「ほかに何が違うか」の下ではなくここに挙げられている。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3.4 Alpha —— 一巡が閉じる</h3>
+        <p>
+          四つの段階 —— 字句解析器、構文解析器、検査器、コード生成器 —— がすべて Loment で
+          書かれ、その結果は三段階の不動点に到達する。これは以前のリポジトリからリリースされた
+          最後のバージョンであり、それ以降のあらゆるバージョンが測られる基準である:
+          <strong>言語とコンパイラが、自分たちを定義するのにホストを必要としなくなった
+          リリースである。</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 Pre</h2>
+    <p class="body">
+      <strong>2026-09-22.</strong> このリポジトリからの最初のリリースであり、ビルドせずに
+      インストールできる最初の Loment。ひとつの理由でプレリリースとして置かれた:
+      「リポジトリにバージョンがある」が主張であることをやめ、見ることのできる事実になるように。
+    </p>
+    <p class="note">
+      それがどう作られたかのひとつの痕跡は、探しに行くなら知っておく価値がある: タグは
+      アーカイブがビルドされたコミットより前のコミットを指している。GitHub が自動生成する
+      ソースアーカイブはタグに従うので、その方法でダウンロードしたソースはそのビルドより前の
+      ツリーである。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 —— 使える</h2>
+    <p class="body">
+      <strong>2026-09-23.</strong> 主題が<em>より多くを持つこと</em>ではなく<em>使えること</em>
+      だったバージョン。言語の表層はまったく変わらなかった —— 新しい構文も、新しい組み込みも
+      ない —— そして作業は、最後のインタプリタを経路から追い出すことに注がれた: パッケージ
+      マネージャと低レベルインターフェースファイルの生成器が Loment の実装を得て、それが意味を
+      持つ唯一の方法で、置き換えた Python のものとバイト単位で比較して判定された。
+    </p>
+    <p class="body">
+      互換性は当時述べられ、繰り返す価値がある。それはバージョン番号が隠してしまう類のもの
+      だからである: <strong>Loment で書かれたものは何ひとつ変える必要がなかった</strong>、
+      そして生成された低レベルの成果物はバイト単位で同一に出た。ブートストラップの種は変わった
+      ので、種からツールチェインを再構築する者には新しいものが必要である。パッケージの
+      ファイル名は、そうでなければならない通り、バージョンを運んでいる。
+    </p>
+    <p class="limit">
+      <strong>このバージョンで公開された Windows インストーラは、すべてのマシンで動くわけでは
+      なく、置き換えられもしない。</strong>一部のシステムでは、ダブルクリックしてもウィンドウも
+      エラーも出ない —— プロセスはただ終了する。原因は判明している: 自己展開パッケージが
+      インストーラスクリプトをパスなしで名前だけによって走らせるので、Windows がカレント
+      ディレクトリを検索しないよう構成されたマシンでは、その名前が見つからない。だから同じ
+      ファイルが、あるマシンでは正常にインストールし、別のマシンでは黙って何もしない。
+      <strong>代わりに zip アーカイブからインストールすること</strong>。それには同じものが
+      入っている。修正は書かれ、後のバージョンとともに出荷される。公開済みのインストーラは
+      意図的にそのままにされる。再構築すると、すでにバージョン番号が付いているファイルの
+      バイトが変わってしまうからである。 <a href="https://github.com/FujoJTOP/loment/issues/117">イシュー #117</a> を見よ。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4.5 Pre —— 告知され、リリースされていない</h2>
+    <p class="body">
+      <strong>2026-10-10.</strong> <strong>ダウンロードするものは何もない。</strong>このタグは
+      アーカイブもインストーラも運んでいない; 次のバージョンが何を含むことになるかが、まだ
+      作られている間に公の場で述べられるために存在する。今日ツールチェインが欲しいなら、
+      0.1.4 をインストールすること。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>回収 —— すでに main ブランチにある</h3>
+        <p>
+          四段のはしごと、その上に建てられた三つの段階。<a href="lgc.html">それ自身のページ</a>で
+          述べられている。まだ作られている部分もそこで名指しされている。
+        </p>
+      </div>
+      <div class="row">
+        <h3>ネットワーキング、両方のターゲットで —— すでに main ブランチにある</h3>
+        <p>
+          同じソースが Linux でも Windows でもソケットを開く。それとともに二つの境界が述べられて
+          いる。それらは欠けている部分だからである: <strong>ネットワーキングライブラリは存在
+          しない</strong> —— 標準ライブラリにネットワークモジュールはなく、システムコールを
+          自分で書く —— そして<strong>受け入れゲートは存在しない</strong>。ネットワークアクセスを
+          要求しないと宣言した単位が、ソケット呼び出しを呼ぶことを実際に止められてはいない。
+          ケイパビリティ検査はドメインの<em>名前</em>を比較するだけで、振る舞いを決して見ない。
+          そして設計記録は、そのゲートが存在すべきだと仮定するのではなく、そもそも存在すべき
+          かどうかを論じている。
+        </p>
+      </div>
+      <div class="row">
+        <h3>パッケージマネージャ、0.2.0 —— 計画中</h3>
+        <p>
+          いまも計画中であり、ここではなくパッケージマネージャ自身のリポジトリで告知される。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>現在の状態はどこにあるか</h2>
+    <p class="body">
+      このページは履歴である。プロジェクトが<em>今日</em>できることは、サイトの残りとリポジトリに
+      あり、次に何をしようとしているかはロードマップにある —— それは計画として書かれ、
+      そう述べている。
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/releases/latest">
+        <span class="who">最新リリース</span>
+        <span class="what">インストールすべきバージョン。つねにこのリンクであり、ページに書き写されたバージョン番号ではない。</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">ロードマップ</span>
+        <span class="what">0.1.4.5 の後に来るもの。機能としてではなく、計画として述べられている。</span>
+      </a>
+      <a class="doclink" href="start.html">
+        <span class="who">はじめに</span>
+        <span class="what">インストールして、最初のプログラムを走らせる。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類の成果物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

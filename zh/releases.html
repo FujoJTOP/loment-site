@@ -1,0 +1,262 @@
+<!doctype html>
+<!-- translated-from: releases.html -->
+<!-- source-sha256: b9d9467e8c36f64d8a620992f14c28f6efdc5ced1d4866ffa3aaaa435c10fd75 -->
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>发布历程 — Loment</title>
+<meta name="description" content="从最早的 Loment 到此刻正在构建的这一版，每一次发布，以及每一版是为了什么。最早的那些版本是从另一个仓库发布的，这一页把这件事写出来，而不是假装这份记录是完整的。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/releases.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/releases.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/releases.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/releases.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/releases.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/releases.html">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">入门</a>
+      <a href="examples.html">示例</a>
+      <a href="releases.html" aria-current="page">发布</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>中文</summary>
+      <ul>
+        <li><a href="../releases.html" hreflang="en">English</a></li>
+        <li><a href="releases.html" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+        <li><a href="../ja/releases.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/releases.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/releases.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">发布</p>
+    <h1>发布历程</h1>
+    <p class="lede">
+      从最早的 Loment 到此刻正在构建的这一版。每一条都说明那一版是<em>为了</em>什么 —— 以及
+      它的记录在哪里，因为最早的那些版本是从另一个仓库发布的，而这个仓库并不带着它们的标签。
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">下载</a>
+      <a class="btn btn-quiet" href="start.html">入门</a>
+    </p>
+    <p class="limit">
+      <strong>这是本站唯一一页写出具体版本号的页面。</strong>别处下载链接一律写
+      <code>releases/latest</code>，因为写在页面上的版本号是一个会过期的说法。而这里
+      版本<em>本身</em>就是主题，所以它们被写出来，每一个都指向当时真正发布的东西。
+      <strong>其中没有任何一条是对尚未发布的版本所作的承诺。</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>在这个仓库之前</h2>
+    <p class="body">
+      最早六个版本出自这个项目之前的那个仓库。它们的标签不在这个仓库里，日期也不在，所以
+      下面给出的是这条线的形状，而不是一份带日期的记录 —— 而且这里没有一处链接，因为没有
+      什么可链。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.1 —— 第一个 Loment</h3>
+        <p>
+          Rust 语法的<strong>严格子集</strong>。那是最初的约束，而不是一种风格：这门语言由
+          Rust 已经定下来的东西来定义，所以几乎没有什么可争的，需要的只是把编译器建起来。
+          它如今不再声称是子集 &mdash; 重叠面还在，只是当语法面长过它之后，那个说法被撤掉了。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 Alpha —— 第一次自举</h3>
+        <p>
+          这门语言开始用自身来写。它买到的不是优雅：一个用它自己所编译的语言写成的编译器，
+          是找出这门语言表达不了什么的唯一办法。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre1 —— 修补</h3>
+        <p>
+          第一次自举暴露出来的那些问题。预发布正是这类东西该发生的地方。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre2 —— 至今仍立着的地基</h3>
+        <p>
+          此后每一次发布都建在它之上的自举地基：一个从提交进仓库的种子重建自身的编译器，
+          以及一条"重建出来的种子等于它出发时的那个"的判据。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3 Alpha —— 多语法这个想法到来</h3>
+        <p>
+          第一个可以把另一种语言的源码当作 Loment 来读的版本。语义永远是这门语言的，借来的
+          只是拼写。它是这个项目的立论，而不是后来加上去的一个功能，所以它列在这里，而不列
+          在"还有什么不同"下面。
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3.4 Alpha —— 闭环</h3>
+        <p>
+          四个阶段 —— 词法分析器、解析器、检查器和代码生成器 —— 全部用 Loment 写成，产物
+          到达一个三阶段的定点。这是从上一个仓库发布的最后一个版本，也是此后每一个版本拿来
+          对照的那一版：<strong>它是语言与编译器不再需要一个宿主来定义自己的那个发布。</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 Pre</h2>
+    <p class="body">
+      <strong>2026-09-22。</strong>从这个仓库发布的第一个版本，也是第一个不用自己构建就能
+      安装的 Loment。它被当作预发布挂出来只有一个原因：让"这个仓库是有版本的"不再是一句
+      声称，而变成一件你看得见的事实。
+    </p>
+    <p class="note">
+      如果你要去翻，有一处制作过程留下的痕迹值得知道：标签指向的 commit 比归档包所构建自
+      的那个更早。GitHub 自动生成的源码归档包跟着标签走，所以你那样下载到的源码，是那次
+      构建之前的树。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 —— 可用</h2>
+    <p class="body">
+      <strong>2026-09-23。</strong>这一版的主题是<em>可用</em>，而不是往里塞更多东西。语法面
+      完全没有变 —— 没有新语法，没有新内建 —— 力气都花在把解释器最后一点从必经之路上拿掉：
+      包管理器和那个生成底层接口文件的生成器都获得了 Loment 实现，而判断它们的方式只有一个
+      才算数，就是与它们所取代的 Python 实现逐字节对比。
+    </p>
+    <p class="body">
+      兼容性在当初就说明过，值得再说一遍，因为这是那种会被版本号盖住的事：<strong>用 Loment
+      写的任何东西都不必改</strong>，而生成出来的底层产物逐字节相同。自举种子确实变了，所以
+      任何从种子重建工具链的人都需要新的那一个。包文件名带着版本号，这是必须的。
+    </p>
+    <p class="limit">
+      <strong>随这一版发布的 Windows 安装器并不是在每台机器上都能用，而且它不会被重打。</strong>
+      在某些系统上，双击它会既不弹窗、也不报错 —— 进程直接退出。原因已经清楚：这个自解压包
+      按名字、不带路径去运行安装脚本，而在那些把 Windows 配置成不搜索当前目录的机器上，这个
+      名字找不到。于是同一个文件在一台机器上能正常安装，在另一台上却悄无声息地什么也不做。
+      <strong>改为从 zip 压缩包安装</strong>，里面装的是同一个东西。修复已经写好，会随之后的
+      某个版本发出；那个已发布的安装器是有意留着不动的，因为重打它会改动一个已经附上版本号的
+      文件里的字节。见 <a href="https://github.com/FujoJTOP/loment/issues/117">issue #117</a>。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4.5 Pre —— 已预告，未发布</h2>
+    <p class="body">
+      <strong>2026-10-10。</strong><strong>没有东西可以下载。</strong>这个标签不带归档包、
+      也不带安装器；它存在，是为了让下一个版本将包含什么，在它仍处于构建之中时就公开说出来。
+      如果你今天就要一套工具链，装 0.1.4。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>回收 —— 已经在主分支里</h3>
+        <p>
+          四级阶梯，以及建在它上面的三档，在<a href="lgc.html">它自己那一页</a>上有描述。
+          仍在构建的那部分也在那里点了名。
+        </p>
+      </div>
+      <div class="row">
+        <h3>网络，在两个目标上 —— 已经在主分支里</h3>
+        <p>
+          同一份源码在 Linux 和 Windows 上都能打开套接字。随它一起写明两处边界，因为那正是
+          缺掉的部分：<strong>没有网络库</strong> —— 标准库没有网络模块，系统调用要你自己写
+          —— 以及<strong>没有准入闸门</strong>。一个声明自己不会请求网络访问的单元，实际上
+          并没有被阻止去调那个套接字调用。能力检查比对的是域的<em>名字</em>，从不看行为，而
+          设计记录在争论那道闸门到底该不该存在，而不是假定它应该存在。
+        </p>
+      </div>
+      <div class="row">
+        <h3>包管理器，0.2.0 —— 计划中</h3>
+        <p>
+          仍在计划中，而且它会在包管理器自己的仓库上公布，而不是在这里。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>当前状态在哪里</h2>
+    <p class="body">
+      这一页是历史。这个项目<em>今天</em>能做什么，在站上其余页面和仓库里；它接下来打算做
+      什么，在路线图上 —— 它是按一份计划来写的，并且自己这么说。
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/releases/latest">
+        <span class="who">最新发布</span>
+        <span class="what">要安装的版本。永远用这个链接，绝不把一个版本号抄到页面上。</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">路线图</span>
+        <span class="what">0.1.4.5 之后是什么，按一份计划来说，而不是按一个功能来说。</span>
+      </a>
+      <a class="doclink" href="start.html">
+        <span class="who">入门</span>
+        <span class="what">装上它，跑你的第一个程序。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">回到首页</span>
+        <span class="what">Loment 是什么，以及它构建的两类产物。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment 依据 Loment-Open License 发布。由 Fujo 编写。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">源码</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">发布</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

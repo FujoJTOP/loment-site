@@ -1,0 +1,289 @@
+<!doctype html>
+<!-- translated-from: releases.html -->
+<!-- source-sha256: b9d9467e8c36f64d8a620992f14c28f6efdc5ced1d4866ffa3aaaa435c10fd75 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>История релизов — Loment</title>
+<meta name="description" content="Каждый релиз Loment — от первого до того, что строится сейчас, — и для чего был каждый. Самые ранние версии вышли из другого репозитория, и страница говорит об этом, а не делает вид, что запись полна.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/releases.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/releases.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/releases.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/releases.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/releases.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/releases.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Начало</a>
+      <a href="examples.html">Примеры</a>
+      <a href="releases.html" aria-current="page">Релизы</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>RU</summary>
+      <ul>
+        <li><a href="../releases.html" hreflang="en">English</a></li>
+        <li><a href="../zh/releases.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/releases.html" hreflang="ja">日本語</a></li>
+        <li><a href="releases.html" hreflang="ru" aria-current="true">Русский</a></li>
+        <li><a href="../es/releases.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Релизы</p>
+    <h1>История релизов</h1>
+    <p class="lede">
+      От первого Loment до того, что строится сейчас. Каждая запись говорит, для
+      <em>чего</em> была та версия, &mdash; и где хранится её след, потому что самые ранние
+      вышли из другого репозитория, и здесь их тегов нет.
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Скачать</a>
+      <a class="btn btn-quiet" href="start.html">Начать</a>
+    </p>
+    <p class="limit">
+      <strong>Это единственная страница на сайте, где названы версии.</strong> Везде в
+      остальном ссылка на скачивание говорит <code>releases/latest</code>, потому что номер
+      версии, написанный на странице, &mdash; это факт со сроком годности. Здесь версии
+      <em>и есть</em> предмет, поэтому они названы, и каждая указывает на то, что было
+      действительно опубликовано. <strong>Ничто из этого не обещание о версии, которая ещё
+      не вышла.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>До этого репозитория</h2>
+    <p class="body">
+      Первые шесть версий вышли из предыдущего репозитория проекта. Их тегов здесь нет, как и
+      их дат, поэтому дальше &mdash; форма линии, а не запись с датами, &mdash; и ничто здесь
+      никуда не ведёт, потому что вести некуда.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.1 — первый Loment</h3>
+        <p>
+          <strong>Строгое подмножество синтаксиса Rust.</strong> Это было начальным
+          ограничением, а не стилем: язык определялся тем, что Rust уже устоял, так что
+          спорить было почти не о чем, а компилятор надо было строить. Теперь он больше не
+          заявляет, что является подмножеством &mdash; пересечение осталось, а заявление было
+          снято, когда поверхность переросла его.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 Alpha — первое самоподдерживание</h3>
+        <p>
+          Язык начинает писаться на самом себе. Что это даёт &mdash; не изящество: компилятор,
+          написанный на языке, который он компилирует, &mdash; единственный способ выяснить,
+          чего язык выразить не может.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre1 — починки</h3>
+        <p>
+          Проблемы, которые выявило первое самоподдерживание. Предрелиз &mdash; это то место,
+          где такое и должно происходить.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre2 — основа, что стоит до сих пор</h3>
+        <p>
+          Основа самосборки, на которой стоит каждый последующий выпуск: компилятор, который
+          пересобирает себя из загрузочного семени, зафиксированного в репозитории, и проверка,
+          что пересобранное семя равно тому, с которого начали.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3 Alpha — приходит идея многосинтаксисности</h3>
+        <p>
+          Первая версия, где исходник другого языка читается как Loment. Смысл всегда этого
+          языка; заимствуется только написание. Это основополагающий довод проекта, а не
+          функция, добавленная сверху, &mdash; поэтому он назван здесь, а не в разделе «что
+          ещё иначе».
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3.4 Alpha — цикл замыкается</h3>
+        <p>
+          Все четыре ступени &mdash; лексер, парсер, проверяльщик и генератор кода &mdash;
+          написаны на Loment, и результат достигает неподвижной точки из трёх ступеней. Это
+          последняя из версий, выпущенных из предыдущего репозитория, и та, с которой
+          сверяется каждая следующая: <strong>это выпуск, в котором язык и компилятор
+          перестали нуждаться в хосте, чтобы определять себя.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 Pre</h2>
+    <p class="body">
+      <strong>2026-09-22.</strong> Первый выпуск из этого репозитория и первый Loment, который
+      можно было установить, не собирая его. Он был выложен как предрелиз по одной причине:
+      чтобы «в репозитории есть версии» перестало быть заявлением и стало фактом, на который
+      можно посмотреть.
+    </p>
+    <p class="note">
+      Об одной особенности того, как он сделан, стоит знать, если будете искать: тег указывает
+      на более ранний коммит, чем тот, из которого собраны архивы. Автоматически
+      сгенерированные GitHub архивы исходников следуют за тегом, так что исходник, скачанный
+      так, &mdash; это дерево до той сборки.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 — пригоден к использованию</h2>
+    <p class="body">
+      <strong>2026-09-23.</strong> Версия, предметом которой была <em>пригодность к
+      использованию</em>, а не то, чтобы в ней было больше. Поверхность языка не изменилась
+      вовсе &mdash; ни нового синтаксиса, ни новых встроенных &mdash; а работа ушла на то,
+      чтобы убрать последний интерпретатор с пути: менеджер пакетов и генератор файлов
+      низкоуровневого интерфейса получили реализации на Loment, судимые единственным
+      осмысленным способом &mdash; побайтово против тех на Python, которые они заменили.
+    </p>
+    <p class="body">
+      О совместимости сказали тогда, и об этом стоит повторить, потому что это как раз то, что
+      номер версии скрывает: <strong>ничего написанного на Loment менять не пришлось</strong>,
+      а сгенерированные низкоуровневые артефакты вышли побайтово идентичными. Загрузочное семя
+      изменилось, так что всякий, кто пересобирает инструментарий из семени, нуждается в новом.
+      Имена файлов пакета несут версию, как и должны.
+    </p>
+    <p class="limit">
+      <strong>Установщик для Windows, опубликованный с этой версией, работает не на всякой
+      машине, и его не заменят.</strong> В некоторых системах двойной щелчок по нему не даёт ни
+      окна, ни ошибки &mdash; процесс просто завершается. Причина понятна:
+      самораспаковывающийся пакет запускает установочный скрипт по имени, без пути, и на
+      машинах, где Windows настроена не искать текущий каталог, это имя не находится. Поэтому
+      один и тот же файл нормально ставится на одной машине и молча ничего не делает на
+      другой. <strong>Ставьте вместо него из zip-архива</strong>, в нём то же самое.
+      Исправление написано и выходит с более поздней версией; опубликованный установщик нарочно
+      оставлен как есть, потому что пересборка изменила бы байты файла, к которому уже привязан
+      номер версии. См. <a href="https://github.com/FujoJTOP/loment/issues/117">проблему #117</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4.5 Pre — объявлен, не выпущен</h2>
+    <p class="body">
+      <strong>2026-10-10.</strong> <strong>Скачивать нечего.</strong> Этот тег не несёт ни
+      архивов, ни установщиков; он существует, чтобы то, что будет в следующей версии, было
+      заявлено публично, пока она ещё строится. Если вам нужен инструментарий сегодня, ставьте
+      0.1.4.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Возврат памяти — уже в ветке main</h3>
+        <p>
+          Лестница из четырёх ступеней и три уровня, построенные на ней, описаны на
+          <a href="lgc.html">её собственной странице</a>. То, что ещё строится, там тоже
+          названо.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Сеть, на обеих целях — уже в ветке main</h3>
+        <p>
+          Один и тот же исходник открывает сокет на Linux и на Windows. С этим заявлены две
+          границы, потому что это те части, которых нет: <strong>сетевой библиотеки нет</strong>
+          &mdash; в стандартной библиотеке нет сетевого модуля, системные вызовы пишете сами
+          &mdash; и <strong>пропускного шлюза нет</strong>. Единица, заявляющая, что не будет
+          запрашивать сетевой доступ, на деле не останавливается от вызова сокета. Проверка
+          возможностей сравнивает <em>имена</em> доменов и никогда не смотрит на поведение, а
+          запись о проектировании спорит, должен ли этот шлюз вообще существовать, а не
+          исходит из того, что должен.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Менеджер пакетов, 0.2.0 — запланирован</h3>
+        <p>
+          Всё ещё запланирован, и о нём объявят в собственном репозитории менеджера пакетов, а
+          не здесь.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Где текущее состояние</h2>
+    <p class="body">
+      Эта страница &mdash; история. То, что проект умеет <em>сегодня</em>, &mdash; на
+      остальной части сайта и в репозитории, а то, что он намерен делать дальше, &mdash; на
+      дорожной карте, которая написана как план и говорит об этом.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/releases/latest">
+        <span class="who">Последний релиз</span>
+        <span class="what">Версия для установки. Всегда эта ссылка, никогда не скопированный на страницу номер версии.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Дорожная карта</span>
+        <span class="what">Что идёт после 0.1.4.5, заявленное как план, а не как функция.</span>
+      </a>
+      <a class="doclink" href="start.html">
+        <span class="who">Начать</span>
+        <span class="what">Установите и запустите свою первую программу.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Назад на главную</span>
+        <span class="what">Что такое Loment и два вида артефактов, которые он собирает.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment выпускается под лицензией Loment-Open. Программа — Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Исходники</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Релизы</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Вики</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Проблемы</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

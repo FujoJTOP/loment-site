@@ -1,0 +1,292 @@
+<!doctype html>
+<!-- translated-from: releases.html -->
+<!-- source-sha256: b9d9467e8c36f64d8a620992f14c28f6efdc5ced1d4866ffa3aaaa435c10fd75 -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historial de versiones — Loment</title>
+<meta name="description" content="Cada versión de Loment, desde la primera hasta la que se está construyendo ahora, y para qué servía cada una. Las primeras versiones se publicaron desde otro repositorio, y esta página lo dice en vez de fingir que el registro está completo.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/releases.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/releases.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/releases.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/releases.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/releases.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/releases.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Primeros pasos</a>
+      <a href="examples.html">Ejemplos</a>
+      <a href="releases.html" aria-current="page">Versiones</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="libl.html">LibL</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang">
+      <summary>ES</summary>
+      <ul>
+        <li><a href="../releases.html" hreflang="en">English</a></li>
+        <li><a href="../zh/releases.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/releases.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/releases.html" hreflang="ru">Русский</a></li>
+        <li><a href="releases.html" hreflang="es" aria-current="true">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Versiones</p>
+    <h1>Historial de versiones</h1>
+    <p class="lede">
+      Desde el primer Loment hasta el que se está construyendo ahora. Cada entrada dice para qué
+      servía esa versión <em>en concreto</em> — y dónde vive su registro, porque las primeras se
+      publicaron desde otro repositorio y este no lleva sus etiquetas.
+    </p>
+    <p class="actions">
+      <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Descargar</a>
+      <a class="btn btn-quiet" href="start.html">Primeros pasos</a>
+    </p>
+    <p class="limit">
+      <strong>Esta es la única página del sitio que nombra versiones.</strong> En todo lo demás el
+      enlace de descarga dice <code>releases/latest</code>, porque un número de versión escrito en
+      una página es un dato con fecha de caducidad. Aquí las versiones <em>son</em> el tema, así
+      que se nombran y cada una apunta a lo que realmente se publicó. <strong>Nada de esto es una
+      promesa sobre una versión que no se ha publicado.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Antes de este repositorio</h2>
+    <p class="body">
+      Las primeras seis versiones salieron del repositorio anterior del proyecto. Sus etiquetas no
+      están en este, ni tampoco sus fechas, así que lo que sigue es la forma de la línea y no un
+      registro con fechas — y aquí nada enlaza a ninguna parte, porque no hay nada a lo que
+      enlazar.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>0.1.1 — el primer Loment</h3>
+        <p>
+          Un <strong>subconjunto estricto de la sintaxis de Rust</strong>. Esa fue la restricción
+          inicial y no un estilo: el lenguaje quedaba definido por lo que Rust ya había resuelto,
+          así que había muy poco que discutir y un compilador que construir. Ya no pretende ser un
+          subconjunto — el solapamiento sigue ahí, la afirmación se abandonó cuando la superficie
+          lo rebasó.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 Alpha — el primer autoalojado</h3>
+        <p>
+          El lenguaje empieza a escribirse en sí mismo. Lo que eso aporta no es elegancia: un
+          compilador escrito en el lenguaje que compila es la única forma de averiguar qué es lo
+          que el lenguaje no puede expresar.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre1 — reparaciones</h3>
+        <p>
+          Los problemas que sacó a la luz el primer autoalojado. Un prelanzamiento es donde se
+          supone que ocurre ese tipo de cosas.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.2 pre2 — la base que sigue en pie</h3>
+        <p>
+          El fundamento de arranque sobre el que se construye cada versión posterior: un compilador
+          que se reconstruye a sí mismo a partir de una semilla de arranque confirmada en el
+          repositorio, y una comprobación de que la semilla reconstruida es igual a aquella con la
+          que empezó.
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3 Alpha — llega la idea de multisintaxis</h3>
+        <p>
+          La primera versión en la que el código fuente de otro lenguaje puede leerse como Loment.
+          El significado es siempre el de este lenguaje; solo se toma prestada la grafía. Es el
+          argumento fundacional del proyecto y no una función añadida encima, y por eso figura aquí
+          y no bajo "qué más es diferente".
+        </p>
+      </div>
+      <div class="row">
+        <h3>0.1.3.4 Alpha — el ciclo se cierra</h3>
+        <p>
+          Las cuatro etapas — analizador léxico, analizador sintáctico, comprobador y generador de
+          código — escritas en Loment, y el resultado alcanza un punto fijo de tres etapas. Es la
+          última de las versiones publicadas desde el repositorio anterior, y aquella contra la que
+          se mide toda versión posterior: <strong>es la versión en la que el lenguaje y el
+          compilador dejaron de necesitar un anfitrión para definirse.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 Pre</h2>
+    <p class="body">
+      <strong>2026-09-22.</strong> La primera versión publicada desde este repositorio, y el primer
+      Loment que se podía instalar sin compilarlo. Se publicó como prelanzamiento por una sola
+      razón: para que "el repositorio tiene versiones" deje de ser una afirmación y se convierta en
+      un hecho que se puede mirar.
+    </p>
+    <p class="note">
+      Un artefacto de cómo se hizo merece conocerse si uno va a mirar: la etiqueta apunta a un
+      commit anterior a aquel desde el que se construyeron los archivos comprimidos. Los archivos
+      de código fuente que GitHub genera automáticamente siguen la etiqueta, así que el código que
+      se descarga por esa vía es el árbol anterior a esa compilación.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4 — usable</h2>
+    <p class="body">
+      <strong>2026-09-23.</strong> La versión cuyo tema era <em>ser usable</em> y no tener más
+      cosas dentro. La superficie del lenguaje no cambió en absoluto — ni sintaxis nueva, ni
+      funciones incorporadas nuevas — y el trabajo se dedicó a sacar del camino lo último que
+      quedaba del intérprete: el gestor de paquetes y el generador de los archivos de interfaz de
+      bajo nivel obtuvieron implementaciones en Loment, juzgadas de la única forma que significa
+      algo, byte a byte contra las de Python que reemplazaron.
+    </p>
+    <p class="body">
+      La compatibilidad se declaró en su momento y merece repetirse, porque es el tipo de cosa que
+      un número de versión oculta: <strong>nada de lo escrito en Loment tuvo que cambiar</strong>,
+      y los artefactos de bajo nivel generados salieron idénticos byte a byte. La semilla de
+      arranque sí cambió, así que quien reconstruya un conjunto de herramientas a partir de una
+      semilla necesita la nueva. Los nombres de archivo de los paquetes llevan la versión, como es
+      obligatorio.
+    </p>
+    <p class="limit">
+      <strong>El instalador de Windows publicado con esta versión no funciona en todas las
+      máquinas, y no se va a reemplazar.</strong> En algunos sistemas, hacer doble clic sobre él no
+      produce ninguna ventana ni ningún error — el proceso simplemente termina. La causa se
+      conoce: el paquete autoextraíble ejecuta el script del instalador por su nombre, sin una
+      ruta, y en las máquinas donde Windows está configurado para no buscar en el directorio
+      actual, ese nombre no se encuentra. El mismo archivo, por tanto, se instala con normalidad en
+      una máquina y no hace nada en silencio en otra. <strong>Instalar desde el archivo comprimido
+      zip</strong>, que contiene lo mismo. La corrección está escrita y llega con una versión
+      posterior; el instalador publicado se deja intacto a propósito, porque reconstruirlo
+      cambiaría los bytes de un archivo que ya tiene un número de versión asociado. Ver
+      <a href="https://github.com/FujoJTOP/loment/issues/117">incidencia #117</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>0.1.4.5 Pre — anunciada, no publicada</h2>
+    <p class="body">
+      <strong>2026-10-10.</strong> <strong>No hay nada que descargar.</strong> Esta etiqueta no
+      lleva archivos comprimidos ni instaladores; existe para que lo que contendrá la próxima
+      versión se diga en público mientras aún se está construyendo. Si se quiere un conjunto de
+      herramientas hoy, instalar 0.1.4.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>Recuperación — ya en la rama principal</h3>
+        <p>
+          La escala de cuatro peldaños y los tres niveles construidos sobre ella, descritos en
+          <a href="lgc.html">su propia página</a>. La parte que aún se está construyendo también se
+          nombra allí.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Redes, en ambos objetivos — ya en la rama principal</h3>
+        <p>
+          El mismo código abre un socket en Linux y en Windows. Con ello se enuncian dos límites,
+          porque son las partes que faltan: <strong>no hay biblioteca de red</strong> — la
+          biblioteca estándar no tiene módulo de red, las llamadas al sistema se escriben uno
+          mismo — y <strong>no hay puerta de admisión</strong>. Una unidad que declara que no
+          solicitará acceso a la red no queda realmente impedida de llamar a la llamada del socket.
+          La comprobación de capacidades compara los <em>nombres</em> de los dominios y nunca mira
+          el comportamiento, y el registro de diseño discute si esa puerta debería existir siquiera,
+          en vez de dar por hecho que sí.
+        </p>
+      </div>
+      <div class="row">
+        <h3>El gestor de paquetes, 0.2.0 — planificado</h3>
+        <p>
+          Todavía planificado, y se anunciará en el repositorio propio del gestor de paquetes y no
+          aquí.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Dónde está el estado actual</h2>
+    <p class="body">
+      Esta página es historia. Lo que el proyecto puede hacer <em>hoy</em> está en el resto del
+      sitio y en el repositorio, y lo que pretende hacer después está en la hoja de ruta — que
+      está escrita como un plan y lo dice.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/releases/latest">
+        <span class="who">Última versión</span>
+        <span class="what">La versión que hay que instalar. Siempre este enlace, nunca un número de versión copiado en una página.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Roadmap</span>
+        <span class="what">Lo que viene después de 0.1.4.5, enunciado como un plan y no como una función.</span>
+      </a>
+      <a class="doclink" href="start.html">
+        <span class="who">Primeros pasos</span>
+        <span class="what">Instalarlo y ejecutar el primer programa.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Volver a la página principal</span>
+        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment se publica bajo la licencia Loment-Open. Programa de Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Código fuente</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Versiones</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Incidencias</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
