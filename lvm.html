@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LVM — Loment VM — Loment</title>
+<meta name="description" content="The Loment VM: designed as a fifth choose dimension, default no_vm, and gated out of release builds. The engine does not exist yet. This page says what is being built and what is not.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="start.html">Get started</a>
+      <a href="examples.html">Examples</a>
+      <a href="lgc.html">LGC</a>
+      <a href="lvm.html" aria-current="page">LVM</a>
+      <a href="lompi.html">lompi</a>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">System · in progress</p>
+    <h1>Loment VM</h1>
+    <p class="lede">
+      The VM is the next execution model the language is being readied for. Its first slice —
+      a dimension and a gate — is being built. <strong>The engine does not exist.</strong>
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>There is no VM</h2>
+    <p class="body">
+      No bytecode, no interpreter, no execution engine of any kind. That goes at the top
+      rather than in a footnote, because a page about a plan is the easiest place for a
+      reader to mistake the plan for the product.
+    </p>
+    <p class="body">
+      What exists today is a specification and an implementation <strong>on a development
+      branch</strong>: no part of it is on the main branch, in any release, or in any
+      installed toolchain. The project says this about itself rather than letting you find
+      out — it is the same debt <code>runtime</code> was in for a while, declared and
+      carried in the artifact while doing nothing, before it was paid.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What the first slice specifies</h2>
+    <p class="body">
+      Two things, both about <em>permission</em> rather than capability. Neither is a feature
+      you can use.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>A fifth dimension</h3>
+        <p>
+          <code>choose</code> had four dimensions — which layer the program may use, how it
+          reclaims memory, whether the artifact may carry a runtime, and whether it may reach
+          outside itself. <code>vm</code> would be the fifth, answering a different question:
+          <strong>which execution model is this program for?</strong> Left unwritten it is
+          <code>no_vm</code>, which is what everything was before the dimension existed.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A gate, not a feature</h3>
+        <p>
+          In a <strong>release</strong> build, <code>choose vm</code> would be a compile-time
+          error; only the development channel would accept it. The rule the project set itself
+          is blunt — until the first usable VM exists, every call to it is illegal in a
+          release — so that an installed toolchain can never accept a promise it cannot keep.
+        </p>
+      </div>
+    </div>
+
+    <p class="limit">
+      <strong>Why the value would not be <code>vm_t0</code> or similar.</strong> The same rule
+      the <code>runtime</code> dimension follows: the value says <em>whether</em>, never
+      <em>which</em>. What sits inside will change over the years, and a name that encoded
+      today's tier would have to be renamed to add tomorrow's.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Why a gate at all</h2>
+    <p class="body">
+      A dimension that compiles in a release and then does nothing is a lie with good
+      formatting. Gating it means the word cannot appear somewhere it would mislead, and
+      that the day the engine lands the gate opens rather than the promise being
+      retrofitted.
+    </p>
+    <p class="body">
+      A gate needs a notion the repository did not have — is this compiler a release build or
+      a development one? The spec puts it in <em>one constant</em>, one value per side, flipped
+      at packaging time. Keeping it to a single line is deliberate: the packaged language
+      guide is copied into a distribution unmodified so that "the copy in the package is the
+      copy in the repository" stays checkable, and one line is the smallest way to bend that
+      rule. The cost is stated with it — the shipped compiler seed would no longer equal the
+      repository's byte for byte, so the criterion drops from "identical" to "reproducibly
+      equal, and the difference is exactly that one constant".
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What it could become</h2>
+    <p class="body">
+      The design record describes a ladder, in the same spirit as the reclamation one: an
+      interpreter first, then feedback collected from real runs, then a baseline compiler,
+      then an optimising compiler that can give a guess up when it turns out wrong. None of
+      those steps is a feature today, and this page will not pretend otherwise.
+    </p>
+    <p class="body">
+      When the engine arrives, the dimension is already the place a new execution model has to
+      plug in — and the gate is already the thing that keeps it from being announced before it
+      works.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Where it is written down</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
+        <span class="who">Roadmap</span>
+        <span class="what">Where the LVM sits against the versions — a plan, stated as a plan.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
+        <span class="who">docs/</span>
+        <span class="what">The design records. Each one is a numbered document, and most are in Chinese.</span>
+      </a>
+      <a class="doclink" href="lgc.html">
+        <span class="who">LomentGC</span>
+        <span class="what">The reclamation ladder — a system that is built, for comparison.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Back to the front page</span>
+        <span class="what">What Loment is, and the two kinds of artifact it builds.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Source</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

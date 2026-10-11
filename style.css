@@ -419,6 +419,14 @@ footer nav { display: flex; flex-wrap: wrap; gap: var(--s3); }
   }
 }
 
+/* Six items do not fit one line on a tablet, so the bar is allowed to wrap
+   before the links start colliding. Below that it shrinks instead of wrapping
+   two lines' worth of chrome into the top of every page. */
+@media (max-width: 860px) {
+  .bar .wrap { flex-wrap: wrap; padding-block: 10px; row-gap: var(--s1); min-height: 0; }
+  .bar nav { flex-wrap: wrap; }
+}
+
 /* Narrow phones: the nav is the first thing to break, and a wrapped two-line
    "Get / started" in a 64px bar is worse than a smaller one. */
 @media (max-width: 560px) {
