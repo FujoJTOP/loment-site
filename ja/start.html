@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: start.html -->
-<!-- source-sha256: 9a3af40efd92450dc52a253f165a6e8c1e86fd68c3ce25a8eef88f261092e4f3 -->
+<!-- source-sha256: 74f7390e1d4c5b32b1d9c446192a51ddb82e0bfd36a7658060f66bafeb1f5966 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -134,12 +134,12 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      <code>_start</code> がエントリポイントである。sealed な成果物には、代わりに
-      エントリポイントを呼んでくれる runtime がないからだ。<code>printf</code> もない:
-      出力は <code>write</code> システムコールを通り、その引数はファイルディスクリプタ、
-      文字列のポインタ、その長さである。二番目の呼び出しは <code>exit</code>。
-      <code>choose hosted</code> と書けば、成果物は代わりに C ランタイムのプログラムになり、
-      エントリポイントは <code>fn main() -&gt; u32</code> になる。
+      <code>_start</code> はマシンが始まる場所である。sealed なプログラム —— 何もリンク
+      しないもの —— には、代わりにエントリポイントを呼んでくれる runtime がその下にないので、
+      自分でそれを名指しする; そして <code>printf</code> もないので、出力は <code>write</code>
+      システムコールを通る: ファイルディスクリプタ、文字列のポインタ、その長さである。二番目の
+      呼び出しは <code>exit</code>。<code>choose hosted</code> と書けば、代わりに普通の C
+      プログラムが得られ、エントリポイントは <code>fn main() -&gt; u32</code> になる。
     </p>
   </div>
 </section>

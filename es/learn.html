@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: learn.html -->
-<!-- source-sha256: f1892c5d0e2d5b40a81a95f2f1d49f1044ca31fbaa389152e3d762fec1e60ffd -->
+<!-- source-sha256: b1c5457832cd650d4f5e28613951fdc29aba3f209b8ae78a7fd22d29212f8405 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -74,29 +74,27 @@
     <p class="eyebrow">Aprender</p>
     <h1>Aprender Loment</h1>
     <p class="lede">
-      La mayoría de los lenguajes tan jóvenes ofrecen o bien nada que leer, o bien un tutorial que
-      se ha alejado en silencio del compilador. Lo que este tiene en su lugar es <strong>un conjunto
-      de herramientas que se explica a sí mismo</strong>, una única guía escrita para ser
-      autocontenida, y documentos que nombran lo que no está terminado. Este es el orden que tiene
-      sentido &mdash; y, junto a él, las cosas que conviene saber antes de fiarse de nada de esto.
+      Hay tres sitios donde mirar, y el más potente es <strong>un conjunto de herramientas que se
+      explica a sí mismo</strong>: puede imprimir todo el lenguaje, listar cada función incorporada
+      que existe y decirte qué significa cualquier código de error que te dé. Esta página da el
+      orden que tiene sentido y pone lo que le falta a cada paso junto al paso.
     </p>
     <p class="limit">
-      <strong>Hay un libro, no cinco.</strong> A este lenguaje no le faltan documentos &mdash;
-      le faltan documentos de <em>enseñanza</em>, y los que existen lo dicen. Cuando un recurso de
-      los de abajo está incompleto, incompleto en un idioma que quizá no se lea, o nunca se ha
-      usado de la forma en que se está a punto de usarlo, esta página lo dice en vez de dejar que
-      uno lo descubra.
+      <strong>Lo que falta es enseñanza, no material.</strong> El manual es una referencia y no un
+      tutorial, y está escrito en chino; los registros de diseño también. Cuando un recurso de los
+      de abajo está incompleto, o nunca se ha usado de la forma en que estás a punto de usarlo,
+      esta página lo dice en vez de dejar que lo descubras.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>Ejecutar algo antes de leer nada</h2>
+    <h2>Ejecuta algo antes de leer nada</h2>
     <p class="body">
-      Aquí nada hace falta entenderlo antes. El paquete se instala desde
+      Aquí nada hace falta entenderlo antes. Instala el paquete desde
       <a href="https://github.com/FujoJTOP/loment/releases/latest">la última versión</a> &mdash;
-      en Windows hay que tomar el zip, no el instalador &mdash; y el comando que escribe un punto
+      en Windows toma el zip, no el instalador &mdash; y el comando que te escribe un punto
       de partida es en sí mismo un programa Loment:
     </p>
 
@@ -106,7 +104,7 @@
 
     <p class="caption">
       La vía de compilar y ejecutar no necesita Python, ni clang, ni WSL. Qué produce y por qué
-      está en <a href="start.html">Primeros pasos</a>; las dos clases de artefacto que puede
+      está en <a href="start.html">Primeros pasos</a>; las dos clases de programa que puede
       producir están en <a href="index.html">la página principal</a>.
     </p>
   </div>
@@ -118,8 +116,8 @@
     <p class="body">
       Todo el lenguaje está disponible como <strong>un único archivo comentado</strong>, y el
       comando que lo imprime viene con el conjunto de herramientas en lugar de vivir en este sitio
-      web. Si se lee de arriba abajo una vez, se habrán visto todas las construcciones que hay
-      &mdash; el lenguaje se construyó para resistir eso, y no para aprenderse función a función.
+      web. Léelo de arriba abajo una vez y habrás visto todas las construcciones que hay &mdash; el
+      lenguaje se construyó para resistir eso, y no para aprenderse función a función.
     </p>
     <p class="body">
       También hay una guía escrita, y es <strong>autocontenida a propósito</strong>: la copia que
@@ -143,12 +141,12 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Consultar las cosas sin salir de la terminal</h2>
+    <h2>Consulta las cosas sin salir de la terminal</h2>
     <p class="body">
-      Esta es la parte genuinamente poco habitual, y vale la pena probarla aunque no haya ninguna
+      Esta es la parte genuinamente poco habitual, y vale la pena probarla aunque no tengas ninguna
       intención de usar el lenguaje. <strong>El conjunto de herramientas es la referencia.</strong>
       Todos estos leen del paquete instalado, así que funcionan sin conexión, y responden sobre la
-      versión que realmente se tiene en lugar de sobre lo que dijera el sitio web la última vez.
+      versión que realmente tienes en lugar de sobre lo que dijera el sitio web la última vez.
     </p>
 
     <div class="codewrap">
@@ -157,7 +155,7 @@
 
     <p class="body">
       El último es el que hay que recordar. Un código de error por sí solo es un número; el
-      conjunto de herramientas guarda la frase que lo acompaña, y dirá a qué se estaba oponiendo
+      conjunto de herramientas guarda la frase que lo acompaña, y te dirá a qué se estaba oponiendo
       el compilador y hacia dónde moverse. <code>loment help</code> sin argumento lista el resto, y
       la <a href="https://loment.fandom.com/wiki/CLI_reference">wiki</a> tiene la versión larga.
     </p>
@@ -166,15 +164,15 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Consultar las cosas por escrito</h2>
+    <h2>Consulta las cosas por escrito</h2>
     <div class="rows">
       <div class="row">
         <h3>El manual</h3>
         <p>
-          Generado a partir del compilador y el corpus de ejemplos, y distribuido en el
-          repositorio: las especificaciones, y una referencia de API para cada módulo de ejemplo
-          incluido. <strong>Está escrito en chino</strong>, y es una <em>referencia</em> y no un
-          tutorial &mdash; dice qué es algo, no qué hacer con ello.
+          Generado a partir del compilador y los ejemplos incluidos, y distribuido en el
+          repositorio: las especificaciones, y una referencia de API para cada módulo de ejemplo.
+          <strong>Está escrito en chino</strong>, y es una <em>referencia</em> y no un tutorial
+          &mdash; dice qué es algo, no qué hacer con ello.
         </p>
       </div>
       <div class="row">
@@ -182,8 +180,8 @@
         <p>
           El mismo material que este sitio, organizado como una enciclopedia del lenguaje:
           sintaxis, tipos, la tabla de funciones incorporadas, los niveles de recuperación, los
-          códigos de error, y lo que es deliberadamente distinto de otros lenguajes. En inglés, y
-          el lugar al que ir cuando se quiere una página sobre una sola cosa.
+          códigos de error y lo que es deliberadamente distinto de otros lenguajes. En inglés, y el
+          lugar al que ir cuando quieres una página sobre una sola cosa.
         </p>
       </div>
       <div class="row">
@@ -201,10 +199,10 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Aprender leyendo código</h2>
+    <h2>Aprende leyendo código</h2>
     <p class="body">
       El repositorio lleva un corpus de programas de ejemplo, y el conjunto de herramientas puede
-      imprimir cualquiera de ellos sin abrir un navegador:
+      imprimir cualquiera de ellos sin que abras un navegador:
     </p>
 
     <div class="codewrap">
@@ -222,12 +220,12 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Dejar que el editor ayude</h2>
+    <h2>Deja que el editor te ayude</h2>
     <p class="body">
       Hay una extensión de editor con una definición de sintaxis y un servidor de lenguaje, y
       archivos para un editor que no necesita uno. Lo que hace el servidor de lenguaje es real:
-      diagnósticos del comprobador mientras se escribe, autocompletado, ir a la definición, y
-      formato &mdash; mediante el formateador aparte, no por el propio servidor.
+      diagnósticos del comprobador mientras escribes, autocompletado, ir a la definición y formato
+      &mdash; mediante el formateador aparte, no por el propio servidor.
     </p>
     <p class="limit">
       <strong>Tres huecos que conviene conocer antes de fiarse de él.</strong> No hay índice de
@@ -270,7 +268,7 @@
       </a>
       <a class="doclink" href="https://discord.gg/rGw7NRNU">
         <span class="who">Discord</span>
-        <span class="what">Donde conversa el proyecto. Las preguntas son tan bienvenidas como los informes de errores.</span>
+        <span class="what">Donde habla el proyecto. Las preguntas son tan bienvenidas como los informes de errores.</span>
       </a>
     </div>
   </div>

@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- translated-from: lgc.html -->
-<!-- source-sha256: a22bee92e9a48d9a7275ad193411391277eee29ede320558565ce96e9cf42cfc -->
+<!-- source-sha256: 9a325a737cc582e9edb0c6849681ef20b74ba0e5430b4057e3dbba32bbdf25e0 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LomentGC — Loment</title>
-<meta name="description" content="LomentGC: la recuperación es un contrato por sitio. Cada sitio de asignación se asigna en tiempo de compilación a un peldaño de una escala de cuatro niveles, y cuánta memoria es responsable el recolector es un número que lleva el artefacto.">
+<meta name="description" content="LomentGC: cada lugar donde un programa Loment asigna queda asignado, en tiempo de compilación, a una de cuatro estrategias — y cuánto queda en manos del recolector se escribe en el binario.">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,10 +74,10 @@
     <p class="eyebrow">Sistema</p>
     <h1>LomentGC</h1>
     <p class="lede">
-      La recuperación no es un único algoritmo sobre un único montículo. Es un
-      <strong>contrato por sitio</strong>: cada <code>alloc</code> de un programa se asigna, en
-      tiempo de compilación, a un peldaño de una escala de cuatro niveles — y cuánta memoria
-      es responsable el recolector es un número que el artefacto lleva.
+      Cuando un programa Loment libera memoria, no le pasa todo el trabajo a un recolector. Cada
+      lugar que asigna queda asignado, en tiempo de compilación, a una de cuatro estrategias — y
+      cuánto se deja al recolector del runtime es un número escrito en el binario, y no una
+      afirmación en un documento.
     </p>
   </div>
 </section>
@@ -86,8 +86,8 @@
   <div class="wrap">
     <h2>La escala</h2>
     <p class="body">
-      De la más fuerte a la más débil: el compilador toma el peldaño más fuerte que puede
-      <em>demostrar</em>. Demostrar más, pagar menos. El precio de cada peldaño se escribe a su
+      De la más fuerte a la más débil: el compilador toma el nivel más fuerte que puede
+      <em>demostrar</em>. Demostrar más, pagar menos. El precio de cada nivel se escribe a su
       lado en lugar de dejarlo en una nota al pie.
     </p>
 
@@ -136,7 +136,7 @@
     <h2>Tres niveles</h2>
     <p class="body">
       Un programa selecciona hasta qué punto de la escala está dispuesto a bajar, con una línea
-      en la unidad raíz.
+      en el archivo del que parte.
     </p>
 
     <div class="rows">
@@ -145,8 +145,8 @@
         <p>
           El valor por defecto. Nada se recupera automáticamente; el programa gestiona su
           propia memoria. No escribir ninguna línea da esto — el valor por defecto es el
-          comportamiento que existía antes de que la dimensión existiera, que es la regla que
-          sigue cada dimensión.
+          comportamiento que existía antes de que el ajuste existiera, que es la regla que
+          sigue cada ajuste.
         </p>
       </div>
       <div class="row">
@@ -181,8 +181,8 @@
   <div class="wrap">
     <h2>Dentro de L3</h2>
     <p class="body">
-      El peldaño de runtime tampoco es un único algoritmo. Ha crecido en tres pasos, cada uno
-      de los cuales tuvo que superar al anterior en un programa medible.
+      El nivel de runtime tampoco es un único algoritmo. Creció en tres pasos, cada uno de los
+      cuales tuvo que superar al anterior en un programa que el proyecto podía medir.
     </p>
 
     <div class="rows">
@@ -217,13 +217,14 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Por qué queda en el artefacto</h2>
+    <h2>Por qué queda en el binario</h2>
     <p class="body">
-      Cada unidad exporta un objeto de forma que lleva <code>gc_ladder</code>: cuántos sitios
-      <code>alloc</code> tomó cada peldaño, más el total. Los cuatro recuentos deben sumar el
-      total, y <strong>dos validadores independientes comprueban esa aritmética sin leer una
-      línea de código fuente</strong>. Así, "cómo se gestiona la memoria de este programa" es
-      un número en la salida de compilación en lugar de una afirmación en un documento.
+      Cada unidad exporta un resumen legible por máquina — un <em>objeto de forma</em> — que
+      lleva <code>gc_ladder</code>: cuántos sitios de asignación tomó cada nivel, más el total.
+      Los cuatro recuentos deben sumar el total, y <strong>dos programas independientes
+      comprueban esa aritmética sin leer una línea de código fuente</strong>. Así, «cómo se
+      gestiona la memoria de este programa» es un número en la salida de compilación en lugar
+      de una afirmación en un documento.
     </p>
 
     <p class="limit">
@@ -251,11 +252,11 @@
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM</span>
-        <span class="what">La dimensión del modelo de ejecución — la dimensión y su compuerta están en la rama principal; el motor no.</span>
+        <span class="what">El ajuste del modelo de ejecución — el ajuste y su comprobación están en la rama principal; el motor no.</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Volver a la página principal</span>
-        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+        <span class="what">Qué es Loment, y las dos clases de programa que construye.</span>
       </a>
     </div>
   </div>

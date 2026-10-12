@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: start.html -->
-<!-- source-sha256: 9a3af40efd92450dc52a253f165a6e8c1e86fd68c3ce25a8eef88f261092e4f3 -->
+<!-- source-sha256: 74f7390e1d4c5b32b1d9c446192a51ddb82e0bfd36a7658060f66bafeb1f5966 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -73,8 +73,8 @@
   <div class="wrap">
     <h1>Primeros pasos</h1>
     <p class="lede">
-      Esta página solo trata de conseguir que un programa se ejecute. Para saber qué es el
-      lenguaje, ve a la <a href="index.html">página principal</a>.
+      Esta página solo trata de conseguir que un programa se ejecute y verlo funcionar. Para qué
+      sirve el lenguaje está en la <a href="index.html">página principal</a>.
     </p>
   </div>
 </section>
@@ -106,8 +106,9 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      Obtienes el comando <code>loment</code>, <code>lompi</code>, y el servidor de lenguaje.
-      Compilar y ejecutar no necesita <strong>ni Python, ni clang, ni WSL</strong>: el paquete
+      Obtienes el comando <code>loment</code>, el gestor de paquetes (<code>lompi</code>) y el
+      servidor de lenguaje. Compilar y ejecutar no necesita <strong>ni Python, ni clang, ni
+      WSL</strong>: el paquete
       son binarios nativos más la biblioteca estándar, y el instalador comprueba
       <code>SHA256SUMS</code> antes de escribir nada.
     </p>
@@ -115,7 +116,7 @@
     <p class="note">
       Para cambiar el lenguaje mismo en lugar de usarlo, parte de una copia de trabajo:
       <code>git clone https://github.com/FujoJTOP/loment.git</code>. El compilador está
-      escrito en Loment y se reconstruye a partir de una semilla comprometida en el
+      escrito en Loment y se reconstruye a partir de una semilla confirmada en el
       repositorio — <code>sh loment/bootstrap.sh</code> lo construye y comprueba que la
       semilla se reproduce a sí misma byte por byte.
     </p>
@@ -134,12 +135,13 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      <code>_start</code> es el punto de entrada, porque un artefacto sealed no tiene runtime
-      que llame a uno por ti. Tampoco hay <code>printf</code>: la salida pasa por la llamada
-      al sistema <code>write</code>, cuyos argumentos son el descriptor de archivo, el
-      puntero de la cadena y su longitud. La segunda llamada es <code>exit</code>. Escribe
-      <code>choose hosted</code> y el artefacto pasa a ser un programa de runtime C, con
-      <code>fn main() -&gt; u32</code> como punto de entrada.
+      <code>_start</code> es donde arranca la máquina. Un programa sealed — uno que no enlaza
+      nada — no tiene runtime debajo que llame a un punto de entrada por ti, así que lo nombras
+      tú mismo; y no tiene <code>printf</code>, así que la salida pasa por la llamada al sistema
+      <code>write</code>: el descriptor de archivo, el puntero de la cadena y su longitud. La
+      segunda llamada es <code>exit</code>. Escribe <code>choose hosted</code> en su lugar y
+      obtienes un programa C corriente, con <code>fn main() -&gt; u32</code> como punto de
+      entrada.
     </p>
   </div>
 </section>

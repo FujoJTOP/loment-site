@@ -72,9 +72,9 @@
     <p class="eyebrow">System · unreleased</p>
     <h1>LibL</h1>
     <p class="lede">
-      The <strong>libc face</strong> of Loment's standard library. The same names, the same
-      argument order and the same return semantics as libc &mdash; for people who already know
-      C. It is the second face of one library, not a second library.
+      Loment's standard library, in C's shape: <strong>the same function names, the same
+      argument order and the same return values as libc</strong> &mdash; for people who already
+      know C. One library with two faces, not two libraries.
     </p>
   </div>
 </section>
@@ -268,7 +268,7 @@
           So <code>qsort</code>'s fourth argument is an enumeration saying what to compare by, not
           a comparison function. That is a real difference and it is not a downgrade in one
           direction: it moves "what does this sort compare by" out of a runtime address and into
-          <strong>a constant in the artifact</strong>, so it is answerable without reading the
+          <strong>a constant in the binary</strong>, so it is answerable without reading the
           source. <strong>The price is stated with it:</strong> an ordering that is not one of the
           built-in kinds cannot be expressed &mdash; you write the loop yourself.
         </p>
@@ -353,7 +353,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Back to the front page</span>
-        <span class="what">What Loment is, and the two kinds of artifact it builds.</span>
+        <span class="what">What Loment is, and the two kinds of program it builds.</span>
       </a>
     </div>
   </div>

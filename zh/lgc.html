@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- translated-from: lgc.html -->
-<!-- source-sha256: a22bee92e9a48d9a7275ad193411391277eee29ede320558565ce96e9cf42cfc -->
+<!-- source-sha256: 9a325a737cc582e9edb0c6849681ef20b74ba0e5430b4057e3dbba32bbdf25e0 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LomentGC — Loment</title>
-<meta name="description" content="LomentGC：回收是一份逐站点的契约。每一个 alloc 站点都在编译期被指派到一座四层阶梯的某一层，而收集器该负责多少内存，是产物携带的一个数字。">
+<meta name="description" content="LomentGC：Loment 程序里每一个分配的地方，都在编译期被指派给四种策略之一 —— 而留给收集器多少，写进了产物里。">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,9 +74,9 @@
     <p class="eyebrow">系统</p>
     <h1>LomentGC</h1>
     <p class="lede">
-      回收不是在一个堆上跑一个算法。它是一份<strong>逐站点的契约</strong>：程序里的每一个
-      <code>alloc</code> 都在编译期被指派到一座四层阶梯的某一层 —— 而收集器该负责多少内存，
-      是产物携带的一个数字。
+      当一个 Loment 程序释放内存时，它不把整件事交给收集器。每一个分配的地方，都在编译期被
+      指派给四种策略之一 —— 而留给 runtime 收集器多少，是写进产物里的一个数字，而不是文档里
+      的一句说法。
     </p>
   </div>
 </section>
@@ -127,15 +127,15 @@
   <div class="wrap">
     <h2>三档</h2>
     <p class="body">
-      程序用根单元里的一行，选择它愿意沿阶梯往下走到哪一层。
+      程序从它开始的那个文件里写一行，选择它愿意沿阶梯往下走到哪一层。
     </p>
 
     <div class="rows">
       <div class="row">
         <h3><code>choose gc_manual</code></h3>
         <p>
-          默认值。没有东西被自动回收；程序自己管理内存。一行都不写就得到它 —— 默认值是该维度
-          存在之前就有的行为，这是每个维度都遵循的规则。
+          默认值。没有东西被自动回收；程序自己管理内存。一行都不写就得到它 —— 默认值是该设置
+          存在之前就有的行为，这是每个设置都遵循的规则。
         </p>
       </div>
       <div class="row">
@@ -199,10 +199,10 @@
   <div class="wrap">
     <h2>为什么它落进产物里</h2>
     <p class="body">
-      每个单元导出一个形式对象，携带 <code>gc_ladder</code>：每一层各拿走了多少个
-      <code>alloc</code> 站点，加上总数。四个计数必须加总等于总数，而<strong>两个独立的校验器
-      在不读一行源码的情况下核这道算术</strong>。于是"这个程序的内存是怎样管理的？"变成构建
-      输出里的一个数字，而不是某份文档里的一个说法。
+      每个单元都导出一份机器可读的摘要 —— 一个<em>形式对象</em> —— 携带
+      <code>gc_ladder</code>：每一层各拿走了多少个 <code>alloc</code> 站点，加上总数。四个
+      计数必须加总等于总数，而<strong>两个独立的程序在不读一行源码的情况下核这道算术</strong>。
+      于是"这个程序的内存是怎样管理的？"变成构建输出里的一个数字，而不是某份文档里的一个说法。
     </p>
 
     <p class="limit">
@@ -227,11 +227,11 @@
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM</span>
-        <span class="what">执行模型那个维度 —— 维度与它的闸门在主分支上，引擎不在。</span>
+        <span class="what">执行模型那个设置 —— 该设置与它的检查在主分支上，引擎不在。</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">回到首页</span>
-        <span class="what">Loment 是什么，以及它构建的两类产物。</span>
+        <span class="what">Loment 是什么，以及它构建的两类程序。</span>
       </a>
     </div>
   </div>

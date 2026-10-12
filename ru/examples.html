@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: examples.html -->
-<!-- source-sha256: 060a12878d5cae4af2caed5f2b2f00ddd3118d100c34e0824988ce8a0434afc4 -->
+<!-- source-sha256: c0d47ae0066f8cfcbe40e252f5034e94df18ca8018493b2eaa5b6095485dd58c -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -84,9 +84,8 @@
   <div class="wrap">
     <h2>Самая маленькая программа</h2>
     <p class="body">
-      <code>_start</code> — точка входа, потому что у sealed-артефакта нет runtime, который
-      вызвал бы её за вас. Вывод идёт через системный вызов <code>write</code>: дескриптор
-      файла, указатель, длина. Второй вызов — <code>exit</code>.
+      <code>_start</code> — там, где начинается машина, и вывод идёт через системный вызов
+      <code>write</code>: дескриптор файла, указатель, длина. Второй вызов — <code>exit</code>.
     </p>
     <div class="codewrap">
 <pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>

@@ -72,10 +72,10 @@
     <p class="eyebrow">System · in progress</p>
     <h1>Loment VM</h1>
     <p class="lede">
-      Not a faster path, and not a way to write programs more easily. A <strong>second way to
-      run one</strong>: an artifact can be handed to an executor that adopts and pages it on
-      demand &mdash; and that decides whether to adopt it by reading what the artifact already
-      carries. <strong>The engine does not exist.</strong>
+      A <strong>second way to run a program</strong>. The binary can be handed to an executor
+      that adopts it on demand and decides whether to adopt it by reading what the binary
+      already carries. It is not a faster path, and it is not a way to write programs more
+      easily. <strong>The engine does not exist yet.</strong>
     </p>
   </div>
 </section>
@@ -89,15 +89,16 @@
       mistake the plan for the product.
     </p>
     <p class="body">
-      What exists is the first slice: <strong>the dimension and the gate are on the main
-      branch</strong>, and neither is in any release or in any installed toolchain. What that slice
-      does is decide whether a program may <em>ask</em> for the VM, not run anything. Everything
-      below this line is the design &mdash; what the thing is meant to be, and what it is meant not
-      to be &mdash; and none of it is a feature you can use.
+      What exists is the first slice: <strong>the <code>vm</code> setting, and the check that
+      refuses it, are on the main branch</strong> &mdash; and neither is in any release or in
+      any installed toolchain. All that slice does is decide whether a program may <em>ask</em>
+      for the VM; it runs nothing. Everything below this line is the design &mdash; what the
+      thing is meant to be, and what it is meant not to be &mdash; and none of it is a feature
+      you can use.
     </p>
     <p class="limit">
-      <strong>A debt the project has carried before.</strong> The <code>runtime</code> dimension
-      was declared in the artifact for a while before it did anything, and was later brought up
+      <strong>A debt the project has carried before.</strong> The <code>runtime</code> setting
+      was declared in the binary for a while before it did anything, and was later brought up
       to what it claimed. This is that shape again: declared, carried, owed. The design says so
       itself rather than leaving a reader to find out.
     </p>
@@ -155,27 +156,28 @@
       <div class="row">
         <h3>The bytecode is not a new invention</h3>
         <p>
-          It is a <strong>serialisation of the IR the compiler already emits</strong>. The
-          bundled back end is a stack machine &mdash; one stack slot per SSA value, arguments on
-          the stack, aggregates through a hidden result pointer &mdash; so a complete execution
-          model for that IR subset already exists and is already exercised. What is missing is
-          the step that <em>executes</em> it. LVM would be a <strong>fourth reader</strong> of
-          the same IR: no new front end, no new IR, no new type system.
+          It is a <strong>serialisation of the intermediate form the compiler already
+          emits</strong>. The bundled back end is a stack machine &mdash; one stack slot per
+          value, arguments on the stack, aggregates through a hidden result pointer &mdash; so a
+          complete execution model for that subset already exists and is already exercised. What
+          is missing is the step that <em>executes</em> it. LVM would be a <strong>fourth
+          reader</strong> of the same form: no new front end, no new intermediate form, no new
+          type system.
         </p>
       </div>
       <div class="row">
-        <h3>A fifth dimension</h3>
+        <h3>A fifth setting</h3>
         <p>
-          <code>choose</code> already had four &mdash; which layer the program may use, how it
-          reclaims memory, whether the artifact may carry a runtime, and whether it may reach
-          outside itself. <code>vm</code> is the fifth, and it answers <strong>which execution model
-          is this program for?</strong> Left unwritten it is <code>no_vm</code>, which is what
-          everything was before the dimension existed. It is on the main branch; it is in no
-          release.
+          <code>choose</code> already had four &mdash; which layer of the library the program
+          may use, how it reclaims memory, whether the binary may carry a runtime, and whether it
+          may reach outside itself. <code>vm</code> is the fifth, and it answers <strong>which
+          execution model is this program for?</strong> Left unwritten it is <code>no_vm</code>,
+          which is what everything was before the setting existed. It is on the main branch; it
+          is in no release.
         </p>
         <p>
           The value says <em>whether</em>, never <em>which</em>. That is the rule the
-          <code>runtime</code> dimension already follows: what sits inside will change over the
+          <code>runtime</code> setting already follows: what sits inside will change over the
           years, and a name that encoded today's rung would have to be renamed to add tomorrow's.
         </p>
       </div>
@@ -303,10 +305,11 @@
         <h3>Running code you did not write</h3>
         <p>
           A third-party extension, or one a machine wrote. <strong>This is where the project's
-          own ideas first have a job to do.</strong> At link time the port table, the capability
-          domains, the record of what is absent and the reclamation ledger are
-          <em>audit</em> &mdash; something to read afterwards. At load time they become a
-          <em>gate</em> &mdash; something to decide with, before anything runs.
+          own ideas first have a job to do.</strong> At link time the port table, the ranges a
+          unit declares it may reach, the record of what it does not have, and its reclamation
+          numbers are <em>audit</em> &mdash; something to read afterwards. At load time those
+          same records become a <em>gate</em> &mdash; something to decide with, before anything
+          runs.
         </p>
       </div>
     </div>
@@ -370,7 +373,7 @@
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
         <span class="who">docs/231</span>
-        <span class="what">The channel and the <code>vm</code> dimension — the slice that is on the main branch.</span>
+        <span class="what">The channel and the <code>vm</code> setting — the slice that is on the main branch.</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">Roadmap</span>
@@ -382,7 +385,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Back to the front page</span>
-        <span class="what">What Loment is, and the two kinds of artifact it builds.</span>
+        <span class="what">What Loment is, and the two kinds of program it builds.</span>
       </a>
     </div>
   </div>

@@ -1,12 +1,12 @@
 <!doctype html>
 <!-- translated-from: lgc.html -->
-<!-- source-sha256: a22bee92e9a48d9a7275ad193411391277eee29ede320558565ce96e9cf42cfc -->
+<!-- source-sha256: 9a325a737cc582e9edb0c6849681ef20b74ba0e5430b4057e3dbba32bbdf25e0 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LomentGC — Loment</title>
-<meta name="description" content="LomentGC: 回収はサイトごとの契約である。すべての alloc サイトはコンパイル時に四段のはしごのいずれかの段に割り当てられ、コレクタがどれだけのメモリに責任を負うかは、成果物が運ぶ数値である。">
+<meta name="description" content="LomentGC: Loment のプログラムで確保が起きるあらゆる場所は、コンパイル時に四つの戦略のいずれかに割り当てられる —— そしてコレクタにどれだけ任されるかは、バイナリに書き込まれる。">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,10 +74,10 @@
     <p class="eyebrow">システム</p>
     <h1>LomentGC</h1>
     <p class="lede">
-      回収は、ひとつのヒープに対するひとつのアルゴリズムではない。それは<strong>サイトごとの
-      契約</strong>である。プログラム中のすべての <code>alloc</code> はコンパイル時に四段の
-      はしごのいずれかの段に割り当てられ —— コレクタがどれだけのメモリに責任を負うかは、
-      成果物が運ぶ数値である。
+      Loment のプログラムがメモリを解放するとき、その仕事のすべてをコレクタに任せはしない。
+      確保が起きるあらゆる場所は、コンパイル時に<strong>四つの戦略のいずれか</strong>に割り当て
+      られ —— runtime コレクタにどれだけ任されるかは、文書の中の主張ではなく、バイナリに
+      書き込まれた数値である。
     </p>
   </div>
 </section>
@@ -132,7 +132,8 @@
   <div class="wrap">
     <h2>三つの段階</h2>
     <p class="body">
-      プログラムは、ルートユニットの一行で、はしごをどこまで下ることを許すかを選ぶ。
+      プログラムは、自分が始めるファイルに一行書くことで、はしごをどこまで下ることを許すかを
+      選ぶ。
     </p>
 
     <div class="rows">
@@ -140,7 +141,7 @@
         <h3><code>choose gc_manual</code></h3>
         <p>
           既定。何も自動では回収されず、プログラムが自分のメモリを管理する。一行も書かなければ
-          これになる —— 既定とは、その次元が存在する前からの振る舞いであり、それはすべての次元が
+          これになる —— 既定とは、その設定が存在する前からの振る舞いであり、それはすべての設定が
           従う規則である。
         </p>
       </div>
@@ -243,7 +244,7 @@
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM</span>
-        <span class="what">実行モデルの次元 —— 次元とそのゲートは main ブランチにあり、エンジンはない。</span>
+        <span class="what">実行モデルの設定 —— 設定とその検査は main ブランチにあり、エンジンはない。</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">フロントページへ戻る</span>

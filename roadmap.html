@@ -91,9 +91,9 @@
     <h2>The nearest milestone: 0.1.5 Alpha 1</h2>
     <p class="body">
       The next thing on the list is not a feature. Its goal is stated as <strong>zero
-      silence</strong>: <em>every virtue the language claims gets either a verdict or a runnable
-      criterion</em>, so that nothing is described without something that could falsify the
-      description.
+      silence</strong>: <em>every claim the language makes gets either a verdict or a test that
+      could prove it wrong</em> &mdash; nothing is described without something that could
+      falsify the description.
     </p>
     <p class="body">
       The input is a survey of what other languages do well &mdash; taken from C, Rust, Java and
@@ -105,10 +105,9 @@
       not been decided, it has been deferred, and the rule is that deferring counts as failing.
     </p>
     <p class="body">
-      That sounds bureaucratic until you see what it is for. Some of the virtues in the survey
-      <em>cannot</em> coexist, and the useful part of the exercise is being forced to say which
-      one is being given up and why. Three of the conflicts are worth naming because they are the
-      ones this language actually sits on:
+      Some of those claims <em>cannot</em> coexist, and the useful part of the exercise is being
+      forced to say which one is being given up, and why. Three of the conflicts are worth
+      naming, because they are the ones this language actually sits on:
     </p>
 
     <div class="rows">
@@ -169,10 +168,10 @@
       <div class="row">
         <h3>0.1.5.x &mdash; the runtime is finished</h3>
         <p>
-          The <code>runtime</code> dimension already exists as a mode with a default, and it is
-          <strong>enforced rather than advisory</strong>: asking for the tier that needs a
-          collector while declaring the artifact carries no runtime is a compile error, because
-          the two contradict each other by definition. What the runtime holds today is exactly the
+          The <code>runtime</code> setting already exists, with a default, and it is
+          <strong>enforced rather than advisory</strong>: asking for the reclamation tier that
+          needs a collector while declaring there is no runtime is a compile error, because the
+          two contradict each other by definition. What the runtime holds today is exactly the
           part that tier needs. This line adds the rest of it.
         </p>
       </div>
@@ -188,8 +187,8 @@
         <h3>0.1.7 &mdash; the object system is filled out</h3>
         <p>
           Today the language has structs, enums whose variants carry a single payload, traits
-          dispatched statically, and generics resolved at compile time. This line is about what is
-          missing rather than about adding a feature nobody asked for.
+          dispatched statically, and generics resolved at compile time. This line fills in what is
+          missing rather than adding something nobody asked for.
         </p>
       </div>
       <div class="row">
@@ -239,7 +238,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Back to the front page</span>
-        <span class="what">What Loment is, and the two kinds of artifact it builds.</span>
+        <span class="what">What Loment is, and the two kinds of program it builds.</span>
       </a>
     </div>
   </div>

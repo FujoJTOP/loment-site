@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 2f84fade6a46cfd9a63618c8c6af9980f561f0b2cfe95c43cb55a15964dbe787 -->
+<!-- source-sha256: c9a171cf07d35f5523c4dd097dca1a426c3d1632c3d5615ceb210756367ce773 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -74,10 +74,10 @@
     <p class="eyebrow">Sistema · en curso</p>
     <h1>Loment VM</h1>
     <p class="lede">
-      No es una ruta más rápida, ni una forma de escribir programas con más facilidad. Una
-      <strong>segunda forma de ejecutar uno</strong>: un artefacto puede entregarse a un ejecutor
-      que lo adopta y lo pagina bajo demanda &mdash; y que decide si adoptarlo leyendo lo que el
-      artefacto ya lleva. <strong>El motor no existe.</strong>
+      Una <strong>segunda forma de ejecutar un programa</strong>. El binario puede entregarse a
+      un ejecutor que lo adopta bajo demanda y decide si adoptarlo leyendo lo que el binario ya
+      lleva. No es una ruta más rápida, ni una forma de escribir programas con más facilidad.
+      <strong>El motor todavía no existe.</strong>
     </p>
   </div>
 </section>
@@ -91,15 +91,15 @@
       para que quien lee confunda el plan con el producto.
     </p>
     <p class="body">
-      Lo que existe es la primera porción: <strong>la dimensión y la puerta están en la rama
-      principal</strong>, y ninguna de las dos está en ninguna versión ni en ningún conjunto de
-      herramientas instalado. Lo que hace esa porción es decidir si un programa puede <em>pedir</em>
-      la VM, no ejecutar nada. Todo lo que hay debajo de esta línea es el diseño &mdash; lo que la
-      cosa pretende ser, y lo que pretende no ser &mdash; y nada de ello es una función que se pueda
-      usar.
+      Lo que existe es la primera porción: <strong>el ajuste <code>vm</code>, y la comprobación
+      que lo rechaza, están en la rama principal</strong> &mdash; y ninguna de las dos está en
+      ninguna versión ni en ningún conjunto de herramientas instalado. Lo único que hace esa
+      porción es decidir si un programa puede <em>pedir</em> la VM; no ejecuta nada. Todo lo que
+      hay debajo de esta línea es el diseño &mdash; lo que la cosa pretende ser, y lo que pretende
+      no ser &mdash; y nada de ello es una función que se pueda usar.
     </p>
     <p class="limit">
-      <strong>Una deuda que el proyecto ya arrastró antes.</strong> La dimensión
+      <strong>Una deuda que el proyecto ya arrastró antes.</strong> El ajuste
       <code>runtime</code> se declaró en el artefacto durante un tiempo antes de hacer nada, y
       después se puso a la altura de lo que prometía. Esta es otra vez esa forma: declarada,
       arrastrada, debida. El diseño lo dice por sí mismo en lugar de dejar que quien lee lo
@@ -159,26 +159,27 @@
       <div class="row">
         <h3>El bytecode no es una invención nueva</h3>
         <p>
-          Es una <strong>serialización del IR que el compilador ya emite</strong>. El back end
-          incluido es una máquina de pila &mdash; una ranura de pila por valor SSA, los argumentos
-          en la pila, los agregados a través de un puntero de resultado oculto &mdash; así que ya
-          existe un modelo de ejecución completo para ese subconjunto del IR, y ya se ejercita. Lo
-          que falta es el paso que lo <em>ejecuta</em>. LVM sería un <strong>cuarto lector</strong>
-          del mismo IR: ningún front end nuevo, ningún IR nuevo, ningún sistema de tipos nuevo.
+          Es una <strong>serialización de la forma intermedia que el compilador ya emite</strong>.
+          El back end incluido es una máquina de pila &mdash; una ranura de pila por valor, los
+          argumentos en la pila, los agregados a través de un puntero de resultado oculto &mdash;
+          así que ya existe un modelo de ejecución completo para ese subconjunto, y ya se
+          ejercita. Lo que falta es el paso que lo <em>ejecuta</em>. LVM sería un <strong>cuarto
+          lector</strong> de la misma forma: ningún front end nuevo, ninguna forma intermedia
+          nueva, ningún sistema de tipos nuevo.
         </p>
       </div>
       <div class="row">
-        <h3>Una quinta dimensión</h3>
+        <h3>Un quinto ajuste</h3>
         <p>
-          <code>choose</code> ya tenía cuatro &mdash; qué capa puede usar el programa, cómo
-          recupera memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera de
-          sí mismo. <code>vm</code> es la quinta, y responde a <strong>¿para qué modelo de
-          ejecución es este programa?</strong> Sin escribirla es <code>no_vm</code>, que es lo que
-          todo era antes de que la dimensión existiera. Está en la rama principal; no está en
-          ninguna versión.
+          <code>choose</code> ya tenía cuatro &mdash; qué capa de la biblioteca puede usar el
+          programa, cómo recupera memoria, si el binario puede llevar un runtime, y si puede
+          alcanzar fuera de sí mismo. <code>vm</code> es el quinto, y responde a <strong>¿para qué
+          modelo de ejecución es este programa?</strong> Sin escribirlo es <code>no_vm</code>, que
+          es lo que todo era antes de que el ajuste existiera. Está en la rama principal; no está
+          en ninguna versión.
         </p>
         <p>
-          El valor dice <em>si</em>, nunca <em>cuál</em>. Esa es la regla que la dimensión
+          El valor dice <em>si</em>, nunca <em>cuál</em>. Esa es la regla que el ajuste
           <code>runtime</code> ya sigue: lo que hay dentro cambiará con los años, y un nombre que
           codificara el peldaño de hoy tendría que renombrarse para añadir el de mañana.
         </p>
@@ -312,10 +313,10 @@
         <p>
           Una extensión de terceros, o una que escribió una máquina. <strong>Aquí es donde las
           ideas propias del proyecto tienen por primera vez un trabajo que hacer.</strong> En tiempo
-          de enlazado, la tabla de puertos, los dominios de capacidad, el registro de lo que está
-          ausente y el libro de recuperación son <em>auditoría</em> &mdash; algo que leer después.
-          En tiempo de carga se vuelven una <em>compuerta</em> &mdash; algo con lo que decidir, antes
-          de que nada se ejecute.
+          de enlazado, la tabla de puertos, los rangos que una unidad declara que puede alcanzar,
+          el registro de lo que no tiene y sus números de recuperación son <em>auditoría</em> &mdash;
+          algo que leer después. En tiempo de carga esos mismos registros se vuelven una
+          <em>compuerta</em> &mdash; algo con lo que decidir, antes de que nada se ejecute.
         </p>
       </div>
     </div>
@@ -380,7 +381,7 @@
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
         <span class="who">docs/231</span>
-        <span class="what">El canal y la dimensión <code>vm</code> — la porción que está en la rama principal.</span>
+        <span class="what">El canal y el ajuste <code>vm</code> — la porción que está en la rama principal.</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">Roadmap</span>
@@ -392,7 +393,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Volver a la página principal</span>
-        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+        <span class="what">Qué es Loment, y las dos clases de programa que construye.</span>
       </a>
     </div>
   </div>

@@ -71,8 +71,8 @@
   <div class="wrap">
     <h1>Get started</h1>
     <p class="lede">
-      This page is only about getting a program to run. For what the language is,
-      see the <a href="index.html">front page</a>.
+      This page is only about getting a program to run and seeing it work. What the language
+      is for is on the <a href="index.html">front page</a>.
     </p>
   </div>
 </section>
@@ -104,10 +104,10 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      You get the <code>loment</code> command, <code>lompi</code>, and the language server.
-      Compiling and running needs <strong>no Python, no clang and no WSL</strong>: the
-      package is native binaries plus the standard library, and the installer checks
-      <code>SHA256SUMS</code> before it writes anything.
+      You get the <code>loment</code> command, the package manager (<code>lompi</code>), and
+      the language server. Compiling and running needs <strong>no Python, no clang and no
+      WSL</strong>: the package is native binaries plus the standard library, and the
+      installer checks <code>SHA256SUMS</code> before it writes anything.
     </p>
 
     <p class="note">
@@ -132,12 +132,13 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      <code>_start</code> is the entry point, because a sealed artifact has no runtime to
-      call one for you. There is no <code>printf</code> either: output goes through the
-      <code>write</code> system call, whose arguments are the file descriptor, the
-      string's pointer and its length. The second call is <code>exit</code>. Write
-      <code>choose hosted</code> and the artifact is a C-runtime program instead, with
-      <code>fn main() -&gt; u32</code> as its entry point.
+      <code>_start</code> is where the machine begins. A sealed program &mdash; one that links
+      nothing &mdash; has no runtime underneath to call an entry point for you, so you name it
+      yourself; and it has no <code>printf</code>, so output goes through the
+      <code>write</code> system call: the file descriptor, the string's pointer, and its
+      length. The second call is <code>exit</code>. Write <code>choose hosted</code> instead
+      and you get an ordinary C program, with <code>fn main() -&gt; u32</code> as its entry
+      point.
     </p>
   </div>
 </section>

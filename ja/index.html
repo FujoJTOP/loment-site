@@ -1,14 +1,14 @@
 <!doctype html>
 <!-- translated-from: index.html -->
-<!-- source-sha256: e80c58f4c64e26cdc0c59b9baf298fda61a8a09f110159d07831ae881475fb74 -->
+<!-- source-sha256: b0e42303d546e9330d371f1d1ed94d6f7a5a8ba51e0f0554ef4f553d633cd6dd -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loment — システムプログラミング言語</title>
-<meta name="description" content="Loment はネイティブの x86-64 実行ファイルにコンパイルする。既定では sealed —— runtime も libc も未定義シンボルもない —— hosted にするのは自分でそう指定したときだけ。ツールチェイン自体が Loment で書かれている。">
+<meta name="description" content="Loment は、それだけで立つネイティブの実行ファイルを作る —— runtime も libc も、その下に何もない。プログラムが何に届いてよいかはソースに書かれ、バイナリに記録される。ツールチェイン自体も Loment で書かれている。">
 <meta property="og:title" content="Loment — システムプログラミング言語">
-<meta property="og:description" content="既定では sealed。runtime も libc も未定義シンボルもない。hosted にするのは自分でそう指定したときだけ。ツールチェインは Loment で書かれている。">
+<meta property="og:description" content="それだけで立つネイティブの実行ファイル: runtime も libc も、その下に何もない。プログラムが何に届いてよいかはソースに書かれ、バイナリに記録される。">
 <meta property="og:type" content="website">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,9 +77,10 @@
     <p class="eyebrow">システムプログラミング言語</p>
     <h1>Loment</h1>
     <p class="lede">
-      ネイティブの x86-64 実行ファイル —— Linux ELF、Windows PE、あるいはベアメタル向けの
-      freestanding オブジェクト —— にコンパイルする。<strong>その中に何が入るかはプログラム自身の
-      決定であり、ビルドがそれを記録する。</strong>ツールチェイン自体が Loment で書かれている。
+      Loment は、<strong>それだけで立つ</strong>ネイティブの実行ファイルを作る —— runtime も
+      libc も、その下に何もない。プログラムが何に届いてよいかはソースに書かれ、バイナリに
+      記録されるので、ビルドはあなたのコードを読まずにそれを検査できる。ツールチェイン自体も
+      Loment で書かれている。
     </p>
     <p class="actions">
       <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">ダウンロード</a>
@@ -92,21 +93,22 @@
     </div>
 
     <p class="caption">
-      <code>_start</code> がエントリポイントである。sealed な成果物には、代わりにエントリポイントを
-      呼んでくれる runtime がないからだ。<code>printf</code> もない —— 出力は
-      <code>write</code> システムコールを通る。
+      これがプログラムの全体である。<code>_start</code> はマシンが始まる場所で、テキストは
+      <code>write</code> システムコールを通って出ていく —— 何もリンクしないプログラムには、
+      その下に呼ぶべき <code>printf</code> がない。何もあなたの代わりにされず、何も邪魔を
+      しない。
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>ひとつのソース、二種類の成果物</h2>
+    <h2>二種類のプログラム</h2>
     <p class="body">
-      多くのビルド設定は言語の外にあり、ソースを読む者には決して見えない。Loment はこの設定を
-      プログラムの<em>中に</em>置く —— ルートユニットに一行 —— そしてそれを、ユニットがエクスポートする
-      形式オブジェクトへと持ち込む。だからどちらの種類の成果物がビルドされたかは、ソースを
-      まったく読めないものにも答えられる。
+      多くの言語は、バイナリに何を入れるかをビルドファイルで決める —— ソースを読む人が決して
+      開かないファイルである。Loment はその決定をプログラムの<em>内側</em>に置く: 自分が始める
+      ファイルに書く一行であり、それはバイナリが携える機械可読な要約へと引き継がれる。だから
+      「これはどちらの種類のプログラムか?」は、コードを一切読まずに答えられる。
     </p>
 
     <div class="split">
@@ -114,12 +116,12 @@
         <p class="pane-tag">choose sealed</p>
         <dl>
           <dt>これは何か</dt>
-          <dd>既定。外界へのポートを持たない成果物。</dd>
+          <dd>既定。外界への開口を持たないプログラム。</dd>
           <dt>エントリポイント</dt>
           <dd><code>fn _start()</code></dd>
           <dt>リンク</dt>
-          <dd>なし。未定義シンボルは警告ではなくエラーである —— だから sealed な成果物には
-              runtime も libc もないことが証明できる。</dd>
+          <dd>なし。未定義シンボルは警告ではなくエラーである —— だから sealed なプログラムが
+              runtime も libc も積まないことが証明できる。</dd>
           <dt>到達範囲</dt>
           <dd>それにコンパイルされたコードだけ、加えてリンカに渡したオブジェクトのうち既に
               自己完結しているもの。</dd>
@@ -129,12 +131,12 @@
         <p class="pane-tag">choose hosted</p>
         <dl>
           <dt>これは何か</dt>
-          <dd>もう一方の道。自分自身の外に到達することが許されると宣言された成果物。</dd>
+          <dd>もう一方の道。自分自身の外に届くことを許されたプログラム。</dd>
           <dt>エントリポイント</dt>
           <dd><code>fn main() -&gt; u32</code></dd>
           <dt>リンク</dt>
-          <dd>実在のライブラリ。ビルドは IR を、同梱のリンカではなくホストの C ツールチェインに
-              渡す。</dd>
+          <dd>実在のライブラリ。ビルドはその出力を、Loment に同梱のリンカではなくホストの C
+              ツールチェインに渡す。</dd>
           <dt>到達範囲</dt>
           <dd>libc、共有ライブラリ、そして自分で埋め込むホスト runtime。プロジェクト自身の判据は
               <code>libstdc++</code> と <code>libz</code> をリンクし、CPython を埋め込む。</dd>
@@ -143,7 +145,7 @@
     </div>
 
     <p class="limit">
-      <strong>境界が実際どこにあるか。</strong>実在のライブラリに到達するとは、自分でホストの
+      <strong>境界は、正確にはここにある。</strong>実在のライブラリに届くとは、自分でホストの
       ツールチェインを通すということだ —— ビルドでそのライブラリを名指しする。実在の C ライブラリは
       まだ<em>インストール可能な依存</em>ではない。パッケージマネージャが受け取るのは今も Loment の
       ソースライブラリだけである。その部分は作っている途中だ。
@@ -153,49 +155,99 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>誰が、どの範囲で、何を実行できるか</h2>
+    <h2>プログラムが触れてよいもの</h2>
     <p class="body">
-      多くの言語は<em>このプログラムは何ができるか?</em>に答える。Loment はもっと狭い問いを軸に
-      組み立てられている —— <strong>誰が、どの範囲で、何を実行でき、それをソースを読まずに
-      決着できるか?</strong>それを支えるのは三つだ。
+      多くの言語は<em>このプログラムは何ができるか?</em>に答える —— そして答えはたいてい
+      「好きなこと全部」である。Loment はもっと狭い問いを軸に組み立てられている:
+      <strong>このプログラムは何に届くことを許されていて、それはソースを読まずに決着できる
+      か?</strong>それを支えるのは三つで、最初のものはコードの中に見える。
     </p>
 
     <div class="codewrap">
 <pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> native_cap</span><span class="ln" data-n="2"> </span><span class="ln ln-mark" data-n="3"><span class="k">capability</span> blk_write : disk[<span class="rng">0..4</span>] revocable</span><span class="ln" data-n="4"> </span><span class="ln" data-n="5"><span class="k">fn</span> write(slot: <span class="t">u32</span>) -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="6">    <span class="k">guard</span> blk_write(slot);</span><span class="ln" data-n="7">    <span class="k">return</span> slot;</span><span class="ln" data-n="8">}</span><span class="ln" data-n="9"> </span><span class="ln" data-n="10"><span class="k">fn</span> literal_ok() -&gt; <span class="t">u32</span> {</span><span class="ln" data-n="11">    <span class="k">guard</span> blk_write(<span class="rng">2</span>);</span><span class="ln" data-n="12">    <span class="k">return</span> <span class="n">2</span>;</span><span class="ln" data-n="13">}</span></code></pre>
     </div>
     <p class="caption">
-      3 行目がユニットの到達しうる範囲を宣言する。6 行目は <code>slot</code> を実行時にそれと
-      照合し、範囲外の添字はトラップする。11 行目はリテラルなので、コンパイラが決着させ、
-      何も出力されない。
+      3 行目がユニットの届いてよい範囲を宣言する。6 行目は <code>slot</code> を実行時にそれと
+      照合し、範囲外の添字はプログラムを止める。11 行目はリテラルなので、コンパイラが前もって
+      決着させ、何も出力しない。
     </p>
 
     <div class="rows">
       <div class="row">
-        <h3>ケイパビリティドメイン</h3>
+        <h3>コードが宣言する範囲</h3>
         <p>
-          ユニットは到達しうる範囲を宣言し、<code>guard</code> が添字をそれと照合する ——
-          添字がリテラルならコンパイル時に、そうでなければ実行時に。境界はうやむやにせず
-          明示される。guard が区切るのは<em>添字</em>であって対象ではなく、またそれは認可ではない。
+          ユニット —— ひとつのソースファイルと、それが取り込むもの —— は届いてよい範囲を宣言し、
+          <code>guard</code> が個々のアクセスをその範囲と照合する: 添字が定数ならコンパイル時に、
+          そうでなければ実行時に。Loment はこれを<em>ケイパビリティドメイン</em>と呼び、境界を
+          うやむやにせず明示する —— <code>guard</code> が区切るのは<em>添字</em>であって対象では
+          なく、またそれは認可ではない。
         </p>
       </div>
       <div class="row">
-        <h3>形式オブジェクト</h3>
+        <h3>バイナリが携える要約</h3>
         <p>
-          すべてのユニットは、自分が何を含み何に到達するかの、宣言された機械可読な要約を
-          エクスポートし、それは二つの独立した検証器が判定する —— だから「これは何に触れうるか」
-          はソースを読まずに答えられる。
+          すべてのユニットは、自分が何を含み何に届くかを書いた機械可読な要約をエクスポートし、
+          二つの独立したプログラムがそれを検査する。だから「これは何に触れうるか?」には、
+          あなたのコードを読まずに答えがある。その要約には名前がある: <em>形式オブジェクト</em>。
         </p>
       </div>
       <div class="row">
-        <h3>互換レイヤー</h3>
+        <h3>他の十の言語からコードを呼ぶ</h3>
         <p>
-          C、C++、Rust、Zig は C ABI の背後で。Go、Python、Java、JavaScript、Perl、Lua は
-          プロセスブリッジ越しに。sealed な成果物では、リンクされるものが自己完結していなければ
-          ならない。<code>choose hosted</code> が実在のライブラリに到達する道であり、判据はそれを
-          libstdc++、libz、埋め込んだ CPython に対して実際に走らせる。
+          C、C++、Rust、Zig は C ABI を通って入ってくる。Go、Python、Java、JavaScript、Perl、
+          Lua はプロセスブリッジを通って。sealed なプログラムでは、リンクするものはどれも
+          自己完結していなければならない。<code>choose hosted</code> が実在のライブラリへの道で
+          あり、プロジェクトのテストはそれを libstdc++、libz、埋め込んだ CPython に対して
+          走らせる。
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>それで既に作られているもの</h2>
+    <p class="body">
+      これほど若い言語は、たいてい「何になりたいか」で語られる。ここにあるのは、Loment が
+      すでにしていることだ —— すべてリポジトリの中にあり、すべてダウンロードできる。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>ツールチェイン</h3>
+        <p>
+          コンパイラ、リンカ、フォーマッタ、ランゲージサーバ、そしてパッケージマネージャは、
+          どれも Loment のソースとして出荷され、その下に Python なしで動く。コンパイラは、
+          この言語で書かれた最大のプログラムである。
+        </p>
+      </div>
+      <div class="row">
+        <h3>ディスクドライバ</h3>
+        <p>
+          <code>ahci.lomt</code> は SATA ディスクと話す: レジスタブロックを読み、実装されて
+          いるポートを数え、コマンドを発行する。レジスタブロックは呼び出し側が渡すので、同じ
+          コードがオペレーティングシステムの中でも、hosted なマシン上でも動く。
+        </p>
+      </div>
+      <div class="row">
+        <h3>ターミナルインターフェース</h3>
+        <p>
+          <code>lumtui</code> はテキスト、枠、レイアウトをターミナルに描く —— 小さな
+          ライブラリで、あなたが自分のものを書くのと同じやり方で書かれている。
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      コンパイラは
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/selfhost">loment/selfhost/</a>
+      の下に、ライブラリは
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/lib">loment/lib/</a>
+      の下に、サンプルは
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>
+      の下にある。
+    </p>
   </div>
 </section>
 
@@ -205,13 +257,13 @@
 
     <div class="rows">
       <div class="row">
-        <h3>crate 属性ではなくプロジェクトモード</h3>
+        <h3>プログラム全体の設定を、一行で</h3>
         <p>
-          <code>choose</code> は五つの次元を持つ —— プログラムが使ってよい層、メモリをどう
-          回収するか、成果物が runtime を積んでよいか、自分自身の外に到達してよいか、そして
-          どの実行モデル向けか。それぞれは
-          ルートユニットに多くとも一度だけ書かれ、それぞれがプログラム全体の性質になる。矛盾する
-          組は拒否され、その診断は「不正な組み合わせ」と言う代わりに、その組と理由を名指しする。
+          自分が始めるファイルに書く一行が、プログラム全体について五つのことを決める:
+          ライブラリのどの層を使ってよいか、メモリをどう回収するか、runtime を積んでよいか、
+          自分自身の外に届いてよいか、そしてどの実行モデル向けに書かれたか。矛盾する二つの
+          設定を求めれば、コンパイラは拒否する —— 「不正な組み合わせ」と言う代わりに、その
+          両方を名指しし、理由を述べる。この仕組みは <code>choose</code> と呼ばれる。
         </p>
       </div>
       <div class="row">
@@ -223,27 +275,28 @@
         </p>
       </div>
       <div class="row">
-        <h3>モジュールを一つずつインポートするライブラリ</h3>
+        <h3>モジュールをひとつずつ取り込むライブラリ</h3>
         <p>
           標準ライブラリはツールチェインに同梱され、<code>use vec</code>、<code>use map</code>、
-          <code>use fs</code> として届く。パッケージ全体のインポートもあるが、それはすべてを
-          ひとつのユニットに引き込んでしまい、ドキュメントはそれを使わないよう勧めている。
+          <code>use fs</code> のようにひとつずつ届く。すべてを一度に引き込むパッケージ全体の
+          取り込み口もあるが、ドキュメントはそれを使わないよう勧めている。
         </p>
       </div>
       <div class="row">
-        <h3>すべてがカスタマイズ可能</h3>
+        <h3>すべてがカスタマイズできる</h3>
         <p>
-          ソースの拡張子、コマンドの面、ライブラリ —— その同一性が内容ハッシュであるディレクトリ
-          —— そしてツールチェインそのもの。レジストリはない。拡張点はディスク上のファイルである。
+          ソースの拡張子、実行できるコマンドの集合、ライブラリ —— その同一性が内容ハッシュで
+          あるディレクトリ —— そしてツールチェインそのもの。レジストリはない。拡張点はディスク
+          上のファイルである。
         </p>
       </div>
     </div>
 
     <p class="limit">
-      <strong>まだ終わっていないこと。</strong>ツールチェインは実行時にはセルフホストである ——
-      Python も libc もなしでコンパイルし実行する —— が、開発側はそうではない。参照実装とその
-      テスト群は今もリポジトリにあり、リポジトリはまだ「Loment だけ」ではない。残っている項目が
-      どちらの半分に属するかはリリースノートに書かれている。
+      <strong>まだ終わっていないこと。</strong>ツールチェインは Python も libc もなしで
+      コンパイルし実行する —— だが開発側はまだそこに至っていない。参照実装とそのテスト群は
+      今もリポジトリにあり、リポジトリはまだ「Loment だけ」ではない。残っている項目がどちらの
+      半分に属するかはリリースノートに書かれている。
     </p>
   </div>
 </section>
@@ -252,16 +305,17 @@
   <div class="wrap">
     <h2>システム</h2>
     <p class="body">
-      独自の設計記録を持つほど大きく、そして正直な現状の一行を持つ、Loment の各部分。
+      Loment のうち、独自の設計記録を持てるほど大きい四つの部分 —— それぞれが正直な現状の
+      一行を持ち、エンジンがまだ存在しないものも含む。
     </p>
     <div style="margin-top: var(--s4)">
       <a class="doclink" href="lgc.html">
         <span class="who">LomentGC</span>
-        <span class="what">回収をサイトごとの契約として捉える。四段のはしごと、コレクタがどこまで責任を負うかが成果物に書き込まれる。</span>
+        <span class="what">メモリは、それが起きる場所ごとに選ばれる四つの戦略のいずれかで解放され —— コレクタにどれだけ任されるかはバイナリに書き込まれる。</span>
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM — Loment VM</span>
-        <span class="what">もうひとつの実行のしかた —— 実行体が産物を必要に応じて取り込む。エンジンは存在せず、そのページはまずそう書いている。</span>
+        <span class="what">プログラムを走らせる第二の方法 —— 実行者が要求に応じて採用するバイナリ。エンジンは存在せず、そのページはまずそう述べている。</span>
       </a>
       <a class="doclink" href="lompi.html">
         <span class="who">lompi</span>
@@ -269,7 +323,7 @@
       </a>
       <a class="doclink" href="libl.html">
         <span class="who">LibL</span>
-        <span class="what">標準ライブラリの libc の面。名前も引数の順も C のままで、判定基準は Python ではなく実物の glibc と比べる。</span>
+        <span class="what">標準ライブラリの C の形をした面。名前も引数の順も C のままで、判定基準は Python ではなく実物の glibc と比べる。</span>
       </a>
     </div>
   </div>

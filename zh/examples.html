@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: examples.html -->
-<!-- source-sha256: 060a12878d5cae4af2caed5f2b2f00ddd3118d100c34e0824988ce8a0434afc4 -->
+<!-- source-sha256: c0d47ae0066f8cfcbe40e252f5034e94df18ca8018493b2eaa5b6095485dd58c -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -83,8 +83,8 @@
   <div class="wrap">
     <h2>最小的程序</h2>
     <p class="body">
-      <code>_start</code> 是入口点，因为 sealed 产物没有 runtime 来替你调用入口。输出走
-      <code>write</code> 系统调用：文件描述符、指针、长度。第二次调用是 <code>exit</code>。
+      <code>_start</code> 是机器开始的地方，输出走 <code>write</code> 系统调用：文件描述符、
+      指针、长度。第二次调用是 <code>exit</code>。
     </p>
     <div class="codewrap">
 <pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
@@ -145,8 +145,8 @@
     </p>
     <p class="note">
       这一页上的所有东西都是用已发布的 <code>0.1.4</code> 包编译并运行的。能力系统 ——
-      <a href="index.html">首页</a>开篇讲的那个 —— 不在这四个之中，因为它在这个发布里链接
-      不过。那是自举链接器里一个已知的缺陷，不是语言的问题：参考实现能链接同一个程序并运行
+      <a href="index.html">首页</a>给了一个例子的那个 —— 不在这四个之中，因为它在这个发布里
+      链接不过。那是自举链接器里一个已知的缺陷，不是语言的问题：参考实现能链接同一个程序并运行
       它。同一类失败见
       <a href="https://github.com/FujoJTOP/loment/issues/102">issue #102</a> 和
       <a href="https://github.com/FujoJTOP/loment/issues/38">#38</a>。

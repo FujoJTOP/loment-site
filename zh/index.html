@@ -1,14 +1,14 @@
 <!doctype html>
 <!-- translated-from: index.html -->
-<!-- source-sha256: e80c58f4c64e26cdc0c59b9baf298fda61a8a09f110159d07831ae881475fb74 -->
+<!-- source-sha256: b0e42303d546e9330d371f1d1ed94d6f7a5a8ba51e0f0554ef4f553d633cd6dd -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loment — 一门系统编程语言</title>
-<meta name="description" content="Loment 编译为原生 x86-64 可执行文件。默认 sealed —— 没有 runtime、没有 libc、没有未定义符号 —— 当你说要 hosted 时才 hosted。工具链本身就是用 Loment 写的。">
+<meta name="description" content="Loment 构建的原生可执行文件自己站得住 —— 没有 runtime、没有 libc、底下什么都没有。程序够得着什么，写在源码里、记在产物里。工具链本身就是用 Loment 写的。">
 <meta property="og:title" content="Loment — 一门系统编程语言">
-<meta property="og:description" content="默认 sealed：没有 runtime、没有 libc、没有未定义符号。当你说要 hosted 时才 hosted。工具链是用 Loment 写的。">
+<meta property="og:description" content="一个自己站得住的原生可执行文件：没有 runtime、没有 libc、底下什么都没有。程序够得着什么，写在源码里、记在产物里。">
 <meta property="og:type" content="website">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,9 +77,9 @@
     <p class="eyebrow">一门系统编程语言</p>
     <h1>Loment</h1>
     <p class="lede">
-      它编译为原生 x86-64 可执行文件 —— Linux ELF、Windows PE，或一个面向裸机的
-      freestanding 目标。<strong>什么被放进产物里，是程序的决定，而构建会把它记录下来。</strong>
-      工具链本身就是用 Loment 写的。
+      Loment 构建的原生可执行文件<strong>自己站得住</strong> —— 没有 runtime、没有 libc、
+      底下什么都没有。程序够得着什么，写在源码里、记在产物里，所以一次构建不必读你的代码，
+      就能把它检查出来。工具链本身就是用 Loment 写的。
     </p>
     <p class="actions">
       <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">下载</a>
@@ -92,19 +92,20 @@
     </div>
 
     <p class="caption">
-      <code>_start</code> 是入口点，因为 sealed（封闭）产物没有 runtime 来替你调用入口。
-      这里也没有 <code>printf</code> —— 输出走 <code>write</code> 系统调用。
+      这就是整个程序。<code>_start</code> 是机器开始的地方，文字经 <code>write</code>
+      系统调用送出去 —— 一个什么都不链接的程序，底下没有 <code>printf</code> 可以调用。
+      没有人替你做任何事，也没有什么挡在路上。
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>一份源码，两类产物</h2>
+    <h2>两类程序</h2>
     <p class="body">
-      多数构建设置活在语言之外，读源码的人从来看不到它们。Loment 把这一项放进程序<em>里</em> ——
-      一行，写在根单元 —— 然后把它带进单元导出的形式对象里。于是"构建的是哪一类产物"这件事，
-      由一个完全读不了源码的东西就能回答。
+      多数语言在构建文件里决定什么进产物 —— 那个文件，读源码的人从不会打开。Loment 把这个
+      决定放进程序<em>里</em>：一行，写在你开始的那个文件里，被带进产物随身携带的一份机器可读
+      摘要。于是"这是一个哪一类程序？"这个问题，不读任何代码就能回答。
     </p>
 
     <div class="split">
@@ -112,12 +113,12 @@
         <p class="pane-tag">choose sealed</p>
         <dl>
           <dt>它是什么</dt>
-          <dd>默认值。一个与世界之间没有任何端口的产物。</dd>
+          <dd>默认值。一个与外界之间没有任何开口的程序。</dd>
           <dt>入口点</dt>
           <dd><code>fn _start()</code></dd>
           <dt>链接</dt>
-          <dd>什么都不链。未定义符号是错误，不是警告 —— 所以 sealed 产物可证明地没有
-              runtime、也没有 libc。</dd>
+          <dd>什么都不链。在那里，未定义符号是错误，不是警告 —— 所以可以证明一个 sealed
+              程序既没有 runtime、也没有 libc。</dd>
           <dt>可达</dt>
           <dd>只有编译进它的代码，加上你交给链接器的、本身已自足的任何目标文件。</dd>
         </dl>
@@ -126,13 +127,13 @@
         <p class="pane-tag">choose hosted</p>
         <dl>
           <dt>它是什么</dt>
-          <dd>另一条路径。一个被声明为允许向自身之外伸手的产物。</dd>
+          <dd>另一条路径。一个被允许向自身之外伸手的程序。</dd>
           <dt>入口点</dt>
           <dd><code>fn main() -&gt; u32</code></dd>
           <dt>链接</dt>
-          <dd>真正的库。构建把 IR 交给宿主的 C 工具链，而不是自带的链接器。</dd>
+          <dd>真正的库。构建把自己的产物交给宿主的 C 工具链，而不是用 Loment 自带的链接器。</dd>
           <dt>可达</dt>
-          <dd>libc、共享库，以及你嵌入的宿主 runtime。项目自己的判据链接
+          <dd>libc、共享库，以及你嵌入的宿主 runtime。项目自己的测试链接
               <code>libstdc++</code> 和 <code>libz</code>，并嵌入 CPython。</dd>
         </dl>
       </div>
@@ -148,11 +149,11 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>谁能运行什么，在什么范围内</h2>
+    <h2>一个程序被允许碰什么</h2>
     <p class="body">
-      多数语言回答的是<em>这个程序能做什么？</em>Loment 围绕一个更窄的问题组织 ——
-      <strong>谁能运行什么、在什么范围内、以及这件事能否在不读源码的情况下裁定？</strong>
-      有三样东西支撑它。
+      多数语言回答的问题是<em>这个程序能做什么？</em> —— 而答案通常是"想做什么就做什么"。
+      Loment 围绕一个更窄的问题来构建：<strong>这个程序被允许够到什么，而这件事能不能在不读它
+      源码的情况下断定？</strong>有三样东西承担它，而第一样在代码里就看得见。
     </p>
 
     <div class="codewrap">
@@ -161,34 +162,81 @@
 
     <p class="caption">
       第 3 行声明了一个单元可达的范围。第 6 行在运行期拿 <code>slot</code> 去核它，越界的
-      下标会陷入。第 11 行是字面量，所以编译器就把它裁定了，不生成任何东西。
+      下标会让程序停下。第 11 行是字面量，所以编译器提前就把它裁定了，不生成任何东西。
     </p>
 
     <div class="rows">
       <div class="row">
-        <h3>能力域</h3>
+        <h3>代码自己声明的范围</h3>
         <p>
-          一个单元声明自己可达的范围，由 <code>guard</code> 拿一个下标去核它 —— 下标是字面量时
-          在编译期核，否则在运行期核。边界被明说出来，而不是含糊带过：guard 约束的是<em>下标</em>，
-          不是主体，它也不是授权。
+          一个<em>单元</em> —— 一个源文件加它导入的东西 —— 声明它可达的范围，由
+          <code>guard</code> 把每一次访问拿去核它：下标是常量时在编译期核，否则在运行期核。
+          Loment 把这叫一个<em>能力域</em>，并且把边界明说出来、而不是含糊带过 ——
+          guard 约束的是<em>下标</em>，不是主体，它也不是授权。
         </p>
       </div>
       <div class="row">
-        <h3>形式对象</h3>
+        <h3>产物随身携带的一份摘要</h3>
         <p>
-          每个单元都导出一份被声明、机器可读的摘要，说明它包含什么、触达什么，并由两个独立的
-          校验器判定 —— 于是"这个能碰到什么"无需读源码就能回答。
+          每个单元都导出一份机器可读的摘要，说明它包含什么、够到什么，并由两个独立的程序来核。
+          于是"这个能碰到什么？"有了一个不用读你代码就能得到的答案。这份摘要有个名字：
+          形式对象。
         </p>
       </div>
       <div class="row">
-        <h3>一层兼容层</h3>
+        <h3>从另外十门语言调用代码</h3>
         <p>
-          C、C++、Rust、Zig 在 C ABI 之后；Go、Python、Java、JavaScript、Perl、Lua 走一个
-          进程桥。在 sealed 产物上，链进来的东西必须自足。<code>choose hosted</code> 是触达
-          真正的库的那条路径，判据拿它去练 libstdc++、libz 和一个嵌入的 CPython。
+          C、C++、Rust 和 Zig 走 C ABI 进来；Go、Python、Java、JavaScript、Perl 和 Lua
+          走一个进程桥。在一个 sealed 程序上，你链进来的东西必须自足。
+          <code>choose hosted</code> 是通向真正的库的那条路，项目自己的测试拿它去跑
+          libstdc++、libz 和一个嵌入的 CPython。
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>它已经被用来做什么</h2>
+    <p class="body">
+      一门这么年轻的语言，通常是被拿它希望成为什么来描述的。下面是 Loment 已经在做的事 ——
+      全都在仓库里，全都可以下载。
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>工具链</h3>
+        <p>
+          编译器、链接器、格式化器、语言服务器和包管理器都以 Loment 源码的形式发布，运行时
+          底下没有 Python。编译器是用这门语言写成的最大一个程序。
+        </p>
+      </div>
+      <div class="row">
+        <h3>一个磁盘驱动</h3>
+        <p>
+          <code>ahci.lomt</code> 跟一块 SATA 盘对话：它读寄存器块、数出实现了的端口、
+          发出命令。寄存器块由调用方递进来，所以同一份代码既能跑在操作系统里，也能跑在
+          hosted 机器上。
+        </p>
+      </div>
+      <div class="row">
+        <h3>一个终端界面</h3>
+        <p>
+          <code>lumtui</code> 往终端里画文字、方框和布局 —— 一个小库，写法就跟你自己会写
+          的那样。
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      编译器在
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/selfhost">loment/selfhost/</a> 下，
+      库在
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/lib">loment/lib/</a> 下，
+      示例在
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a> 下。
+    </p>
   </div>
 </section>
 
@@ -198,12 +246,12 @@
 
     <div class="rows">
       <div class="row">
-        <h3>一种项目模式，不是 crate 属性</h3>
+        <h3>整个程序的设置，就在一行里</h3>
         <p>
-          <code>choose</code> 有五个维度 —— 程序可用哪一层、如何回收内存、产物能否携带一个
-          runtime、能否向自身之外伸手、以及它是为哪种执行模型而写的。每一个都最多写一次，
-          写在根单元里，且各自成为整个程序的一个属性：一对矛盾的组合会被拒绝，诊断会点名
-          那一对和理由，而不是只说"非法组合"。
+          一行，写在你开始的那个文件里，就定下整个程序的五件事：它可以用库的哪一层、它如何
+          回收内存、它能否携带一个 runtime、它能否向自身之外伸手、以及它是为哪种执行模型而
+          写的。要两个互相矛盾的设置，编译器会拒绝 —— 把两个都点出来、并说出为什么，而不是
+          一句"非法组合"。这个机制叫 <code>choose</code>。
         </p>
       </div>
       <div class="row">
@@ -216,24 +264,23 @@
       <div class="row">
         <h3>一个一次只导入一个模块的库</h3>
         <p>
-          标准库随工具链一起发布，以 <code>use vec</code>、<code>use map</code>、
-          <code>use fs</code> 的方式触达。存在一种整包导入，但它会把所有东西拉进一个单元，
-          文档不建议这么做。
+          标准库随工具链一起发布，你一次触达一个模块：<code>use vec</code>、<code>use map</code>、
+          <code>use fs</code>。存在一种整包导入，它会把所有东西一次拉进来，文档不建议这么做。
         </p>
       </div>
       <div class="row">
         <h3>一切皆可定制</h3>
         <p>
-          源码后缀、命令面、库 —— 一个以内容哈希为身份的目录 —— 以及工具链本身。没有注册表；
-          扩展点是磁盘上的文件。
+          源码后缀、你能运行的命令集、库 —— 一个以内容哈希为身份的目录 —— 以及工具链本身。
+          没有注册表；扩展点是磁盘上的文件。
         </p>
       </div>
     </div>
 
     <p class="limit">
-      <strong>还没有完成的部分。</strong>工具链在运行期是自举的 —— 它在没有 Python、没有
-      libc 的情况下编译并运行 —— 但开发侧不是：参考实现及其测试套件仍在仓库里，仓库也还不是
-      "只有 Loment"。发布说明会写清每个待办项落在哪一半。
+      <strong>还没有完成的部分。</strong>工具链在没有 Python、没有 libc 的情况下编译并运行 ——
+      但开发侧还不是这样：参考实现及其测试套件仍在仓库里，仓库也还不是"只有 Loment"。发布
+      说明会写清每个待办项落在哪一半。
     </p>
   </div>
 </section>
@@ -242,16 +289,17 @@
   <div class="wrap">
     <h2>系统</h2>
     <p class="body">
-      Loment 里大到值得有各自设计记录的部分 —— 以及各自诚实的现状说明。
+      Loment 里大到值得有各自设计记录的四部分 —— 每一部分都带着自己诚实的现状说明，
+      包括那个引擎还不存在的。
     </p>
     <div style="margin-top: var(--s4)">
       <a class="doclink" href="lgc.html">
         <span class="who">LomentGC</span>
-        <span class="what">回收作为一份逐站点的契约：一座四层阶梯，以及收集器该负责多少被写进产物。</span>
+        <span class="what">内存由四种策略之一来释放，在每个发生的地方各自挑一种 —— 而留给收集器多少，写进了产物里。</span>
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM — Loment VM</span>
-        <span class="what">另一种跑法 —— 产物交给执行体按需收编。引擎并不存在，那一页把它写在最前面。</span>
+        <span class="what">另一种跑法 —— 产物交给执行器按需收编。引擎并不存在，那一页把它写在最前面。</span>
       </a>
       <a class="doclink" href="lompi.html">
         <span class="who">lompi</span>
@@ -259,7 +307,7 @@
       </a>
       <a class="doclink" href="libl.html">
         <span class="who">LibL</span>
-        <span class="what">标准库的 libc 面：用 C 的名字、C 的参数序，而判据比的是真 glibc，不是 Python。</span>
+        <span class="what">标准库，做成 C 的形状：用 C 的名字、C 的参数序，比的是真 glibc，而不是 Python。</span>
       </a>
     </div>
   </div>

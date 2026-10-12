@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: examples.html -->
-<!-- source-sha256: 060a12878d5cae4af2caed5f2b2f00ddd3118d100c34e0824988ce8a0434afc4 -->
+<!-- source-sha256: c0d47ae0066f8cfcbe40e252f5034e94df18ca8018493b2eaa5b6095485dd58c -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -83,8 +83,7 @@
   <div class="wrap">
     <h2>最小のプログラム</h2>
     <p class="body">
-      <code>_start</code> がエントリポイントである。sealed な成果物には、代わりに
-      エントリポイントを呼んでくれる runtime がないからだ。出力は <code>write</code>
+      <code>_start</code> はマシンが始まる場所であり、出力は <code>write</code>
       システムコールを通る: ファイルディスクリプタ、ポインタ、長さ。二番目の呼び出しは
       <code>exit</code>。
     </p>
@@ -148,7 +147,7 @@
     </p>
     <p class="note">
       このページのすべては、公開された <code>0.1.4</code> パッケージでコンパイルし実行した。
-      ケイパビリティシステム —— <a href="index.html">フロントページ</a>が最初に掲げるもの ——
+      ケイパビリティシステム —— <a href="index.html">フロントページ</a>が例を示しているもの ——
       はこの四つには含まれない。このリリースではリンクしないからだ。それは、言語ではなく
       セルフホストのリンカにある既知の欠陥である。参照実装は同じプログラムをリンクして実行する。
       同じ種類の失敗については

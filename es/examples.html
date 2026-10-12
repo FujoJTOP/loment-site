@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: examples.html -->
-<!-- source-sha256: 060a12878d5cae4af2caed5f2b2f00ddd3118d100c34e0824988ce8a0434afc4 -->
+<!-- source-sha256: c0d47ae0066f8cfcbe40e252f5034e94df18ca8018493b2eaa5b6095485dd58c -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -84,9 +84,9 @@
   <div class="wrap">
     <h2>El programa más pequeño</h2>
     <p class="body">
-      <code>_start</code> es el punto de entrada, porque un artefacto sealed no tiene runtime
-      que llame a uno por ti. La salida pasa por la llamada al sistema <code>write</code>:
-      descriptor de archivo, puntero, longitud. La segunda llamada es <code>exit</code>.
+      <code>_start</code> es donde arranca la máquina, y la salida pasa por la llamada al sistema
+      <code>write</code>: descriptor de archivo, puntero, longitud. La segunda llamada es
+      <code>exit</code>.
     </p>
 
     <div class="codewrap">
@@ -156,8 +156,8 @@
     </p>
     <p class="note">
       Todo lo de esta página se compiló y ejecutó con el paquete publicado
-      <code>0.1.4</code>. El sistema de capacidades — aquello con lo que abre la
-      <a href="index.html">página principal</a> — no está entre estos cuatro, porque no
+      <code>0.1.4</code>. El sistema de capacidades — aquello de lo que la
+      <a href="index.html">página principal</a> muestra un ejemplo — no está entre estos cuatro, porque no
       enlaza en esta versión. Es un defecto conocido del enlazador autoalojado, no del
       lenguaje: la implementación de referencia enlaza el mismo programa y lo ejecuta. Véanse
       <a href="https://github.com/FujoJTOP/loment/issues/102">issue #102</a> y

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: start.html -->
-<!-- source-sha256: 9a3af40efd92450dc52a253f165a6e8c1e86fd68c3ce25a8eef88f261092e4f3 -->
+<!-- source-sha256: 74f7390e1d4c5b32b1d9c446192a51ddb82e0bfd36a7658060f66bafeb1f5966 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -73,7 +73,7 @@
   <div class="wrap">
     <h1>入门</h1>
     <p class="lede">
-      这一页只讲怎么让一个程序跑起来。想知道这门语言是什么，请看<a href="index.html">首页</a>。
+      这一页只讲怎么让一个程序跑起来、并看着它工作。这门语言是做什么用的，在<a href="index.html">首页</a>。
     </p>
   </div>
 </section>
@@ -104,7 +104,7 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      你会得到 <code>loment</code> 命令、<code>lompi</code>，以及语言服务器。
+      你会得到 <code>loment</code> 命令、包管理器（<code>lompi</code>），以及语言服务器。
       编译和运行<strong>不需要 Python、不需要 clang、不需要 WSL</strong>：这个包是原生二进制
       加上标准库，安装器在写入任何东西之前会核对 <code>SHA256SUMS</code>。
     </p>
@@ -130,10 +130,11 @@
     </div>
 
     <p class="body" style="margin-top: var(--s4)">
-      <code>_start</code> 是入口点，因为 sealed 产物没有 runtime 来替你调用入口。这里也没有
-      <code>printf</code>：输出走 <code>write</code> 系统调用，它的参数是文件描述符、字符串的
-      指针和它的长度。第二次调用是 <code>exit</code>。写上 <code>choose hosted</code>，
-      产物就变成一个 C runtime 程序，入口点是 <code>fn main() -&gt; u32</code>。
+      <code>_start</code> 是机器开始的地方。一个 sealed 程序 &mdash; 一个什么都不链接的程序
+      &mdash; 底下没有 runtime 来替你调用入口，所以入口得你自己点名；它也没有
+      <code>printf</code>，所以输出走 <code>write</code> 系统调用：文件描述符、字符串的指针、
+      它的长度。第二次调用是 <code>exit</code>。改成写 <code>choose hosted</code>，你就得到
+      一个普通的 C 程序，入口点是 <code>fn main() -&gt; u32</code>。
     </p>
   </div>
 </section>

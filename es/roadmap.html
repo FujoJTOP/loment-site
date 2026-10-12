@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: roadmap.html -->
-<!-- source-sha256: c65a50598a84e0b3ee5d09d33e785ecb47941141eac8c871979bbae7f48d2a7b -->
+<!-- source-sha256: f87a3c7d19645f2779d8d39c46e649c0059f6c2f8735643fe63de71e64e68e72 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -93,8 +93,9 @@
     <h2>El hito más cercano: 0.1.5 Alpha 1</h2>
     <p class="body">
       Lo siguiente en la lista no es una función. Su objetivo se enuncia como <strong>silencio
-      cero</strong>: <em>cada virtud que el lenguaje afirma recibe un veredicto o un criterio
-      ejecutable</em>, de modo que nada se describa sin algo que pueda falsar la descripción.
+      cero</strong>: <em>cada afirmación que hace el lenguaje recibe un veredicto o una prueba que
+      podría demostrarla falsa</em> &mdash; nada se describe sin algo que pueda falsar la
+      descripción.
     </p>
     <p class="body">
       La entrada es un sondeo de lo que otros lenguajes hacen bien &mdash; tomado de C, Rust, Java
@@ -106,10 +107,9 @@
       ha aplazado, y la regla es que aplazar cuenta como fallar.
     </p>
     <p class="body">
-      Eso suena burocrático hasta que se ve para qué sirve. Algunas de las virtudes del sondeo
-      <em>no pueden</em> coexistir, y la parte útil del ejercicio es verse obligado a decir a cuál
-      se renuncia y por qué. Tres de los conflictos merecen nombrarse, porque son aquellos sobre
-      los que este lenguaje se asienta de hecho:
+      Algunas de esas afirmaciones <em>no pueden</em> coexistir, y la parte útil del ejercicio es
+      verse obligado a decir a cuál se renuncia y por qué. Tres de los conflictos merecen
+      nombrarse, porque son aquellos sobre los que este lenguaje se asienta de hecho:
     </p>
 
     <div class="rows">
@@ -171,9 +171,9 @@
       <div class="row">
         <h3>0.1.5.x &mdash; el runtime queda terminado</h3>
         <p>
-          La dimensión <code>runtime</code> ya existe como un modo con un valor por defecto, y es
-          <strong>obligatoria en vez de orientativa</strong>: pedir el nivel que necesita un
-          recolector mientras se declara que el artefacto no lleva runtime es un error de
+          El ajuste <code>runtime</code> ya existe, con un valor por defecto, y es
+          <strong>obligatorio en vez de orientativo</strong>: pedir el nivel de recuperación que
+          necesita un recolector mientras se declara que no hay runtime es un error de
           compilación, porque los dos se contradicen por definición. Lo que el runtime contiene hoy
           es exactamente la parte que ese nivel necesita. Esta línea añade el resto.
         </p>
@@ -191,7 +191,7 @@
         <p>
           Hoy el lenguaje tiene structs, enums cuyas variantes llevan una sola carga útil, traits
           despachados de forma estática y genéricos resueltos en tiempo de compilación. Esta línea
-          trata de lo que falta y no de añadir una función que nadie ha pedido.
+          rellena lo que falta en lugar de añadir algo que nadie ha pedido.
         </p>
       </div>
       <div class="row">
@@ -243,7 +243,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Volver a la página principal</span>
-        <span class="what">Qué es Loment, y las dos clases de artefacto que construye.</span>
+        <span class="what">Qué es Loment, y las dos clases de programa que construye.</span>
       </a>
     </div>
   </div>

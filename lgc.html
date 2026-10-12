@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LomentGC — Loment</title>
-<meta name="description" content="LomentGC: reclamation is a per-site contract. Every alloc site is assigned at compile time to one rung of a four-level ladder, and how much memory the collector is responsible for is a number the artifact carries.">
+<meta name="description" content="LomentGC: every place a Loment program allocates is assigned, at compile time, to one of four strategies — and how much is left to the collector is written into the binary.">
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,10 +72,10 @@
     <p class="eyebrow">System</p>
     <h1>LomentGC</h1>
     <p class="lede">
-      Reclamation is not one algorithm over one heap. It is a <strong>per-site
-      contract</strong>: every <code>alloc</code> in a program is assigned, at compile time,
-      to one rung of a four-level ladder — and how much memory the collector is responsible
-      for is a number the artifact carries.
+      When a Loment program frees memory, it does not hand the whole job to a collector. Every
+      place that allocates is assigned, at compile time, to one of four strategies — and how
+      much is left to the runtime collector is a number written into the binary rather than a
+      claim in a document.
     </p>
   </div>
 </section>
@@ -84,8 +84,8 @@
   <div class="wrap">
     <h2>The ladder</h2>
     <p class="body">
-      From strongest to weakest: the compiler takes the strongest rung it can <em>prove</em>.
-      Prove more, pay less. Each rung's price is written next to it rather than left in a
+      From strongest to weakest: the compiler takes the strongest level it can <em>prove</em>.
+      Prove more, pay less. Each level's price is written next to it rather than left in a
       footnote.
     </p>
 
@@ -131,8 +131,8 @@
   <div class="wrap">
     <h2>Three tiers</h2>
     <p class="body">
-      A program selects how far down the ladder it is willing to go, with one line in the
-      root unit.
+      A program selects how far down the ladder it is willing to go, with one line in the file
+      it starts from.
     </p>
 
     <div class="rows">
@@ -141,7 +141,7 @@
         <p>
           The default. Nothing is reclaimed automatically; the program manages its own
           memory. Writing no line at all gives you this — the default is the behaviour that
-          was there before the dimension existed, which is the rule every dimension follows.
+          was there before the setting existed, which is the rule every setting follows.
         </p>
       </div>
       <div class="row">
@@ -175,8 +175,8 @@
   <div class="wrap">
     <h2>Inside L3</h2>
     <p class="body">
-      The runtime rung is not one algorithm either. It has grown in three steps, each of
-      which had to beat the one before it on a measurable program.
+      The runtime level is not one algorithm either. It grew in three steps, each of which had
+      to beat the one before it on a program the project could measure.
     </p>
 
     <div class="rows">
@@ -210,13 +210,13 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Why it lands in the artifact</h2>
+    <h2>Why it lands in the binary</h2>
     <p class="body">
-      Each unit exports a form object carrying <code>gc_ladder</code>: how many
-      <code>alloc</code> sites each rung took, plus the total. The four counts must sum to
-      the total, and <strong>two independent validators check that arithmetic without reading
-      a line of source</strong>. So "how is this program's memory managed?" is a number in the
-      build output rather than a claim in a document.
+      Each unit exports a machine-readable summary &mdash; a <em>form object</em> &mdash;
+      carrying <code>gc_ladder</code>: how many allocating sites each level took, plus the
+      total. The four counts must sum to the total, and <strong>two independent programs check
+      that arithmetic without reading a line of source</strong>. So "how is this program's
+      memory managed?" is a number in the build output rather than a claim in a document.
     </p>
 
     <p class="limit">
@@ -243,11 +243,11 @@
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM</span>
-        <span class="what">The execution-model dimension — the dimension and its gate are on the main branch; the engine is not.</span>
+        <span class="what">The execution-model setting — the setting and its check are on the main branch; the engine is not.</span>
       </a>
       <a class="doclink" href="index.html">
         <span class="who">Back to the front page</span>
-        <span class="what">What Loment is, and the two kinds of artifact it builds.</span>
+        <span class="what">What Loment is, and the two kinds of program it builds.</span>
       </a>
     </div>
   </div>

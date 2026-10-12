@@ -81,9 +81,9 @@
   <div class="wrap">
     <h2>The smallest program</h2>
     <p class="body">
-      <code>_start</code> is the entry point, because a sealed artifact has no runtime to
-      call one for you. Output goes through the <code>write</code> system call: file
-      descriptor, pointer, length. The second call is <code>exit</code>.
+      <code>_start</code> is where the machine begins, and output goes through the
+      <code>write</code> system call: file descriptor, pointer, length. The second call is
+      <code>exit</code>.
     </p>
     <div class="codewrap">
 <pre class="code"><code><span class="ln" data-n="1"><span class="k">module</span> hello</span><span class="ln" data-n="2"> </span><span class="ln" data-n="3"><span class="k">fn</span> _start() {</span><span class="ln" data-n="4">    <span class="k">let</span> s: <span class="t">str</span> = <span class="s">"hello from Loment\n"</span>;</span><span class="ln" data-n="5">    syscall4(<span class="n">1</span>, <span class="n">1</span>, str_ptr(s) <span class="k">as</span> <span class="t">u64</span>, str_len(s) <span class="k">as</span> <span class="t">u64</span>);</span><span class="ln" data-n="6">    syscall4(<span class="n">60</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>);</span><span class="ln" data-n="7">}</span></code></pre>
@@ -145,8 +145,8 @@
     </p>
     <p class="note">
       Everything on this page was compiled and run with the published
-      <code>0.1.4</code> package. The capability system — the thing the
-      <a href="index.html">front page</a> opens with — is not among these four,
+      <code>0.1.4</code> package. The capability system — the one the
+      <a href="index.html">front page</a> shows an example of — is not among these four,
       because it does not link in this release. That is a known defect in the
       self-hosted linker, not in the language: the reference implementation links the
       same program and runs it. See

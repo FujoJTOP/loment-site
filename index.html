@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loment — a systems programming language</title>
-<meta name="description" content="Loment compiles to native x86-64 executables. Sealed by default — no runtime, no libc, no undefined symbols — and hosted when you say so. The toolchain is itself written in Loment.">
+<meta name="description" content="Loment builds a native executable that stands on its own — no runtime, no libc, nothing underneath. What a program may reach is written in the source and recorded in the binary. The toolchain is itself written in Loment.">
 <meta property="og:title" content="Loment — a systems programming language">
-<meta property="og:description" content="Sealed by default: no runtime, no libc, no undefined symbols. Hosted when you say so. The toolchain is written in Loment.">
+<meta property="og:description" content="A native executable that stands on its own: no runtime, no libc, nothing underneath. What a program may reach is written in the source and recorded in the binary.">
 <meta property="og:type" content="website">
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,9 +75,10 @@
     <p class="eyebrow">A systems programming language</p>
     <h1>Loment</h1>
     <p class="lede">
-      It compiles to native x86-64 executables — Linux ELF, Windows PE, or a freestanding
-      object for bare metal. <strong>What goes into one is the program's decision, and the
-      build records it.</strong> The toolchain is itself written in Loment.
+      Loment builds a native executable that <strong>stands on its own</strong> — no runtime,
+      no libc, nothing underneath. What a program may reach is written in the source and
+      recorded in the binary, so a build can check it without reading your code. The
+      toolchain is itself written in Loment.
     </p>
     <p class="actions">
       <a class="btn btn-solid" href="https://github.com/FujoJTOP/loment/releases/latest">Download</a>
@@ -90,21 +91,22 @@
     </div>
 
     <p class="caption">
-      <code>_start</code> is the entry point, because a sealed artifact has no runtime to call
-      one for you. There is no <code>printf</code> either — output goes through the
-      <code>write</code> system call.
+      This is the whole program. <code>_start</code> is where the machine begins, and the text
+      goes out through the <code>write</code> system call — a program that links nothing has
+      no <code>printf</code> underneath it to call. Nothing is done for you, and nothing is
+      in the way.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>One source, two kinds of artifact</h2>
+    <h2>Two kinds of program</h2>
     <p class="body">
-      Most build settings live outside the language, where a reader of the source never sees
-      them. Loment puts this one <em>in</em> the program — one line, in the root unit — and
-      then carries it into the form object the unit exports. So which kind of artifact was
-      built is answerable by something that cannot read the source at all.
+      Most languages decide in a build file what goes into the binary — a file the person
+      reading the source never opens. Loment puts that decision inside the program: one line,
+      in the file you start from, carried into a machine-readable summary the binary ships
+      with. So "which kind of program is this?" is answerable without reading any code at all.
     </p>
 
     <div class="split">
@@ -112,14 +114,14 @@
         <p class="pane-tag">choose sealed</p>
         <dl>
           <dt>What it is</dt>
-          <dd>The default. An artifact with no ports to the world.</dd>
+          <dd>The default. A program with no openings to the outside.</dd>
           <dt>Entry point</dt>
           <dd><code>fn _start()</code></dd>
           <dt>Links</dt>
-          <dd>Nothing. An undefined symbol is an error, not a warning — so a sealed artifact
-              provably has no runtime and no libc.</dd>
+          <dd>Nothing. An undefined symbol is an error there, not a warning — which is what
+              makes it provable that a sealed program carries no runtime and no libc.</dd>
           <dt>Reaches</dt>
-          <dd>Only the code compiled into it, plus any object you hand the linker that is
+          <dd>Only what was compiled into it, plus any object file you hand the linker that is
               already self-contained.</dd>
         </dl>
       </div>
@@ -127,35 +129,36 @@
         <p class="pane-tag">choose hosted</p>
         <dl>
           <dt>What it is</dt>
-          <dd>The other path. An artifact declared allowed to reach outside itself.</dd>
+          <dd>The other path. A program that is allowed to reach outside itself.</dd>
           <dt>Entry point</dt>
           <dd><code>fn main() -&gt; u32</code></dd>
           <dt>Links</dt>
-          <dd>Real libraries. The build hands the IR to the host C toolchain instead of the
-              bundled linker.</dd>
+          <dd>Real libraries. The build hands its output to the host's C toolchain instead of
+              using the linker that ships with Loment.</dd>
           <dt>Reaches</dt>
-          <dd>libc, shared libraries, and a host runtime you embed. The project's own criteria
+          <dd>libc, shared libraries, and a host runtime you embed. The project's own tests
               link <code>libstdc++</code> and <code>libz</code> and embed CPython.</dd>
         </dl>
       </div>
     </div>
 
     <p class="limit">
-      <strong>Where the boundary actually sits.</strong> Reaching a real library means going
-      through the host toolchain yourself — you name the library in the build. A real C
-      library is not yet an <em>installable dependency</em>: the package manager still takes
-      Loment source libraries only. That part is being built.
+      <strong>The boundary, exactly.</strong> Reaching a real library means going through the
+      host toolchain yourself — you name the library in the build. A real C library is not yet
+      an <em>installable dependency</em>: the package manager still takes Loment source
+      libraries only. That part is being built.
     </p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <h2>Who can run what, in what scope</h2>
+    <h2>What a program is allowed to touch</h2>
     <p class="body">
-      Most languages answer <em>what can this program do?</em> Loment is arranged around a
-      narrower question — <strong>who can run what, in what scope, and can that be settled
-      without reading the source?</strong> Three things carry it.
+      Most languages answer the question <em>what can this program do?</em> — and the answer is
+      usually "whatever it wants". Loment is built around a narrower one: <strong>what is this
+      program allowed to reach, and can that be settled without reading its source?</strong>
+      Three things carry it, and the first one is visible in the code.
     </p>
 
     <div class="codewrap">
@@ -163,38 +166,85 @@
     </div>
     <p class="caption">
       Line 3 declares the range a unit may reach. Line 6 checks <code>slot</code> against it
-      at run time, where an out-of-range index traps. Line 11 is a literal, so the compiler
-      settles it and nothing is emitted.
+      at run time, where an out-of-range index stops the program. Line 11 is a literal, so the
+      compiler settles it ahead of time and emits nothing.
     </p>
 
     <div class="rows">
       <div class="row">
-        <h3>Capability domains</h3>
+        <h3>A range the code declares</h3>
         <p>
-          A unit declares the range it may reach, and a <code>guard</code> checks an index
-          against it — at compile time when the index is a literal, otherwise at run time.
-          The boundary is stated rather than glossed: a guard bounds the <em>index</em>,
-          not the subject, and it is not authorisation.
+          A unit — one source file and what it imports — declares the range it may reach, and
+          a <code>guard</code> checks each access against that range: at compile time when the
+          index is a constant, at run time otherwise. Loment calls this a <em>capability
+          domain</em>, and states the boundary rather than glossing it — a guard bounds the
+          <em>index</em>, not the subject, and it is not authorisation.
         </p>
       </div>
       <div class="row">
-        <h3>Form objects</h3>
+        <h3>A summary the binary carries</h3>
         <p>
-          Every unit exports a declared, machine-readable summary of what it contains and
-          what it reaches, judged by two independent validators — so "what can this touch"
-          is answerable without reading the source.
+          Every unit exports a machine-readable summary of what it contains and what it
+          reaches, and two independent programs check it. So "what can this touch?" has an
+          answer that does not require reading your code. The summary has a name: a <em>form
+          object</em>.
         </p>
       </div>
       <div class="row">
-        <h3>A compat layer</h3>
+        <h3>Calling code from ten other languages</h3>
         <p>
-          C, C++, Rust and Zig behind the C ABI; Go, Python, Java, JavaScript, Perl and Lua
-          over a process bridge. On a sealed artifact what links in must be self-contained.
-          <code>choose hosted</code> is the path that reaches real libraries, and the
-          criteria exercise it against libstdc++, libz and an embedded CPython.
+          C, C++, Rust and Zig come in through the C ABI; Go, Python, Java, JavaScript, Perl
+          and Lua through a process bridge. On a sealed program, whatever you link in has to
+          be self-contained. <code>choose hosted</code> is the road to real libraries, and the
+          project's tests drive it against libstdc++, libz and an embedded CPython.
         </p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What has already been built with it</h2>
+    <p class="body">
+      A language this young is usually described by what it hopes to become. Here is what
+      Loment is already doing — all of it in the repository, all of it downloadable.
+    </p>
+
+    <div class="rows">
+      <div class="row">
+        <h3>The toolchain</h3>
+        <p>
+          The compiler, the linker, the formatter, the language server and the package manager
+          all ship as Loment source, and they run with no Python underneath them. The compiler
+          is the largest program written in the language.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A disk driver</h3>
+        <p>
+          <code>ahci.lomt</code> talks to a SATA disk: it reads the register block, counts the
+          implemented ports, and issues commands. The register block is handed in by the
+          caller, so the same code runs inside an operating system or on a hosted machine.
+        </p>
+      </div>
+      <div class="row">
+        <h3>A terminal interface</h3>
+        <p>
+          <code>lumtui</code> draws text, boxes and layout to a terminal — a small library,
+          written the way you would write yours.
+        </p>
+      </div>
+    </div>
+
+    <p class="caption">
+      The compiler is under
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/selfhost">loment/selfhost/</a>,
+      the libraries under
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/lib">loment/lib/</a>, and
+      the examples under
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>.
+    </p>
   </div>
 </section>
 
@@ -204,14 +254,14 @@
 
     <div class="rows">
       <div class="row">
-        <h3>A project mode, not a crate attribute</h3>
+        <h3>The whole program's settings, in one line</h3>
         <p>
-          <code>choose</code> has five dimensions — which layer the program may use, how it
-          reclaims memory, whether the artifact may carry a runtime, whether it may reach outside
-          itself, and which execution model it is for. Each is written at most once, in the root
-          unit, and each becomes a property of the whole program: a contradictory pair is refused,
-          and the diagnostic names the pair and the reason rather than saying "illegal
-          combination".
+          One line, in the file you start from, settles five things about the whole program:
+          which layer of the library it may use, how it reclaims memory, whether it may carry
+          a runtime, whether it may reach outside itself, and which execution model it is
+          written for. Ask for two settings that contradict each other and the compiler
+          refuses — naming both and saying why, rather than "illegal combination". The
+          mechanism is called <code>choose</code>.
         </p>
       </div>
       <div class="row">
@@ -225,28 +275,27 @@
       <div class="row">
         <h3>A library you import one module at a time</h3>
         <p>
-          The standard library ships with the toolchain and is reached as
-          <code>use vec</code>, <code>use map</code>, <code>use fs</code>. There is a
-          package-wide import, but it pulls everything into one unit, and the documentation
-          advises against it.
+          The standard library ships with the toolchain, and you reach it one module at a
+          time: <code>use vec</code>, <code>use map</code>, <code>use fs</code>. There is a
+          package-wide import that pulls everything in at once, and the documentation advises
+          against it.
         </p>
       </div>
       <div class="row">
         <h3>Everything is customizable</h3>
         <p>
-          The source suffix, the command surface, the libraries — a directory whose identity
-          is a content hash — and the toolchain itself. There is no registry; the extension
-          points are files on disk.
+          The source suffix, the set of commands you can run, the libraries — a directory
+          whose identity is a content hash — and the toolchain itself. There is no registry;
+          the extension points are files on disk.
         </p>
       </div>
     </div>
 
     <p class="limit">
-      <strong>What is not finished.</strong> The toolchain is self-hosted at run time — it
-      compiles and runs with no Python and no libc — but the development side is not: the
-      reference implementation and its test suites are still in the repository, and the
-      repository is not yet "only Loment". The release notes say which half each remaining
-      item is in.
+      <strong>What is not finished.</strong> The toolchain compiles and runs without Python
+      and without libc — but the development side is not there yet. The reference
+      implementation and its test suites are still in the repository, and the repository is
+      not yet "only Loment". The release notes say which half each remaining item is in.
     </p>
   </div>
 </section>
@@ -255,17 +304,17 @@
   <div class="wrap">
     <h2>Systems</h2>
     <p class="body">
-      Parts of Loment that are large enough to have their own design records — and their own
-      honest status lines.
+      Four parts of Loment large enough to have their own design records — each with its own
+      honest status line, including the one whose engine does not exist yet.
     </p>
     <div style="margin-top: var(--s4)">
       <a class="doclink" href="lgc.html">
         <span class="who">LomentGC</span>
-        <span class="what">Reclamation as a per-site contract: a four-level ladder, and how much the collector is responsible for written into the artifact.</span>
+        <span class="what">Memory is freed by one of four strategies, picked per place it happens — and how much is left to the collector is written into the binary.</span>
       </a>
       <a class="doclink" href="lvm.html">
         <span class="who">LVM — Loment VM</span>
-        <span class="what">A second way to run a program &mdash; an artifact an executor adopts on demand. The engine does not exist, and the page says so first.</span>
+        <span class="what">A second way to run a program &mdash; a binary an executor adopts on demand. The engine does not exist, and the page says so first.</span>
       </a>
       <a class="doclink" href="lompi.html">
         <span class="who">lompi</span>
@@ -273,7 +322,7 @@
       </a>
       <a class="doclink" href="libl.html">
         <span class="who">LibL</span>
-        <span class="what">The standard library's libc face: C's names, C's argument order, and a criterion that compares against real glibc instead of against Python.</span>
+        <span class="what">The standard library in C's shape: C's names and C's argument order, checked against real glibc rather than against Python.</span>
       </a>
     </div>
   </div>

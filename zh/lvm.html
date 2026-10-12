@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 2f84fade6a46cfd9a63618c8c6af9980f561f0b2cfe95c43cb55a15964dbe787 -->
+<!-- source-sha256: c9a171cf07d35f5523c4dd097dca1a426c3d1632c3d5615ceb210756367ce773 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -74,9 +74,9 @@
     <p class="eyebrow">系统 · 进行中</p>
     <h1>Loment VM</h1>
     <p class="lede">
-      不是一条更快的路，也不是一种把程序写得更省事的办法。它是<strong>运行程序的第二种
-      方式</strong>：一份产物可以被交给一个执行器，由它按需接纳、按需分页 —— 而这个执行器
-      决定要不要接纳，靠的是读这份产物本身已经携带的东西。<strong>引擎并不存在。</strong>
+      它是<strong>运行程序的第二种方式</strong>：一份产物可以交给一个执行器，由它按需接纳，
+      而它决定要不要接纳，靠的是读这份产物已经携带的东西。它不是一条更快的路，也不是一种把
+      程序写得更省事的办法。<strong>引擎尚不存在。</strong>
     </p>
   </div>
 </section>
@@ -89,13 +89,13 @@
       计划的一页，最容易让读者把计划当成产品。
     </p>
     <p class="body">
-      存在的，是第一片：<strong>维度与闸门在主分支上</strong>，而两者都不在任何发布里、
-      也不在任何已安装的工具链里。那一片所做的，是决定一个程序能否<em>请求</em> VM，而不是
-      运行任何东西。这条线以下的一切都是设计 —— 这个东西打算成为什么，以及它打算不成为
-      什么 —— 没有哪一样是你能用的功能。
+      存在的，是第一片：<strong><code>vm</code> 设置，以及拒绝它的那道校验，在主分支上</strong>
+      —— 而两者都不在任何发布里、也不在任何已安装的工具链里。那一片所做的，是决定一个程序
+      能否<em>请求</em> VM，而不是运行任何东西。这条线以下的一切都是设计 —— 这个东西打算成为
+      什么，以及它打算不成为什么 —— 没有哪一样是你能用的功能。
     </p>
     <p class="limit">
-      <strong>项目以前就背过的一笔债。</strong><code>runtime</code> 维度曾在一段时间里被
+      <strong>项目以前就背过的一笔债。</strong><code>runtime</code> 设置曾在一段时间里被
       声明在产物里，却什么也不做，后来才被补齐到它声称的样子。这又是同一种形状：已声明、
       被携带、被亏欠。设计自己把这件事说出来，而不是留给读的人去发现。
     </p>
@@ -149,23 +149,23 @@
       <div class="row">
         <h3>字节码不是一项新发明</h3>
         <p>
-          它是<strong>对编译器已经产出的那份 IR 的一次序列化</strong>。随包的后端是一台栈机
-          —— 每个 SSA 值占一个栈槽，参数放在栈上，聚合体通过一个隐藏的结果指针传递 —— 所以
-          针对那个 IR 子集的一套完整执行模型已经存在、也已经在被演练。缺的是<em>执行</em>它
-          的那一步。LVM 会是同一份 IR 的<strong>第四个读者</strong>：没有新的前端，没有新的
-          IR，没有新的类型系统。
+          它是<strong>对编译器已经产出的那份中间形式的一次序列化</strong>。随包的后端是一台
+          栈机 —— 每个值占一个栈槽，参数放在栈上，聚合体通过一个隐藏的结果指针传递 —— 所以
+          针对那个子集的一套完整执行模型已经存在、也已经在被演练。缺的是<em>执行</em>它的
+          那一步。LVM 会是同一份形式的<strong>第四个读者</strong>：没有新的前端，没有新的
+          中间形式，没有新的类型系统。
         </p>
       </div>
       <div class="row">
-        <h3>第五个维度</h3>
+        <h3>第五个设置</h3>
         <p>
-          <code>choose</code> 已有四个 —— 程序可用哪一层、它如何回收内存、产物能否携带一个
-          runtime、以及它能否向自身之外伸手。<code>vm</code> 是第五个，回答的是
-          <strong>这个程序是为哪个执行模型而写的？</strong>不写就是 <code>no_vm</code>，
-          也就是这个维度存在之前一切东西的状态。它在主分支上；它不在任何发布里。
+          <code>choose</code> 已有四个 —— 程序可以用库的哪一层、它如何回收内存、产物能否
+          携带一个 runtime、以及它能否向自身之外伸手。<code>vm</code> 是第五个，回答的是
+          <strong>这个程序是为哪种执行模型而写的？</strong>不写就是 <code>no_vm</code>，
+          也就是这个设置存在之前一切东西的状态。它在主分支上；它不在任何发布里。
         </p>
         <p>
-          这个值说的是<em>是否</em>，从不是<em>哪一个</em>。这正是 <code>runtime</code> 维度
+          这个值说的是<em>是否</em>，从不是<em>哪一个</em>。这正是 <code>runtime</code> 设置
           已经遵循的规则：里面装的东西会随年份变化，而一个把今天这一级编码进名字的写法，明天
           要加新的一级时就得改名。
         </p>
@@ -279,9 +279,9 @@
         <h3>运行不是你写的代码</h3>
         <p>
           一个第三方扩展，或者一个机器写出来的扩展。<strong>这是项目自己的那些想法第一次有活
-          要干的地方。</strong>在链接期，端口表、能力域、关于什么东西缺位的记录，以及回收台账，
-          都是<em>审计</em> —— 事后拿来读的东西。到了加载期，它们变成一道<em>闸门</em> —— 在
-          任何东西运行之前，拿来作决定的东西。
+          要干的地方。</strong>在链接期，端口表、一个单元声明自己可达的范围、关于它没有什么的
+          记录，以及它的回收数字，都是<em>审计</em> —— 事后拿来读的东西。到了加载期，这些同样
+          的记录变成一道<em>闸门</em> —— 在任何东西运行之前，拿来作决定的东西。
         </p>
       </div>
     </div>
@@ -343,7 +343,7 @@
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
         <span class="who">docs/231</span>
-        <span class="what">通道与 <code>vm</code> 维度 —— 那一片已经在主分支上。</span>
+        <span class="what">通道与 <code>vm</code> 设置 —— 那一片已经在主分支上。</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">路线图</span>
@@ -355,7 +355,7 @@
       </a>
       <a class="doclink" href="index.html">
         <span class="who">回到首页</span>
-        <span class="what">Loment 是什么，以及它构建的两类产物。</span>
+        <span class="what">Loment 是什么，以及它构建的两类程序。</span>
       </a>
     </div>
   </div>
