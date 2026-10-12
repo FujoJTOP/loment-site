@@ -1,0 +1,191 @@
+<!doctype html>
+<!-- translated-from: standard.html -->
+<!-- source-sha256: cb23a809c4e4b6234be73ea1e4657b5273fb14908dae4b383b077f18981cd816 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>標準 — Loment</title>
+<meta name="description" content="この言語には、名前を持ち引用できる標準 —— LLS —— があり、それはこのページではなく、それが記述するコードの隣、リポジトリにある。何を固定し、何が適合を決め、何をすることを拒むのか。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/standard.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/standard.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/standard.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/standard.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/standard.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/standard.html">
+</head>
+<body>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+        <nav>
+      <a href="learn.html">学習</a>
+      <a href="start.html">はじめに</a>
+      <a href="examples.html">サンプル</a>
+      <a href="standard.html" aria-current="page">標準</a>
+      <details class="navmenu" name="bar">
+        <summary>バージョン</summary>
+        <ul>
+          <li><a href="releases.html">リリース履歴</a></li>
+          <li><a href="roadmap.html">ロードマップ</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>システム</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>日本語</summary>
+      <ul>
+        <li><a href="../standard.html" hreflang="en">English</a></li>
+        <li><a href="../zh/standard.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="standard.html" hreflang="ja" aria-current="true">日本語</a></li>
+        <li><a href="../ru/standard.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/standard.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">標準</p>
+    <h1>Loment 言語標準</h1>
+    <p class="lede">
+      この言語には<strong>名前を持ち、引用できる標準</strong>がある —— LLS、すなわち Loment
+      Language Standard（Loment 言語標準）—— そしてそれは、このページではなく、
+      それが記述するコードの隣、リポジトリにある。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>何のためのもので、何になることを拒むか</h2>
+    <p class="body">
+      標準が存在するのは、「この実装は正しいか?」への答えが、誰に尋ねたかによって変わらなく
+      なるようにするためである。ほとんどの標準は、規則そのものを述べることでそれに答える。
+      これはそうしない —— このプロジェクトの規則は、何であれ権威ある写しはただ一か所にのみ
+      存在するというもので、だからこの標準は<strong>言語の規則をみずから一切述べない</strong>。
+      それは規則を囲む枠であり、その中身はすべて、唯一の出所へのポインタか、適合とは何かを
+      述べたもののどちらかである。
+    </p>
+    <p class="body">
+      その枠で、この標準は二つのことをする。ひとつは<strong>表層を固定する</strong>こと ——
+      言語のどの部分が、定められた手続きによってのみ変わりうるのか、そしてその手続きとは
+      何か。もうひとつは<strong>適合を決める</strong>こと —— それを決める判定スイートを
+      名指しすることによって。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>適合を決めるのは何か</h2>
+    <p class="body">
+      文書ではない。どの実装でもない。標準はそう明言している: 散文と実装と判定基準が食い違う
+      とき、<strong>正しいのは判定基準である</strong>。失敗している判定基準は、その基準を
+      緩めることでは通せない —— 実装を変えるか、定められた手続きの下で表層を変えるか、
+      そのどちらかによってのみ通せる。
+    </p>
+    <p class="limit">
+      <strong>そして、判定スイートに見えないもの。</strong>なかには、あるマシンには無い
+      かもしれないツールを必要とする判定基準があり、そうした基準は合格ではなく<em>スキップ</em>
+      と報告される —— だから「緑」とは、走った判定基準が緑だったという意味である。標準は
+      そのひとつひとつを名指しし、この文書全体で最も居心地の悪い一文も書き留めている:
+      判定スイートは実装と同じ著者によって書かれているので、二つの実装が一致することは、
+      それらが<em>一致している</em>ことの証拠である。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>スイッチ</h2>
+    <p class="body">
+      標準は Loment を、それが欠いているものではなく、そのスイッチによって記述する。言語が
+      持ちうるあらゆるサブシステム —— プログラムが使ってよい層、メモリを誰が回収するか、
+      バイナリが runtime を積むかどうか、外界への口を持つかどうか、そしてどの実行モデルに
+      向けたものか —— は、プログラムが自分の根のユニットに一度だけ述べ、ビルドがそれを
+      記録する設定である。既定は、既存のプログラムを従来どおりに振る舞わせ続ける位置である。
+      それは既定の性質であって、言語についての主張ではない。
+    </p>
+    <p class="body">
+      標準はまた、見落としやすい一線を引く。スイッチの組み合わせのなかには、二つの値が
+      <em>正反対のことを意味する</em>ために拒否されるものがあり、まだ誰も作っていないという
+      理由だけで拒否されるものもある。<strong>切れているスイッチは、禁じられたスイッチでは
+      ない</strong> —— 標準はその二つを意図的に区別している。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>どこにあるか</h2>
+    <p class="body">
+      それが記述するコードの隣に、そしてそれと同じように版付けられている: 標準のバージョン
+      <em>が</em>、それが定義する表層のバージョンである。二つではなくひとつの番号 ——
+      別のエディション軸を立てれば、エディションを言語のバージョンに対応付ける表が必要になり、
+      その表が第二の真実の出所となってしまうからである。
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/standard/LLS.md">
+        <span class="who">standard/LLS.md</span>
+        <span class="what">標準そのもの。英語で書かれており、規範として参照するものの大半は中国語で書かれている、と明言している。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/158-loment-freeze.md">
+        <span class="who">docs/158</span>
+        <span class="what">凍結された表層と、それを変えるための手続き —— 標準がその両方について指し示す記録。中国語で書かれている。</span>
+      </a>
+      <a class="doclink" href="releases.html">
+        <span class="who">リリース履歴</span>
+        <span class="what">実際に出荷されたもの —— 標準はそれではなく、そう主張することも決してない。</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">フロントページへ戻る</span>
+        <span class="what">Loment とは何か、そしてそれがビルドする二種類のプログラム。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment は Loment-Open License の下で公開されている。制作: Fujo。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">ソース</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">リリース</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">イシュー</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

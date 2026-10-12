@@ -48,7 +48,8 @@ LANGS = [
 ]
 
 #: 英文页在根目录；译文各占一个子目录，页面名相同。
-PAGES = ["index.html", "start.html", "examples.html", "lgc.html", "lvm.html", "lompi.html",
+PAGES = ["index.html", "start.html", "examples.html", "standard.html", "lgc.html", "lvm.html",
+         "lompi.html",
          "libl.html",
          "releases.html",
          "roadmap.html",

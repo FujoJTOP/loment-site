@@ -1,0 +1,192 @@
+<!doctype html>
+<!-- translated-from: standard.html -->
+<!-- source-sha256: cb23a809c4e4b6234be73ea1e4657b5273fb14908dae4b383b077f18981cd816 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Стандарт — Loment</title>
+<meta name="description" content="У языка есть именованный стандарт, на который можно ссылаться, — LLS, — и он живёт в репозитории, рядом с кодом, который описывает, а не на этой странице. Что он фиксирует, что решает вопрос соответствия и от чего отказывается.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/standard.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/standard.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/standard.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/standard.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/standard.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/standard.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+        <nav>
+      <a href="learn.html">Обучение</a>
+      <a href="start.html">Начало</a>
+      <a href="examples.html">Примеры</a>
+      <a href="standard.html" aria-current="page">Стандарт</a>
+      <details class="navmenu" name="bar">
+        <summary>Версии</summary>
+        <ul>
+          <li><a href="releases.html">История версий</a></li>
+          <li><a href="roadmap.html">Дорожная карта</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Системы</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>RU</summary>
+      <ul>
+        <li><a href="../standard.html" hreflang="en">English</a></li>
+        <li><a href="../zh/standard.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/standard.html" hreflang="ja">日本語</a></li>
+        <li><a href="standard.html" hreflang="ru" aria-current="true">Русский</a></li>
+        <li><a href="../es/standard.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Стандарт</p>
+    <h1>Стандарт языка Loment</h1>
+    <p class="lede">
+      У языка есть <strong>именованный стандарт, на который можно ссылаться</strong> &mdash;
+      LLS, Loment Language Standard, &mdash; и он живёт в репозитории, рядом с кодом, который
+      описывает, а не на этой странице.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Для чего он нужен — и чем отказывается быть</h2>
+    <p class="body">
+      Стандарт существует, чтобы у вопроса «правильна ли эта реализация?» был ответ, не
+      зависящий от того, кого спросили. Большинство стандартов отвечают на него, излагая сами
+      правила. Этот — нет: правило проекта в том, что авторитетная копия чего угодно существует
+      ровно в одном месте, поэтому стандарт <strong>не излагает ни одного языкового правила
+      сам</strong>. Он — рамка вокруг правил, и всё в нём либо указатель на единственный
+      источник, либо утверждение о том, что значит соответствие.
+    </p>
+    <p class="body">
+      С этой рамкой он делает две вещи. Он <strong>фиксирует поверхность</strong> &mdash; какие
+      части языка могут меняться только по определённой процедуре, и что это за процедура. И он
+      <strong>решает вопрос соответствия</strong>, называя набор критериев, который его решает.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Что решает вопрос соответствия</h2>
+    <p class="body">
+      Не документ и не какая-либо реализация. Стандарт говорит это прямыми словами: там, где
+      текст, реализация и критерии расходятся, <strong>правы критерии</strong>. Падающий
+      критерий нельзя заставить пройти, ослабив критерий, &mdash; только изменив реализацию или
+      изменив поверхность по процедуре.
+    </p>
+    <p class="limit">
+      <strong>И то, чего набор увидеть не может.</strong> Часть критериев требует инструмента,
+      которого на данной машине может не быть, и они сообщают <em>пропущен</em>, а не пройден,
+      &mdash; так что «зелёный» значит, что зелёными были те критерии, что запустились.
+      Стандарт называет каждый из них, а также записывает самую неудобную фразу во всём
+      документе: набор написан тем же автором, что и реализации, поэтому согласие двух
+      реализаций — это свидетельство того, что они <em>согласны</em>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Переключатели</h2>
+    <p class="body">
+      Стандарт описывает Loment его переключателями, а не тем, чего в нём нет. Каждая
+      подсистема, какая у языка может быть, &mdash; какой слой программе можно использовать,
+      кто возвращает память, несёт ли бинарник runtime, есть ли у него порты во внешний мир и
+      для какой модели выполнения он, &mdash; это настройка, которую программа объявляет один
+      раз, в своём корневом модуле, и сборка её записывает. Значения по умолчанию — это
+      положения, при которых существующие программы ведут себя как раньше. Это свойство
+      значений по умолчанию, а не утверждение о языке.
+    </p>
+    <p class="body">
+      Стандарт также проводит черту, которую легко не заметить. Некоторые сочетания
+      переключателей отклоняются потому, что два значения <em>означают противоположное</em>;
+      другие отклоняются лишь потому, что их никто ещё не построил. <strong>Выключенный
+      переключатель &mdash; не запрещённый переключатель</strong>, и стандарт нарочно держит
+      эти две вещи врозь.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Где он живёт</h2>
+    <p class="body">
+      Рядом с кодом, который он описывает, и версионируется вместе с ним: версия стандарта
+      <em>и есть</em> версия поверхности, которую он определяет. Одно число, а не два, &mdash;
+      потому что отдельная ось изданий потребовала бы таблицы соответствия изданий версиям
+      языка, а такая таблица была бы вторым источником истины.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/standard/LLS.md">
+        <span class="who">standard/LLS.md</span>
+        <span class="what">Сам стандарт. Написан по-английски, и в нём прямо сказано, что большая часть того, на что он нормативно ссылается, написана по-китайски.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/158-loment-freeze.md">
+        <span class="who">docs/158</span>
+        <span class="what">Замороженная поверхность и процедура её изменения &mdash; запись, на которую стандарт указывает в обоих случаях. На китайском.</span>
+      </a>
+      <a class="doclink" href="releases.html">
+        <span class="who">История версий</span>
+        <span class="what">Что на самом деле было выпущено &mdash; чем стандарт не является и чем никогда себя не называл.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Назад на главную</span>
+        <span class="what">Что такое Loment и два вида программ, которые он собирает.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment выпускается под лицензией Loment-Open. Программа — Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Исходники</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Релизы</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Вики</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Проблемы</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

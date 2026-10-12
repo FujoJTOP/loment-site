@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Standard — Loment</title>
+<meta name="description" content="The language has a named, citable standard — LLS — and it lives in the repository beside the code it describes, not on this page. What it fixes, what decides conformance, and what it refuses to do.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/standard.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/standard.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/standard.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/standard.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/standard.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/standard.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+        <nav>
+      <a href="learn.html">Learn</a>
+      <a href="start.html">Get started</a>
+      <a href="examples.html">Examples</a>
+      <a href="standard.html" aria-current="page">Standard</a>
+      <details class="navmenu" name="bar">
+        <summary>Versions</summary>
+        <ul>
+          <li><a href="releases.html">Release history</a></li>
+          <li><a href="roadmap.html">Roadmap</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Systems</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>EN</summary>
+      <ul>
+        <li><a href="standard.html" hreflang="en" aria-current="true">English</a></li>
+        <li><a href="zh/standard.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="ja/standard.html" hreflang="ja">日本語</a></li>
+        <li><a href="ru/standard.html" hreflang="ru">Русский</a></li>
+        <li><a href="es/standard.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Standard</p>
+    <h1>The Loment Language Standard</h1>
+    <p class="lede">
+      The language has a <strong>named, citable standard</strong> &mdash; LLS, the Loment
+      Language Standard &mdash; and it lives in the repository beside the code it describes
+      rather than on this page.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What it is for, and what it refuses to be</h2>
+    <p class="body">
+      A standard exists so that "is this implementation correct?" has an answer that does not
+      depend on who is asked. Most standards answer that by stating the rules themselves. This
+      one does not: the project's rule is that the authoritative copy of anything exists in
+      exactly one place, so the standard <strong>states no language rules of its own</strong>.
+      It is a frame around the rules, and everything in it is either a pointer to a single
+      source or a statement about what conformance means.
+    </p>
+    <p class="body">
+      It does two things with that frame. It <strong>fixes the surface</strong> &mdash; which
+      parts of the language may change only by a defined procedure, and what that procedure is.
+      And it <strong>decides conformance</strong>, by naming the suite that decides it.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>What decides conformance</h2>
+    <p class="body">
+      Not the document, and not any implementation. The standard says so in as many words: where
+      the prose, an implementation and the criteria disagree, <strong>the criteria are
+      right</strong>. A failing criterion may not be made to pass by relaxing the criterion
+      &mdash; only by changing the implementation, or by changing the surface under the
+      procedure.
+    </p>
+    <p class="limit">
+      <strong>And what the suite cannot see.</strong> Some criteria need a tool a given machine
+      may not have, and they report <em>skipped</em> rather than passed &mdash; so "green" means
+      the criteria that ran were green. The standard names each one, and it also writes down the
+      least comfortable sentence in the whole document: the suite is written by the same author
+      as the implementations, so two implementations agreeing is evidence that they
+      <em>agree</em>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>The switches</h2>
+    <p class="body">
+      The standard describes Loment by its switches rather than by what it lacks. Every
+      subsystem the language can have &mdash; which layer the program may use, who reclaims
+      memory, whether the binary carries a runtime, whether it has ports to the world, and which
+      execution model it is for &mdash; is a setting the program states once, in its root unit,
+      and the build records it. The defaults are the positions that keep existing programs
+      behaving as they did. That is a property of the defaults, not a claim about the language.
+    </p>
+    <p class="body">
+      The standard also draws a line that is easy to miss. Some combinations of switches are
+      refused because the two values <em>mean opposite things</em>; others are refused only
+      because nobody has built them yet. <strong>A switch that is off is not a switch that is
+      forbidden</strong>, and the standard keeps the two apart on purpose.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Where it lives</h2>
+    <p class="body">
+      Beside the code it describes, and versioned with it: the standard's version <em>is</em>
+      the version of the surface it defines. One number, not two &mdash; because a separate
+      edition axis would need a table mapping editions to language versions, and that table
+      would be a second source of truth.
+    </p>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/standard/LLS.md">
+        <span class="who">standard/LLS.md</span>
+        <span class="what">The standard itself. Written in English, and it says plainly that most of what it normatively references is written in Chinese.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/158-loment-freeze.md">
+        <span class="who">docs/158</span>
+        <span class="what">The frozen surface and the procedure for changing it — the record the standard points at for both. In Chinese.</span>
+      </a>
+      <a class="doclink" href="releases.html">
+        <span class="who">Release history</span>
+        <span class="what">What has actually shipped — which the standard is not, and never claims to be.</span>
+      </a>
+      <a class="doclink" href="index.html">
+        <span class="who">Back to the front page</span>
+        <span class="what">What Loment is, and the two kinds of program it builds.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Source</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
