@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: libl.html -->
-<!-- source-sha256: bab1219b8e5ba5ac9017a73871815d66f28f475229396d8cc80e963988d16932 -->
+<!-- source-sha256: 12b3639c15b6143ae4c2ffcd909433e41490ce3fd79d5fc574275c18f444a3a3 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -83,17 +83,18 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>リリースには入っていない</h2>
+    <h2>まだ利用できない</h2>
     <p class="body">
-      LibL は開発ブランチで実装され、プルリクエストとして開かれている。<strong>そのどの部分も、
-      main ブランチにも、どのリリースにも、どのインストール済みツールチェインにもない</strong>
-      —— だから今日それを <code>use</code> することはできず、このページの何ものも、あなたが
-      走らせられるものではない。
+      ライブラリは書かれており、そのコードは<strong>main ブランチにある</strong>。<strong>リリース
+      では利用できない</strong> —— いま切られつつある版のリリースノートは、これを libc とともに
+      利用できないものとして挙げている —— だからこのページの何ものも、今日あなたが使えるもの
+      ではない。
     </p>
     <p class="limit">
       <strong>そもそもなぜこれがこのサイトにあるのか。</strong>それは、言語が開いたままにしていた
       問いへの最初の答えだからである: C からやって来た人に標準ライブラリがどう見えるか。
-      プルリクエストが現状であり、このページの末尾でリンクされている。
+      「書かれた」ことと「使える」ことは同じではなく、ここではその隔たりが、片方だけを言えば
+      誤解を招くほど大きい。
     </p>
   </div>
 </section>
@@ -332,9 +333,13 @@
   <div class="wrap">
     <h2>どこに書き留められているか</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-libl.md">
+        <span class="who">docs/232</span>
+        <span class="what">設計記録: 四つの面、見出しからモジュールへの対応、そして言語が逸脱を強いいた箇所すべて。中国語で書かれている。</span>
+      </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/pull/245">
-        <span class="who">プルリクエスト</span>
-        <span class="what">すべてがここにある: ライブラリ、glibc に対して走らせる判定基準、そして設計記録。オープンで、未マージ。</span>
+        <span class="who">プルリクエスト #245</span>
+        <span class="what">これが着地した場所 —— ライブラリ、glibc に対して走らせる判定基準、そして論証。マージ済み。</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/issues/246">
         <span class="who">イシュー #246</span>

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 5664702d7d39f8ee0a96cc51aba8bc971a0d87625a4b219d396e84cf3964cd69 -->
+<!-- source-sha256: 2f84fade6a46cfd9a63618c8c6af9980f561f0b2cfe95c43cb55a15964dbe787 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -90,8 +90,9 @@
       冒頭に置く。計画についてのページは、読者が計画を製品と取り違える最も容易な場所だからだ。
     </p>
     <p class="body">
-      存在するのは、設計記録と、いまも作られている最初の一片だけである。<strong>そのどの部分も、
-      main ブランチにも、どのリリースにも、どのインストール済みツールチェインにもない。</strong>
+      存在するのは最初の一片である: <strong>次元とそのゲートは main ブランチにあり</strong>、
+      どちらもどのリリースにも、どのインストール済みツールチェインにもない。その一片がすることは、
+      プログラムが VM を<em>要求</em>してよいかを決めることであって、何かを走らせることではない。
       この線より下はすべて設計である —— そのものが何であるべきか、何であってはならないか ——
       そしてそのどれも、使える機能ではない。
     </p>
@@ -165,10 +166,11 @@
       <div class="row">
         <h3>第五の次元</h3>
         <p>
-          <code>choose</code> には四つあった —— プログラムが使ってよい層、メモリをどう回収するか、
-          成果物が runtime を積んでよいか、自分自身の外に到達してよいか。<code>vm</code> が第五と
-          なり、<strong>このプログラムはどの実行モデル向けか?</strong> に答える。書かなければ
+          <code>choose</code> にはすでに四つあった —— プログラムが使ってよい層、メモリをどう回収するか、
+          成果物が runtime を積んでよいか、自分自身の外に到達してよいか。<code>vm</code> が第五であり、
+          <strong>このプログラムはどの実行モデル向けか?</strong> に答える。書かなければ
           <code>no_vm</code> になり、それはこの次元が存在する前にはすべてがそうだったものである。
+          それは main ブランチにあり、どのリリースにも入っていない。
         </p>
         <p>
           その値は<em>あるかどうか</em>を述べ、決して<em>どれか</em>を述べない。それは
@@ -363,9 +365,13 @@
         <span class="who">LVM</span>
         <span class="what">同じ領域を、言語の残りの話題と並べて wiki に。</span>
       </a>
-      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
-        <span class="who">docs/</span>
-        <span class="what">設計記録。<strong>この設計はまだ公開ブランチにない</strong> —— だから今のところ、このページが公開の要約である。</span>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-loment-vm.md">
+        <span class="who">docs/232</span>
+        <span class="what">設計記録。中国語で書かれており、どの部分が固まっていてどれがそうでないかを、それ自身が語っている。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
+        <span class="who">docs/231</span>
+        <span class="what">チャネルと <code>vm</code> 次元 —— main ブランチにあるその一片。</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">ロードマップ</span>

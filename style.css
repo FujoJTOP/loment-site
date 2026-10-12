@@ -384,6 +384,45 @@ code {
   .pane + .pane { border-left: none; border-top: 1px solid var(--line-2); }
 }
 
+/* ------------------------------------------------------- numbered list
+
+   For release notes, where the numbers are the point: a release note is
+   quoted, and "the third thing in 0.1.4.5" has to mean one thing. The marker
+   sits in a mono gutter — the same device the code gutters use — and the
+   items are separated by the one hairline the rest of the page uses. */
+
+ol.notes {
+  counter-reset: note;
+  list-style: none;
+  margin: var(--s4) 0 0;
+  padding: 0;
+  max-width: var(--measure);
+}
+ol.notes > li {
+  position: relative;
+  padding: var(--s3) 0 var(--s3) 3.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+}
+ol.notes > li::before {
+  counter-increment: note;
+  content: counter(note);
+  position: absolute; left: 0; top: var(--s3);
+  font: 600 var(--t-xs) / 1.7 var(--mono);
+  color: var(--faint);
+}
+ol.notes > li strong { color: var(--ink); font-weight: 600; }
+ol.notes > li code { font-size: 0.95em; }
+
+/* A sub-heading inside a section, sitting above one of those lists. The
+   section's own h2 carries the weight; this only has to separate, and h3 has
+   no margin of its own here. */
+.sec > .wrap > h3 {
+  margin-top: var(--s5);
+  font-size: var(--t-h3);
+  color: var(--ink);
+}
+
 /* ---------------------------------------------------------------- code */
 
 .codewrap {

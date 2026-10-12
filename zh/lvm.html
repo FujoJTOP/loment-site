@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 5664702d7d39f8ee0a96cc51aba8bc971a0d87625a4b219d396e84cf3964cd69 -->
+<!-- source-sha256: 2f84fade6a46cfd9a63618c8c6af9980f561f0b2cfe95c43cb55a15964dbe787 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -89,9 +89,10 @@
       计划的一页，最容易让读者把计划当成产品。
     </p>
     <p class="body">
-      存在的，是一份设计记录，和第一片仍在搭建的东西。<strong>它的任何部分都不在主分支、
-      不在任何发布里、不在任何已安装的工具链里。</strong>这条线以下的一切都是设计 —— 这个
-      东西打算成为什么，以及它打算不成为什么 —— 没有哪一样是你能用的功能。
+      存在的，是第一片：<strong>维度与闸门在主分支上</strong>，而两者都不在任何发布里、
+      也不在任何已安装的工具链里。那一片所做的，是决定一个程序能否<em>请求</em> VM，而不是
+      运行任何东西。这条线以下的一切都是设计 —— 这个东西打算成为什么，以及它打算不成为
+      什么 —— 没有哪一样是你能用的功能。
     </p>
     <p class="limit">
       <strong>项目以前就背过的一笔债。</strong><code>runtime</code> 维度曾在一段时间里被
@@ -158,10 +159,10 @@
       <div class="row">
         <h3>第五个维度</h3>
         <p>
-          <code>choose</code> 曾有四个 —— 程序可用哪一层、它如何回收内存、产物能否携带一个
-          runtime、以及它能否向自身之外伸手。<code>vm</code> 会是第五个，回答的是
+          <code>choose</code> 已有四个 —— 程序可用哪一层、它如何回收内存、产物能否携带一个
+          runtime、以及它能否向自身之外伸手。<code>vm</code> 是第五个，回答的是
           <strong>这个程序是为哪个执行模型而写的？</strong>不写就是 <code>no_vm</code>，
-          也就是这个维度存在之前一切东西的状态。
+          也就是这个维度存在之前一切东西的状态。它在主分支上；它不在任何发布里。
         </p>
         <p>
           这个值说的是<em>是否</em>，从不是<em>哪一个</em>。这正是 <code>runtime</code> 维度
@@ -336,9 +337,13 @@
         <span class="who">LVM</span>
         <span class="what">wiki 上的同一片地，与语言其余部分放在一起。</span>
       </a>
-      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
-        <span class="who">docs/</span>
-        <span class="what">设计记录。<strong>这份设计还不在公开分支上</strong> —— 所以眼下，这一页就是公开的摘要。</span>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-loment-vm.md">
+        <span class="who">docs/232</span>
+        <span class="what">设计记录。用中文写成，并且它自己说明了哪些部分是定下的、哪些不是。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
+        <span class="who">docs/231</span>
+        <span class="what">通道与 <code>vm</code> 维度 —— 那一片已经在主分支上。</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">路线图</span>

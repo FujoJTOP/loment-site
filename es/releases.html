@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: releases.html -->
-<!-- source-sha256: e9397625e20ab0e7291ed789f21f3356f28fec918a35a402b220c538b5beb8a2 -->
+<!-- source-sha256: 7413b86510fc7ac7dfc6bdbd639a0b522911ee6c4c879f9482d00f6d30410f2c -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -215,44 +215,99 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>0.1.4.5 Pre — anunciada, no publicada</h2>
+    <h2>0.1.4.5</h2>
     <p class="body">
-      <strong>2026-10-10.</strong> <strong>No hay nada que descargar.</strong> Esta etiqueta no
-      lleva archivos comprimidos ni instaladores; existe para que lo que contendrá la próxima
-      versión se diga en público mientras aún se está construyendo. Si se quiere un conjunto de
-      herramientas hoy, instalar 0.1.4.
+      <strong>En publicación.</strong> La etiqueta que se sostiene hoy es un anuncio — no lleva
+      archivos comprimidos ni instaladores. La versión se está cortando a partir de ella, y esto es
+      lo que contiene: lo nuevo, y lo que estaba roto y ya no lo está.
     </p>
 
-    <div class="rows">
-      <div class="row">
-        <h3>Recuperación — ya en la rama principal</h3>
-        <p>
-          La escala de cuatro peldaños y los tres niveles construidos sobre ella, descritos en
-          <a href="lgc.html">su propia página</a>. La parte que aún se está construyendo también se
-          nombra allí.
-        </p>
-      </div>
-      <div class="row">
-        <h3>Redes, en ambos objetivos — ya en la rama principal</h3>
-        <p>
-          El mismo código abre un socket en Linux y en Windows. Con ello se enuncian dos límites,
-          porque son las partes que faltan: <strong>no hay biblioteca de red</strong> — la
-          biblioteca estándar no tiene módulo de red, las llamadas al sistema se escriben uno
-          mismo — y <strong>no hay puerta de admisión</strong>. Una unidad que declara que no
-          solicitará acceso a la red no queda realmente impedida de llamar a la llamada del socket.
-          La comprobación de capacidades compara los <em>nombres</em> de los dominios y nunca mira
-          el comportamiento, y el registro de diseño discute si esa puerta debería existir siquiera,
-          en vez de dar por hecho que sí.
-        </p>
-      </div>
-      <div class="row">
-        <h3>El gestor de paquetes, 0.2.0 — planificado</h3>
-        <p>
-          Todavía planificado, y se anunciará en el repositorio propio del gestor de paquetes y no
-          aquí.
-        </p>
-      </div>
-    </div>
+    <h3>Nuevo</h3>
+    <ol class="notes">
+      <li>
+        <strong>La recuperación está completa.</strong> La escala de cuatro peldaños — promoción
+        estática, último uso, épocas de bloque y el recolector en tiempo de ejecución — tiene
+        implementaciones en ambos lados y un criterio para cada uno; un recolector <em>adaptativo</em>
+        para el nivel que lo quería; y una mitad <em>generacional</em>, con una tabla de tarjetas y
+        una barrera de escritura. Cuánto de un programa es responsabilidad del recolector es un
+        número que el artefacto lleva, y dos validadores independientes lo comprueban sin leer una
+        línea de código fuente. Ver <a href="lgc.html">LomentGC</a>.
+      </li>
+      <li>
+        <strong><code>no_runtime</code> es una garantía, no una declaración.</strong> El valor por
+        defecto antes significaba «este programa no pidió un runtime». Ahora significa <em>el
+        artefacto no tiene ninguno</em>: una construcción que arrastraría uno se rechaza en tiempo
+        de compilación. <code>choose runtime</code> es la otra mitad — pone el runtime dentro, lo
+        use el programa o no. <strong>Este es el único cambio de aquí que puede afectar a un
+        programa que ya se tenga:</strong> cualquier cosa que use división, asignación de memoria o
+        construcción de cadenas necesita una línea añadida a su unidad raíz.
+      </li>
+      <li>
+        <strong>Una quinta dimensión: <code>vm</code>.</strong> Un programa puede decir ahora para
+        qué modelo de ejecución es. En una compilación de <strong>versión</strong> esa línea es un
+        error de compilación; solo el canal de desarrollo la acepta, y lo que ese canal produce es
+        idéntico byte a byte a <code>no_vm</code>. La dimensión y la puerta son reales, y el motor
+        no lo es — <a href="lvm.html">esa página</a> dice qué mitad es cuál.
+      </li>
+      <li>
+        <strong>Redes, en ambos objetivos.</strong> El mismo código abre un socket en Linux y en
+        Windows, a partir de los mismos bytes. Con ello vienen dos límites, y son las partes que
+        todavía faltan: <strong>no hay biblioteca de red</strong> — las llamadas al sistema se
+        escriben uno mismo — y <strong>no hay puerta de admisión</strong>, de modo que una unidad
+        que declara que no solicitará acceso a la red no queda realmente impedida de llamar a un
+        socket. La comprobación de capacidades compara los <em>nombres</em> de los dominios, y nunca
+        mira el comportamiento.
+      </li>
+      <li>
+        <strong><code>--opt</code>.</strong> Cuando clang está instalado, la compilación puede
+        entregarle el IR a <code>-O2</code> en lugar de usar el enlazador incluido. Es la vía rápida,
+        y cuesta la propiedad por la que existe la vía incluida: no requerir ninguna cadena de
+        herramientas externa.
+      </li>
+    </ol>
+
+    <h3>Corregido</h3>
+    <ol class="notes">
+      <li>
+        <strong>El instalador de Windows.</strong> El publicado con 0.1.4 no hace absolutamente nada
+        en una máquina configurada para no buscar un ejecutable en el directorio actual. Ese se queda
+        como está; esta versión trae el instalador corregido.
+      </li>
+      <li>
+        <strong>Una lista de bloques libres que nunca reutilizaba nada.</strong> El enlazador
+        incluido asignaba solo una arista entrante por phi, así que la lista de bloques libres del
+        asignador se quedó vacía durante toda su vida.
+      </li>
+      <li>
+        <strong>Artefactos que el ensamblador rechazaba.</strong> Dos errores del IR hacían que los
+        artefactos con subíndices de matriz fueran LLVM no válido. Y un terminador de bloque ausente
+        en la propia salida del recolector era invisible para todos los criterios que el proyecto
+        tenía.
+      </li>
+      <li>
+        <strong>El servidor de lenguaje y el formateador.</strong> El servidor ya no se cae con un
+        archivo que no puede analizar, y el formateador autoalojado ya no rechaza las otras seis
+        gramáticas superficiales.
+      </li>
+      <li>
+        <strong>La alineación de pila en el punto de entrada.</strong> A la entrada de un proceso no
+        se le da la alineación que la convención de llamada supone, así que <code>_start</code> la
+        realinea.
+      </li>
+      <li>
+        <strong>Varias correcciones en la gramática superficial de C</strong> para los lugares donde
+        el front end se tragaba algo o lo reportaba como otra cosa. Cada una tiene su propia
+        incidencia; el mensaje de la etiqueta las enumera.
+      </li>
+    </ol>
+
+    <h3>Lo que no trae esta versión</h3>
+    <p class="limit">
+      <strong>libc y LibL no están disponibles.</strong> La línea de libc está construyendo las
+      piezas que una biblioteca de C necesita, una a una, y la cara con forma de libc de la
+      biblioteca estándar no está lista para usarse. Ninguna de las dos es algo con lo que planear
+      hoy — <a href="libl.html">la página de LibL</a> lleva su propia línea de estado.
+    </p>
   </div>
 </section>
 

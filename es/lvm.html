@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lvm.html -->
-<!-- source-sha256: 5664702d7d39f8ee0a96cc51aba8bc971a0d87625a4b219d396e84cf3964cd69 -->
+<!-- source-sha256: 2f84fade6a46cfd9a63618c8c6af9980f561f0b2cfe95c43cb55a15964dbe787 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -91,11 +91,12 @@
       para que quien lee confunda el plan con el producto.
     </p>
     <p class="body">
-      Lo que existe es un registro de diseño y una primera porción todavía en construcción.
-      <strong>Ninguna parte está en la rama principal, ni en ninguna versión, ni en ningún
-      conjunto de herramientas instalado.</strong> Todo lo que hay debajo de esta línea es el
-      diseño &mdash; lo que la cosa pretende ser, y lo que pretende no ser &mdash; y nada de ello
-      es una función que se pueda usar.
+      Lo que existe es la primera porción: <strong>la dimensión y la puerta están en la rama
+      principal</strong>, y ninguna de las dos está en ninguna versión ni en ningún conjunto de
+      herramientas instalado. Lo que hace esa porción es decidir si un programa puede <em>pedir</em>
+      la VM, no ejecutar nada. Todo lo que hay debajo de esta línea es el diseño &mdash; lo que la
+      cosa pretende ser, y lo que pretende no ser &mdash; y nada de ello es una función que se pueda
+      usar.
     </p>
     <p class="limit">
       <strong>Una deuda que el proyecto ya arrastró antes.</strong> La dimensión
@@ -169,11 +170,12 @@
       <div class="row">
         <h3>Una quinta dimensión</h3>
         <p>
-          <code>choose</code> tenía cuatro &mdash; qué capa puede usar el programa, cómo recupera
-          memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera de sí mismo.
-          <code>vm</code> sería la quinta, al responder a <strong>¿para qué modelo de ejecución es
-          este programa?</strong> Sin escribirla es <code>no_vm</code>, que es lo que todo era
-          antes de que la dimensión existiera.
+          <code>choose</code> ya tenía cuatro &mdash; qué capa puede usar el programa, cómo
+          recupera memoria, si el artefacto puede llevar un runtime, y si puede alcanzar fuera de
+          sí mismo. <code>vm</code> es la quinta, y responde a <strong>¿para qué modelo de
+          ejecución es este programa?</strong> Sin escribirla es <code>no_vm</code>, que es lo que
+          todo era antes de que la dimensión existiera. Está en la rama principal; no está en
+          ninguna versión.
         </p>
         <p>
           El valor dice <em>si</em>, nunca <em>cuál</em>. Esa es la regla que la dimensión
@@ -372,9 +374,13 @@
         <span class="who">LVM</span>
         <span class="what">El mismo terreno en la wiki, junto al resto del lenguaje.</span>
       </a>
-      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
-        <span class="who">docs/</span>
-        <span class="what">Los registros de diseño. <strong>Este diseño todavía no está en la rama pública</strong> &mdash; así que por ahora, esta página es el resumen público.</span>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-loment-vm.md">
+        <span class="who">docs/232</span>
+        <span class="what">El registro de diseño. Escrito en chino, y él mismo lo dice sobre qué partes están asentadas y cuáles no.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
+        <span class="who">docs/231</span>
+        <span class="what">El canal y la dimensión <code>vm</code> — la porción que está en la rama principal.</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">Roadmap</span>

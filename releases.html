@@ -208,43 +208,92 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>0.1.4.5 Pre — announced, not released</h2>
+    <h2>0.1.4.5</h2>
     <p class="body">
-      <strong>2026-10-10.</strong> <strong>There is nothing to download.</strong> This tag
-      carries no archives and no installers; it exists so that what the next version will
-      contain is stated in public while it is still being built. If you want a toolchain today,
-      install 0.1.4.
+      <strong>Being released.</strong> The tag that stands today is an announcement &mdash; it
+      carries no archives and no installers. The release is being cut from it, and this is what it
+      contains: what is new, and what was broken and now is not.
     </p>
 
-    <div class="rows">
-      <div class="row">
-        <h3>Reclamation — already in the main branch</h3>
-        <p>
-          The four-rung ladder and the three tiers built on it, described on
-          <a href="lgc.html">its own page</a>. The part still being built is named there too.
-        </p>
-      </div>
-      <div class="row">
-        <h3>Networking, on both targets — already in the main branch</h3>
-        <p>
-          The same source opens a socket on Linux and on Windows. Two boundaries are stated with
-          it, because they are the parts that are missing: <strong>there is no networking
-          library</strong> &mdash; the standard library has no network module, you write the
-          system calls yourself &mdash; and <strong>there is no admission gate</strong>. A unit
-          that declares it will not request network access is not actually stopped from calling
-          the socket call. The capability check compares the <em>names</em> of domains and never
-          looks at behaviour, and the design record argues about whether that gate should exist
-          at all rather than assuming it should.
-        </p>
-      </div>
-      <div class="row">
-        <h3>The package manager, 0.2.0 — planned</h3>
-        <p>
-          Still planned, and it will be announced on the package manager's own repository rather
-          than here.
-        </p>
-      </div>
-    </div>
+    <h3>New</h3>
+    <ol class="notes">
+      <li>
+        <strong>Reclamation is complete.</strong> The four-rung ladder &mdash; static promotion,
+        last-use, block epochs, and the runtime collector &mdash; has implementations on both sides
+        and a criterion for each; an <em>adaptive</em> collector for the tier that wanted one; and a
+        <em>generational</em> half, with a card table and a write barrier. How much of a program the
+        collector is responsible for is a number the artifact carries, and two independent
+        validators check it without reading a line of source. See <a href="lgc.html">LomentGC</a>.
+      </li>
+      <li>
+        <strong><code>no_runtime</code> is a guarantee, not a declaration.</strong> The default used
+        to mean "this program did not ask for a runtime". It now means <em>the artifact has none</em>:
+        a construct that would drag one in is refused at compile time. <code>choose runtime</code> is
+        the other half &mdash; it puts the runtime in whether or not the program uses it.
+        <strong>This is the one change here that can affect a program you already have:</strong>
+        anything using division, allocation or string building needs one line added to its root unit.
+      </li>
+      <li>
+        <strong>A fifth dimension: <code>vm</code>.</strong> A program can now say which execution
+        model it is for. In a <strong>release</strong> build that line is a compile error; only the
+        development channel accepts it, and what that channel produces is byte-identical to
+        <code>no_vm</code>. The dimension and the gate are real, and the engine is not &mdash;
+        <a href="lvm.html">that page</a> says which half is which.
+      </li>
+      <li>
+        <strong>Networking, on both targets.</strong> The same source opens a socket on Linux and on
+        Windows, from the same bytes. Two boundaries come with it, and they are the parts still
+        missing: there is <strong>no networking library</strong> &mdash; you write the system calls
+        &mdash; and there is <strong>no admission gate</strong>, so a unit that declares it will not
+        request network access is not actually stopped from calling a socket. The capability check
+        compares the <em>names</em> of domains, and never looks at behaviour.
+      </li>
+      <li>
+        <strong><code>--opt</code>.</strong> When clang is installed, the build can hand it the IR
+        at <code>-O2</code> instead of using the bundled linker. It is the fast path, and it costs
+        the property the bundled path exists for: no external toolchain required.
+      </li>
+    </ol>
+
+    <h3>Fixed</h3>
+    <ol class="notes">
+      <li>
+        <strong>The Windows installer.</strong> The one published with 0.1.4 does nothing at all on
+        a machine configured not to search the current directory for an executable. That one stays
+        as it is; this release carries the fixed installer.
+      </li>
+      <li>
+        <strong>A free list that never reused anything.</strong> The bundled linker assigned only
+        one incoming edge per phi, so the allocator's free list stayed empty for its whole life.
+      </li>
+      <li>
+        <strong>Artifacts the assembler refused.</strong> Two IR bugs made array-subscript artifacts
+        invalid LLVM. And a missing block terminator in the collector's own output was invisible to
+        every criterion the project had.
+      </li>
+      <li>
+        <strong>The language server and the formatter.</strong> The server no longer crashes on a
+        file it cannot parse, and the self-hosted formatter no longer refuses the six other surface
+        grammars.
+      </li>
+      <li>
+        <strong>Stack alignment at the entry point.</strong> A process entry is not given the
+        alignment the call convention assumes, so <code>_start</code> realigns it.
+      </li>
+      <li>
+        <strong>Several fixes in the C surface grammar</strong> for the places the front end
+        swallowed something or reported it as something else. Each has its own issue; the tag
+        message lists them.
+      </li>
+    </ol>
+
+    <h3>Not in this release</h3>
+    <p class="limit">
+      <strong>libc and LibL are not available.</strong> The libc line is building the pieces a C
+      library needs one at a time, and the standard library's libc-shaped face is not ready to be
+      used. Neither is something to plan around today &mdash; <a href="libl.html">the LibL page</a>
+      carries its own status line.
+    </p>
   </div>
 </section>
 

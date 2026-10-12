@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: libl.html -->
-<!-- source-sha256: bab1219b8e5ba5ac9017a73871815d66f28f475229396d8cc80e963988d16932 -->
+<!-- source-sha256: 12b3639c15b6143ae4c2ffcd909433e41490ce3fd79d5fc574275c18f444a3a3 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -82,15 +82,16 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>不在任何发布里</h2>
+    <h2>尚不可用</h2>
     <p class="body">
-      LibL 是在一个开发分支上实现的，并作为一个 pull request 开着。<strong>它的任何部分都不在
-      主分支、不在任何发布里、也不在任何已安装的工具链里</strong> —— 所以你今天没法
-      <code>use</code> 它，这页上的任何东西也都不是你能跑的。
+      这个库已经写好，代码<strong>在主分支上</strong>。<strong>它不在任何发布里</strong> ——
+      正在切出的这一版的发布说明把它和 libc 一起列为不可用 —— 所以这一页上的任何东西都不是
+      你今天能用的。
     </p>
     <p class="limit">
       <strong>它为什么还在这站上。</strong>因为它是某个语言一直悬着的问题的第一份答案：标准库
-      对于一个从 C 走过来的人是什么样子。这个 pull request 就是它的状态，链接在本页底部。
+      对于一个从 C 走过来的人是什么样子。"写好"不等于"准备好了"，而在这里两者差得足够远，
+      只说前者会误导人。
     </p>
   </div>
 </section>
@@ -309,9 +310,13 @@
   <div class="wrap">
     <h2>它写在哪儿</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-libl.md">
+        <span class="who">docs/232</span>
+        <span class="what">设计记录：那四个面、标题到模块的对应关系，以及语言每一处被迫偏离的地方。用中文写成。</span>
+      </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/pull/245">
-        <span class="who">拉取请求</span>
-        <span class="what">整件事：那个库、对着 glibc 跑的那条判据，以及设计记录。开着，尚未合并。</span>
+        <span class="who">拉取请求 #245</span>
+        <span class="what">它落地的地方 —— 那个库、对着 glibc 跑的那条判据，以及论证。已合并。</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/issues/246">
         <span class="who">Issue #246</span>

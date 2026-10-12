@@ -81,16 +81,18 @@
 
 <section class="sec">
   <div class="wrap">
-    <h2>Not in a release</h2>
+    <h2>Not available yet</h2>
     <p class="body">
-      LibL is implemented on a development branch and open as a pull request. <strong>No part of
-      it is in the main branch, in any release, or in any installed toolchain</strong> &mdash; so
-      you cannot <code>use</code> it today, and nothing on this page is something you can run.
+      The library is written and the code is <strong>on the main branch</strong>. <strong>It is not
+      available in a release</strong> &mdash; the release note for the version now being cut lists
+      it, with libc, as not available &mdash; so nothing on this page is something you can use
+      today.
     </p>
     <p class="limit">
       <strong>Why it is on this site at all.</strong> Because it is the first answer to a question
       the language had left open: what the standard library looks like to someone arriving from C.
-      The pull request is the state, and it is linked at the bottom of this page.
+      "Written" is not the same as "ready", and the two are far enough apart here that saying only
+      the first would be misleading.
     </p>
   </div>
 </section>
@@ -333,9 +335,13 @@
   <div class="wrap">
     <h2>Where it is written down</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-libl.md">
+        <span class="who">docs/232</span>
+        <span class="what">The design record: the four faces, the heading-to-module mapping, and every place the language forced a deviation. Written in Chinese.</span>
+      </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/pull/245">
-        <span class="who">Pull request</span>
-        <span class="what">The whole thing: the library, the criterion run against glibc, and the design record. Open, not merged.</span>
+        <span class="who">Pull request #245</span>
+        <span class="what">Where it landed &mdash; the library, the criterion run against glibc, and the argument. Merged.</span>
       </a>
       <a class="doclink" href="https://github.com/FujoJTOP/loment/issues/246">
         <span class="who">Issue #246</span>

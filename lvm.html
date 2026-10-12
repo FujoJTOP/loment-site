@@ -89,10 +89,11 @@
       mistake the plan for the product.
     </p>
     <p class="body">
-      What exists is a design record and a first slice still being built. <strong>No part of it
-      is on the main branch, in any release, or in any installed toolchain.</strong> Everything
-      below this line is the design &mdash; what the thing is meant to be, and what it is meant
-      not to be &mdash; and none of it is a feature you can use.
+      What exists is the first slice: <strong>the dimension and the gate are on the main
+      branch</strong>, and neither is in any release or in any installed toolchain. What that slice
+      does is decide whether a program may <em>ask</em> for the VM, not run anything. Everything
+      below this line is the design &mdash; what the thing is meant to be, and what it is meant not
+      to be &mdash; and none of it is a feature you can use.
     </p>
     <p class="limit">
       <strong>A debt the project has carried before.</strong> The <code>runtime</code> dimension
@@ -165,11 +166,12 @@
       <div class="row">
         <h3>A fifth dimension</h3>
         <p>
-          <code>choose</code> had four &mdash; which layer the program may use, how it reclaims
-          memory, whether the artifact may carry a runtime, and whether it may reach outside
-          itself. <code>vm</code> would be the fifth, answering <strong>which execution model is
-          this program for?</strong> Left unwritten it is <code>no_vm</code>, which is what
-          everything was before the dimension existed.
+          <code>choose</code> already had four &mdash; which layer the program may use, how it
+          reclaims memory, whether the artifact may carry a runtime, and whether it may reach
+          outside itself. <code>vm</code> is the fifth, and it answers <strong>which execution model
+          is this program for?</strong> Left unwritten it is <code>no_vm</code>, which is what
+          everything was before the dimension existed. It is on the main branch; it is in no
+          release.
         </p>
         <p>
           The value says <em>whether</em>, never <em>which</em>. That is the rule the
@@ -362,9 +364,13 @@
         <span class="who">LVM</span>
         <span class="what">The same ground on the wiki, beside the rest of the language.</span>
       </a>
-      <a class="doclink" href="https://github.com/FujoJTOP/loment/tree/main/docs">
-        <span class="who">docs/</span>
-        <span class="what">The design records. <strong>This design is not on the public branch yet</strong> &mdash; so for now, this page is the public summary.</span>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/232-loment-vm.md">
+        <span class="who">docs/232</span>
+        <span class="what">The design record. Written in Chinese, and it says so itself about which parts are settled and which are not.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/docs/231-lvm-channel-and-vm-dimension.md">
+        <span class="who">docs/231</span>
+        <span class="what">The channel and the <code>vm</code> dimension — the slice that is on the main branch.</span>
       </a>
       <a class="doclink" href="https://loment.fandom.com/wiki/Versions_and_roadmap">
         <span class="who">Roadmap</span>
