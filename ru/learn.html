@@ -1,0 +1,296 @@
+<!doctype html>
+<!-- translated-from: learn.html -->
+<!-- source-sha256: f1892c5d0e2d5b40a81a95f2f1d49f1044ca31fbaa389152e3d762fec1e60ffd -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Изучение — Loment</title>
+<meta name="description" content="Как учить Loment: сначала запустите что-нибудь, прочитайте язык за один присест и ищите справку в инструментальной цепочке, которая объясняет себя сама. И рядом — то, чего не хватает.">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/learn.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/learn.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/learn.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/learn.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/learn.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/learn.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="learn.html" aria-current="page">Обучение</a>
+      <a href="start.html">Начало</a>
+      <a href="examples.html">Примеры</a>
+      <details class="navmenu" name="bar">
+        <summary>Версии</summary>
+        <ul>
+          <li><a href="releases.html">История версий</a></li>
+          <li><a href="roadmap.html">Дорожная карта</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Системы</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>RU</summary>
+      <ul>
+        <li><a href="../learn.html" hreflang="en">English</a></li>
+        <li><a href="../zh/learn.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="../ja/learn.html" hreflang="ja">日本語</a></li>
+        <li><a href="learn.html" hreflang="ru" aria-current="true">Русский</a></li>
+        <li><a href="../es/learn.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Обучение</p>
+    <h1>Изучение Loment</h1>
+    <p class="lede">
+      Большинство языков в этом возрасте предлагают либо нечего читать, либо руководство,
+      которое тихо разошлось с компилятором. У этого вместо этого &mdash; <strong>инструментальная
+      цепочка, которая объясняет себя сама</strong>, одно руководство, написанное так, чтобы быть
+      самодостаточным, и документы, которые называют то, что не доделано. Вот порядок, который
+      имеет смысл, &mdash; и рядом с ним то, что стоит знать, прежде чем доверять чему-либо из этого.
+    </p>
+    <p class="limit">
+      <strong>Книга одна, а не пять.</strong> В этом языке не мало документов &mdash; ему не
+      хватает <em>обучающих</em> документов, и те, что есть, говорят об этом сами. Где ресурс
+      ниже неполон, неполон на языке, которого вы, возможно, не читаете, или никогда не
+      использовался так, как собираетесь использовать его вы, &mdash; эта страница говорит об
+      этом, а не оставляет вам выяснять самому.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Запустите что-нибудь, прежде чем что-либо читать</h2>
+    <p class="body">
+      Здесь ничего не нужно понимать заранее. Установите пакет из
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">последнего выпуска</a> &mdash;
+      в Windows берите zip, а не установщик &mdash; и команда, которая создаёт вам отправную
+      точку, сама является программой на Loment:
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment new hello        <span class="c"># writes hello.lomt; it will not overwrite one</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment run hello.lomt   <span class="c"># compile, link, run &mdash; the exit code is the program's</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      Путь «скомпилировать и запустить» не требует ни Python, ни clang, ни WSL. Что он
+      производит и почему &mdash; на странице <a href="start.html">Начало</a>; два вида
+      артефактов, которые он может произвести, &mdash; на <a href="index.html">главной странице</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Язык &mdash; за один присест</h2>
+    <p class="body">
+      Весь язык доступен как <strong>один прокомментированный файл</strong>, и команда, которая
+      его печатает, поставляется с инструментальной цепочкой, а не живёт на этом сайте.
+      Прочитайте его сверху донизу один раз &mdash; и вы увидели каждую конструкцию, какая есть:
+      язык строился так, чтобы это выдержать, а не чтобы его учили по одной возможности за раз.
+    </p>
+    <p class="body">
+      Есть также письменное руководство, и оно <strong>намеренно самодостаточно</strong>: копия
+      внутри установленного пакета &mdash; тот же файл, что и в репозитории, так что его можно
+      читать без сети, и критерий проекта в том, что эти две копии остаются идентичными.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour    <span class="c"># the language as one commented source file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment skill --print   <span class="c"># the written guide, printed in full</span></span></code></pre>
+    </div>
+
+    <p class="limit">
+      <strong>Две вещи о первой из этих команд, прежде чем вы её запустите.</strong> Комментарии
+      в tour &mdash; <em>на китайском</em>, и в текущем опубликованном выпуске именно этот файл не
+      компонуется: это известный дефект самоподдерживающегося компоновщика, и
+      <a href="examples.html">те четыре программы на странице «Примеры»</a> &mdash; те, что
+      проверены на запуск. Руководство, которое печатает вторая команда, &mdash; на английском.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Ищите справку, не выходя из терминала</h2>
+    <p class="body">
+      Это та часть, что действительно необычна, и её стоит попробовать, даже если вы не
+      собираетесь пользоваться языком. <strong>Инструментальная цепочка и есть справочник.</strong>
+      Каждая из этих команд читает из установленного пакета, так что они работают без сети и
+      отвечают о версии, которая у вас на самом деле есть, а не о том, что в последний раз сказал
+      сайт.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment cheat            <span class="c"># the whole language on one page</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment syntax           <span class="c"># the syntax on one page</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins         <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment keywords         <span class="c"># the reserved words</span></span><span class="ln" data-n="5"><span class="prompt">$ </span>loment explain E4       <span class="c"># what a diagnostic means, and what to change</span></span></code></pre>
+    </div>
+
+    <p class="body">
+      Последнюю стоит запомнить. Код ошибки сам по себе &mdash; это число; инструментальная
+      цепочка хранит фразу, которая к нему идёт, и скажет вам, на что возражал компилятор и в
+      какую сторону двигаться. <code>loment help</code> без аргумента перечисляет остальное, а
+      <a href="https://loment.fandom.com/wiki/CLI_reference">вики</a> содержит длинную форму.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Ищите справку в текстах</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>Руководство</h3>
+        <p>
+          Генерируется из компилятора и корпуса примеров и поставляется в репозитории:
+          спецификации и справочник по API для каждого входящего в поставку примера-модуля.
+          <strong>Написан на китайском</strong>, и это <em>справочник</em>, а не руководство,
+          &mdash; он говорит, что вещь есть, а не что с ней делать.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Вики</h3>
+        <p>
+          Тот же материал, что и на этом сайте, устроенный как энциклопедия языка: синтаксис,
+          типы, таблица встроенных, ступени возврата памяти, коды ошибок и то, что намеренно
+          отличается от других языков. На английском, и это то место, куда идти, когда нужна одна
+          страница об одной вещи.
+        </p>
+      </div>
+      <div class="row">
+        <h3>Записи о проектировании</h3>
+        <p>
+          За каждым решением в этом языке стоит пронумерованный документ, который приводит доводы
+          и называет, чего это стоило. <strong>Они написаны на китайском</strong>, и они не для
+          обучающихся, &mdash; но когда страница здесь или в вики говорит «так велит
+          проектирование», вот где это.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Учитесь, читая код</h2>
+    <p class="body">
+      В репозитории лежит корпус примеров программ, и инструментальная цепочка может напечатать
+      любой из них, не открывая браузера:
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment examples        <span class="c"># what is bundled</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment example demo    <span class="c"># print one of them in full</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      Для более мягкого начала <a href="examples.html">те четыре программы на этом сайте</a>
+      коротки, и каждая показывает вывод, который она в самом деле произвела. Полный корпус
+      &mdash; в репозитории в каталоге
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>,
+      и не каждый файл в нём сегодня компонуется.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Пусть редактор помогает вам</h2>
+    <p class="body">
+      Есть расширение для редактора с определением синтаксиса и языковым сервером, а также файлы
+      для редактора, которому сервер не нужен. Что языковой сервер делает &mdash; это
+      по-настоящему: диагностика от проверяльщика по мере набора, автодополнение, переход к
+      определению и форматирование &mdash; через отдельный форматировщик, а не самим сервером.
+    </p>
+    <p class="limit">
+      <strong>Три пробела, о которых стоит знать, прежде чем полагаться на него.</strong> Нет
+      межфайлового индекса символов, так что автодополнение и переход к определению видят только
+      текущий документ. Сервер не объявляет возможность форматирования; форматирование &mdash;
+      отдельная программа. И собственные заметки проекта говорят, что сервер <em>никогда не
+      запускался в настоящем редакторе вручную</em>: его тесты вызывают тот же обработчик
+      запросов напрямую. У отладчика свои пробелы: нет условных точек останова, нет вычисления
+      выражений, а локальные переменные &mdash; это регистры, а не имена.
+      <a href="https://loment.fandom.com/wiki/Editor_support">Страница о редакторе в вики</a>
+      перечисляет их полностью.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Где всё это живёт</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="start.html">
+        <span class="who">Начало</span>
+        <span class="what">Установите и запустите свою первую программу. Нативные бинарники; ни Python, ни clang, ни WSL.</span>
+      </a>
+      <a class="doclink" href="examples.html">
+        <span class="who">Примеры</span>
+        <span class="what">Четыре короткие программы, каждая с выводом, который она напечатала, — и того, чего среди них нет.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/">
+        <span class="who">Вики</span>
+        <span class="what">Язык, инструментальная цепочка и дорожная карта, страница за страницей.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">Длинная форма страницы «Начало», включая все пути сборки.</span>
+      </a>
+      <a class="doclink" href="roadmap.html">
+        <span class="who">Дорожная карта</span>
+        <span class="what">Что планируется дальше, изложено как план — без привязанных к нему дат.</span>
+      </a>
+      <a class="doclink" href="https://discord.gg/rGw7NRNU">
+        <span class="who">Discord</span>
+        <span class="what">Где проект общается. Вопросы так же желанны, как отчёты об ошибках.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment выпускается под лицензией Loment-Open. Программа — Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Исходники</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Релизы</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Вики</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Проблемы</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

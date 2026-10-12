@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: index.html -->
-<!-- source-sha256: 2ab8b12577a7e470e7245597b2eaa120bcc3167479fca2be738f0c62e4e11804 -->
+<!-- source-sha256: 49a8d9ef70f04982cb3f60ea8e0ed9dc682e96c754074416aec1c7cccecabb94 -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -35,18 +35,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">Обучение</a>
       <a href="start.html">Начало</a>
       <a href="examples.html">Примеры</a>
-      <a href="releases.html">Релизы</a>
-      <a href="roadmap.html">Дорожная карта</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>Версии</summary>
+        <ul>
+          <li><a href="releases.html">История версий</a></li>
+          <li><a href="roadmap.html">Дорожная карта</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Системы</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>RU</summary>
       <ul>
         <li><a href="../index.html" hreflang="en">English</a></li>
@@ -276,6 +287,10 @@
   <div class="wrap">
     <h2>Где читать дальше</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="learn.html">
+        <span class="who">Обучение</span>
+        <span class="what">Порядок, который имеет смысл, и чего не хватает на каждом шаге — рядом с шагом.</span>
+      </a>
       <a class="doclink" href="start.html">
         <span class="who">Начать</span>
         <span class="what">Установите и запустите свою первую программу. Нативные бинарники; без Python, без clang, без WSL.</span>

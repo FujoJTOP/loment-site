@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: lgc.html -->
-<!-- source-sha256: 79365c8cc7d54094e771526af28a6c1e930682a5d8a7f2049f77ff23bfdabe77 -->
+<!-- source-sha256: b2c0e2dbb43ea67133f6e5bbe3d942ccc8f6b4be610249fac1b668daf91104a8 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -32,18 +32,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">学习</a>
       <a href="start.html">入门</a>
       <a href="examples.html">示例</a>
-      <a href="releases.html">发布</a>
-      <a href="roadmap.html">路线图</a>
-      <a href="lgc.html" aria-current="page">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>版本</summary>
+        <ul>
+          <li><a href="releases.html">发布历程</a></li>
+          <li><a href="roadmap.html">路线图</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary aria-current="page">系统</summary>
+        <ul>
+          <li><a href="lgc.html" aria-current="page">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>中文</summary>
       <ul>
         <li><a href="../lgc.html" hreflang="en">English</a></li>

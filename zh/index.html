@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: index.html -->
-<!-- source-sha256: 2ab8b12577a7e470e7245597b2eaa120bcc3167479fca2be738f0c62e4e11804 -->
+<!-- source-sha256: 49a8d9ef70f04982cb3f60ea8e0ed9dc682e96c754074416aec1c7cccecabb94 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -35,18 +35,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">学习</a>
       <a href="start.html">入门</a>
       <a href="examples.html">示例</a>
-      <a href="releases.html">发布</a>
-      <a href="roadmap.html">路线图</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>版本</summary>
+        <ul>
+          <li><a href="releases.html">发布历程</a></li>
+          <li><a href="roadmap.html">路线图</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>系统</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>中文</summary>
       <ul>
         <li><a href="../index.html" hreflang="en">English</a></li>
@@ -258,6 +269,10 @@
   <div class="wrap">
     <h2>去哪里读更多</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="learn.html">
+        <span class="who">学习</span>
+        <span class="what">该按什么顺序上手，以及每一步缺什么 —— 与那一步并排写着。</span>
+      </a>
       <a class="doclink" href="start.html">
         <span class="who">入门</span>
         <span class="what">装上它并跑起你的第一个程序。原生二进制；不需要 Python、不需要 clang、不需要 WSL。</span>

@@ -33,18 +33,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">Learn</a>
       <a href="start.html">Get started</a>
       <a href="examples.html">Examples</a>
-      <a href="releases.html">Releases</a>
-      <a href="roadmap.html">Roadmap</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>Versions</summary>
+        <ul>
+          <li><a href="releases.html">Release history</a></li>
+          <li><a href="roadmap.html">Roadmap</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Systems</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>EN</summary>
       <ul>
         <li><a href="index.html" hreflang="en" aria-current="true">English</a></li>
@@ -271,6 +282,10 @@
   <div class="wrap">
     <h2>Where to read more</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="learn.html">
+        <span class="who">Learn</span>
+        <span class="what">The order that makes sense, and what is missing from each step &mdash; stated alongside it.</span>
+      </a>
       <a class="doclink" href="start.html">
         <span class="who">Get started</span>
         <span class="what">Install it and run your first program. Native binaries; no Python, no clang, no WSL.</span>

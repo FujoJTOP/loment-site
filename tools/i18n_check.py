@@ -51,7 +51,8 @@ LANGS = [
 PAGES = ["index.html", "start.html", "examples.html", "lgc.html", "lvm.html", "lompi.html",
          "libl.html",
          "releases.html",
-         "roadmap.html"]
+         "roadmap.html",
+         "learn.html"]
 
 #: 语言切换器与 alternate 组不进"散文面"：它们是镶边，不是内容。
 SKIP_CLASSES = {"codewrap", "lang"}
@@ -79,7 +80,7 @@ HEAD_SPAN_RE = re.compile(
     r'(?=<a class="skip"|<header class="bar">)', re.S)
 BAR_SPAN_RE = re.compile(r'</nav>\n.*?</header>', re.S)
 #: 校验时只认整块出现在那里，不管它在不在行首。
-LANG_RE = re.compile(r'<details class="lang">.*?</details>', re.S)
+LANG_RE = re.compile(r'<details class="lang"[^>]*>.*?</details>', re.S)
 SECTION_RE = re.compile(r'<section class="([^"]*)"')
 NAV_RE = re.compile(r'<nav>(.*?)</nav>', re.S)
 NAV_LINK_RE = re.compile(r'<a\b[^>]*>(.*?)</a>', re.S)
@@ -153,7 +154,7 @@ def canonical_lang_block(page: str, cur: str) -> str:
     """顶栏那个 <details> 语言切换器。当前语言那一条带 aria-current。
     缩进按它在 `</nav>` 与 `  </div>` 之间的位置来（4 空格）。"""
     _code, _hre, _native, short = langs_by_dir()[cur]
-    out = ['    <details class="lang">',
+    out = ['    <details class="lang" name="bar">',
            f'      <summary>{short}</summary>',
            '      <ul>']
     for d, _c, hre, native, _s in LANGS:
@@ -437,7 +438,7 @@ def check() -> int:
                            '<a class="skip"', "</body>", "</html>"):
                 if needle not in text:
                     mis_skel.append(f"{tag} 缺 {needle}")
-            if text.count("<details class=\"lang\">") != 1:
+            if text.count('<details class="lang"') != 1:
                 mis_skel.append(f"{tag} 切换器不是恰好一个")
 
             if d == "":

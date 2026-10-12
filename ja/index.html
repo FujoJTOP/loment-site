@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: index.html -->
-<!-- source-sha256: 2ab8b12577a7e470e7245597b2eaa120bcc3167479fca2be738f0c62e4e11804 -->
+<!-- source-sha256: 49a8d9ef70f04982cb3f60ea8e0ed9dc682e96c754074416aec1c7cccecabb94 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -35,18 +35,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">学習</a>
       <a href="start.html">はじめに</a>
       <a href="examples.html">サンプル</a>
-      <a href="releases.html">リリース</a>
-      <a href="roadmap.html">ロードマップ</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>バージョン</summary>
+        <ul>
+          <li><a href="releases.html">リリース履歴</a></li>
+          <li><a href="roadmap.html">ロードマップ</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>システム</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>日本語</summary>
       <ul>
         <li><a href="../index.html" hreflang="en">English</a></li>
@@ -267,6 +278,10 @@
   <div class="wrap">
     <h2>もっと読むには</h2>
     <div style="margin-top: var(--s4)">
+      <a class="doclink" href="learn.html">
+        <span class="who">学習</span>
+        <span class="what">効く順番と、各段に何が足りないか —— 並べて書いてある。</span>
+      </a>
       <a class="doclink" href="start.html">
         <span class="who">はじめに</span>
         <span class="what">インストールして最初のプログラムを走らせる。ネイティブバイナリ。Python も clang も WSL も要らない。</span>

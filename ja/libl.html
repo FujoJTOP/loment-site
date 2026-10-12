@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: libl.html -->
-<!-- source-sha256: 46f2d83ddc649f20729baa726fd20085efcbd0f6a43bd91591223266a3c5c4d9 -->
+<!-- source-sha256: bab1219b8e5ba5ac9017a73871815d66f28f475229396d8cc80e963988d16932 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -32,18 +32,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">学習</a>
       <a href="start.html">はじめに</a>
       <a href="examples.html">サンプル</a>
-      <a href="releases.html">リリース</a>
-      <a href="roadmap.html">ロードマップ</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html" aria-current="page">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary>バージョン</summary>
+        <ul>
+          <li><a href="releases.html">リリース履歴</a></li>
+          <li><a href="roadmap.html">ロードマップ</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary aria-current="page">システム</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html" aria-current="page">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>日本語</summary>
       <ul>
         <li><a href="../libl.html" hreflang="en">English</a></li>

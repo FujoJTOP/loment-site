@@ -1,0 +1,277 @@
+<!doctype html>
+<!-- translated-from: learn.html -->
+<!-- source-sha256: f1892c5d0e2d5b40a81a95f2f1d49f1044ca31fbaa389152e3d762fec1e60ffd -->
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>学习 — Loment</title>
+<meta name="description" content="怎么学 Loment：先跑点什么，一口气把整门语言读完，再在一个会解释自己的工具链里查东西。缺什么，一并写在旁边。">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/learn.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/learn.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/learn.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/learn.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/learn.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/learn.html">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="learn.html" aria-current="page">学习</a>
+      <a href="start.html">入门</a>
+      <a href="examples.html">示例</a>
+      <details class="navmenu">
+        <summary>版本</summary>
+        <ul>
+          <li><a href="releases.html">发布历程</a></li>
+          <li><a href="roadmap.html">路线图</a></li>
+        </ul>
+      </details>
+      <details class="navmenu">
+        <summary>系统</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>中文</summary>
+      <ul>
+        <li><a href="../learn.html" hreflang="en">English</a></li>
+        <li><a href="learn.html" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+        <li><a href="../ja/learn.html" hreflang="ja">日本語</a></li>
+        <li><a href="../ru/learn.html" hreflang="ru">Русский</a></li>
+        <li><a href="../es/learn.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">学习</p>
+    <h1>学习 Loment</h1>
+    <p class="lede">
+      多数这么年轻的语言，要么没什么可读，要么有一份已经悄悄和编译器脱了节的教程。这门语言
+      有的，是<strong>一个会解释自己的工具链</strong>、一份按自足来写的指南，以及会点名自己
+      哪里没做完的文档。下面是合理的顺序 &mdash; 以及，与它并排，那些在你信任何一条之前值得
+      知道的事。
+    </p>
+    <p class="limit">
+      <strong>只有一本书，不是五本。</strong>这门语言不缺文档 &mdash; 缺的是<em>教学</em>
+      文档，而现有的那些自己也这么说。下面某个资源不完整、或者是用一种你未必读得懂的语言
+      写的、或者从没被按你正要用的方式用过 &mdash; 这一页会明说，而不是让你自己撞上。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>在读任何东西之前，先跑点什么</h2>
+    <p class="body">
+      这里没有什么是需要先弄懂才能做的。从
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">最新发布</a>装上包 &mdash;
+      在 Windows 上取 zip，不要取安装器 &mdash; 而那条给你写一个起点的命令，本身就是一段
+      Loment 程序：
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment new hello        <span class="c"># writes hello.lomt; it will not overwrite one</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment run hello.lomt   <span class="c"># compile, link, run &mdash; the exit code is the program's</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      编译加运行这条路径不需要 Python、不需要 clang、不需要 WSL。它产出什么、为什么，在
+      <a href="start.html">入门</a>那一页；它能产出的两类产物，在
+      <a href="index.html">首页</a>。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>这门语言，一口气读完</h2>
+    <p class="body">
+      整门语言就是<strong>一个带注释的文件</strong>，而打印它的那条命令随工具链发布，不是挂在
+      这个网站上。从头到尾读一遍，你就见过了它所有的构造 &mdash; 这门语言是为了经得起这样读
+      而建的，而不是为了让人一个特性一个特性地学。
+    </p>
+    <p class="body">
+      另有一份写下来的指南，它<strong>刻意做成自足的</strong>：安装包里那一份与仓库里那一份
+      是同一个文件，所以断网也能读，而这个项目的判据就是这两份保持一致。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour    <span class="c"># the language as one commented source file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment skill --print   <span class="c"># the written guide, printed in full</span></span></code></pre>
+    </div>
+
+    <p class="limit">
+      <strong>在你运行第一条命令之前，关于它有两件事。</strong>tour 里的注释是<em>中文的</em>，
+      而在当前已发布的这一版上，那个文件链接不过 &mdash; 这是自举链接器的一个已知缺陷，
+      <a href="examples.html">示例页上那四个程序</a>才是已验证能跑的。第二条命令打印出来的
+      指南是英文的。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>不用离开终端就能查东西</h2>
+    <p class="body">
+      这才是真正不寻常的地方，哪怕你压根没打算用这门语言，也值得试一试。<strong>工具链就是
+      参考。</strong>这几条都从安装包里读，所以断网也能用，而且回答的是你手上真正的那个版本，
+      而不是网站上一次说了什么。
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment cheat            <span class="c"># the whole language on one page</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment syntax           <span class="c"># the syntax on one page</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins         <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment keywords         <span class="c"># the reserved words</span></span><span class="ln" data-n="5"><span class="prompt">$ </span>loment explain E4       <span class="c"># what a diagnostic means, and what to change</span></span></code></pre>
+    </div>
+
+    <p class="body">
+      最后一条是值得记住的。一个错误码本身只是个数字；工具链存着与它配套的那句话，会告诉你
+      编译器在反对什么、该往哪边走。不带参数的 <code>loment help</code> 会列出其余的，而
+      <a href="https://loment.fandom.com/wiki/CLI_reference">wiki</a> 上是加长版。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>用写下来的材料查东西</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>手册</h3>
+        <p>
+          从编译器和示例语料生成，随仓库发布：各种规范，以及每个随包示例模块的 API 参考。
+          <strong>它是用中文写的</strong>，而且它是<em>参考</em>而不是教程 &mdash; 它告诉你
+          一个东西是什么，不告诉你拿它做什么。
+        </p>
+      </div>
+      <div class="row">
+        <h3>Wiki</h3>
+        <p>
+          与本站相同的材料，按这门语言的百科来编排：语法、类型、内建表、回收档位、错误码，
+          以及哪些地方是刻意与其他语言不同的。英文，当你想一页只讲一件事的时候就去那里。
+        </p>
+      </div>
+      <div class="row">
+        <h3>设计记录</h3>
+        <p>
+          这门语言里的每一个决定背后都有一份编号文档，为它辩护，也写出它付了什么代价。
+          <strong>它们是用中文写的</strong>，而且不是为学习者写的 &mdash; 但当这里或 wiki 上
+          某一页说"设计上就是这么定的"时，那说的就是这里。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>靠读代码来学</h2>
+    <p class="body">
+      仓库里带着一卷示例程序语料，工具链能把其中任何一个打印出来，不用你打开浏览器：
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment examples        <span class="c"># what is bundled</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment example demo    <span class="c"># print one of them in full</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      想更温和地上手，<a href="examples.html">本站上那四个程序</a>很短，每一个都带着它真正
+      产出的输出。完整语料在仓库的
+      <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>
+      下，而其中并不是每个文件今天都链接得过。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>让编辑器帮你</h2>
+    <p class="body">
+      有一个编辑器扩展，带一份语法定义和一个语言服务器，也有给那种不需要语言服务器的编辑器
+      的文件。语言服务器做的事是真的：在你敲字时给出检查器的诊断、补全、跳转到定义，以及
+      格式化 &mdash; 走的是另一个独立的格式化器，不是服务器本身。
+    </p>
+    <p class="limit">
+      <strong>在你依赖它之前，值得知道三处缺口。</strong>没有跨文件符号索引，所以补全和
+      跳转到定义只看得到当前文档。服务器不声明格式化能力；格式化是单独一个程序。而项目
+      自己的笔记说，服务器<em>从没被人在真编辑器里手动驱动过</em> &mdash; 它的测试直接调用
+      同一个请求处理器。调试器也有自己的缺口：没有条件断点、没有表达式求值，局部变量是
+      寄存器而不是名字。<a href="https://loment.fandom.com/wiki/Editor_support">wiki 上的
+      编辑器页</a>把完整清单列了出来。
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>这一切都在哪里</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="start.html">
+        <span class="who">入门</span>
+        <span class="what">装上它，跑你的第一个程序。原生二进制；不需要 Python、不需要 clang、不需要 WSL。</span>
+      </a>
+      <a class="doclink" href="examples.html">
+        <span class="who">示例</span>
+        <span class="what">四个短程序，每一个都带着它打印出来的输出 — 以及什么没有在其中。</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/">
+        <span class="who">Wiki</span>
+        <span class="what">这门语言、工具链和路线图，一页一页地讲。</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">入门页的加长版，包含每一条构建路径。</span>
+      </a>
+      <a class="doclink" href="roadmap.html">
+        <span class="who">路线图</span>
+        <span class="what">接下来打算做什么，按一份计划来说 — 不附日期。</span>
+      </a>
+      <a class="doclink" href="https://discord.gg/rGw7NRNU">
+        <span class="who">Discord</span>
+        <span class="what">项目交谈的地方。提问和 bug 报告一样受欢迎。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment 依据 Loment-Open License 发布。由 Fujo 编写。</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">源码</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">发布</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

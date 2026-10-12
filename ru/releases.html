@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: releases.html -->
-<!-- source-sha256: 9354f8a5338c0b3fb38fd4aa6f3fa051ddd83b3d703325c0341e83f152fa2a07 -->
+<!-- source-sha256: e9397625e20ab0e7291ed789f21f3356f28fec918a35a402b220c538b5beb8a2 -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -32,18 +32,29 @@
       </svg>
       Loment
     </a>
-    <nav>
+        <nav>
+      <a href="learn.html">Обучение</a>
       <a href="start.html">Начало</a>
       <a href="examples.html">Примеры</a>
-      <a href="releases.html" aria-current="page">Релизы</a>
-      <a href="roadmap.html">Дорожная карта</a>
-      <a href="lgc.html">LGC</a>
-      <a href="lvm.html">LVM</a>
-      <a href="lompi.html">lompi</a>
-      <a href="libl.html">LibL</a>
+      <details class="navmenu" name="bar">
+        <summary aria-current="page">Версии</summary>
+        <ul>
+          <li><a href="releases.html" aria-current="page">История версий</a></li>
+          <li><a href="roadmap.html">Дорожная карта</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Системы</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
       <a href="https://github.com/FujoJTOP/loment">GitHub</a>
     </nav>
-    <details class="lang">
+    <details class="lang" name="bar">
       <summary>RU</summary>
       <ul>
         <li><a href="../releases.html" hreflang="en">English</a></li>

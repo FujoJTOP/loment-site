@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn — Loment</title>
+<meta name="description" content="How to learn Loment: run something first, read the language in one sitting, and look things up in a toolchain that explains itself. With what is missing stated alongside.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="alternate" hreflang="en" href="https://fujojtop.github.io/loment-site/learn.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://fujojtop.github.io/loment-site/zh/learn.html">
+<link rel="alternate" hreflang="ja" href="https://fujojtop.github.io/loment-site/ja/learn.html">
+<link rel="alternate" hreflang="ru" href="https://fujojtop.github.io/loment-site/ru/learn.html">
+<link rel="alternate" hreflang="es" href="https://fujojtop.github.io/loment-site/es/learn.html">
+<link rel="alternate" hreflang="x-default" href="https://fujojtop.github.io/loment-site/learn.html">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#2f4bff"/>
+        <path d="M18 14h12v24h16v12H18z" fill="#fff"/>
+      </svg>
+      Loment
+    </a>
+    <nav>
+      <a href="learn.html" aria-current="page">Learn</a>
+      <a href="start.html">Get started</a>
+      <a href="examples.html">Examples</a>
+      <details class="navmenu" name="bar">
+        <summary>Versions</summary>
+        <ul>
+          <li><a href="releases.html">Release history</a></li>
+          <li><a href="roadmap.html">Roadmap</a></li>
+        </ul>
+      </details>
+      <details class="navmenu" name="bar">
+        <summary>Systems</summary>
+        <ul>
+          <li><a href="lgc.html">LGC</a></li>
+          <li><a href="lvm.html">LVM</a></li>
+          <li><a href="lompi.html">lompi</a></li>
+          <li><a href="libl.html">LibL</a></li>
+        </ul>
+      </details>
+      <a href="https://github.com/FujoJTOP/loment">GitHub</a>
+    </nav>
+    <details class="lang" name="bar">
+      <summary>EN</summary>
+      <ul>
+        <li><a href="learn.html" hreflang="en" aria-current="true">English</a></li>
+        <li><a href="zh/learn.html" hreflang="zh-Hans">简体中文</a></li>
+        <li><a href="ja/learn.html" hreflang="ja">日本語</a></li>
+        <li><a href="ru/learn.html" hreflang="ru">Русский</a></li>
+        <li><a href="es/learn.html" hreflang="es">Español</a></li>
+      </ul>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="head">
+  <div class="wrap">
+    <p class="eyebrow">Learn</p>
+    <h1>Learn Loment</h1>
+    <p class="lede">
+      Most languages this young offer either nothing to read or a tutorial that has quietly
+      drifted from the compiler. What this one has instead is <strong>a toolchain that explains
+      itself</strong>, one guide written to be self-contained, and documents that name what is
+      not finished. Here is the order that makes sense &mdash; and, alongside it, the things
+      worth knowing before you trust any of it.
+    </p>
+    <p class="limit">
+      <strong>There is one book, not five.</strong> This language is not short of documents &mdash;
+      it is short of <em>teaching</em> documents, and the ones that exist say so. Where a
+      resource below is incomplete, incomplete in a language you may not read, or has never been
+      used the way you are about to use it, this page says that rather than letting you find out.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Run something before you read anything</h2>
+    <p class="body">
+      Nothing here needs to be understood first. Install the package from
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">the latest release</a> &mdash;
+      on Windows take the zip, not the installer &mdash; and the command that writes you a
+      starting point is itself a Loment program:
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment new hello        <span class="c"># writes hello.lomt; it will not overwrite one</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment run hello.lomt   <span class="c"># compile, link, run &mdash; the exit code is the program's</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      The compile-and-run path needs no Python, no clang and no WSL. What it produces and why is
+      on <a href="start.html">Get started</a>; the two kinds of artifact it can produce are on
+      <a href="index.html">the front page</a>.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>The language, in one sitting</h2>
+    <p class="body">
+      The whole language is available as <strong>one commented file</strong>, and the command
+      that prints it ships with the toolchain rather than living on this website. Read it top to
+      bottom once and you have seen every construct there is &mdash; the language was built to
+      survive that, rather than to be learned a feature at a time.
+    </p>
+    <p class="body">
+      There is also a written guide, and it is <strong>self-contained on purpose</strong>: the
+      copy inside the installed package is the same file as the one in the repository, so it can
+      be read with no network, and the project's criterion is that the two stay identical.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment example tour    <span class="c"># the language as one commented source file</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment skill --print   <span class="c"># the written guide, printed in full</span></span></code></pre>
+    </div>
+
+    <p class="limit">
+      <strong>Two things about that first command, before you run it.</strong> The comments in
+      the tour are <em>in Chinese</em>, and on the currently published release that particular
+      file does not link &mdash; it is a known defect in the self-hosted linker, and
+      <a href="examples.html">the four programs on the examples page</a> are the ones verified to
+      run. The guide printed by the second command is in English.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Look things up without leaving the terminal</h2>
+    <p class="body">
+      This is the part that is genuinely unusual, and it is worth trying even if you have no
+      intention of using the language. <strong>The toolchain is the reference.</strong> Every one
+      of these reads from the installed package, so they work with no network, and they answer
+      about the version you actually have rather than about whatever the website last said.
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment cheat            <span class="c"># the whole language on one page</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment syntax           <span class="c"># the syntax on one page</span></span><span class="ln" data-n="3"><span class="prompt">$ </span>loment builtins         <span class="c"># every built-in function there is</span></span><span class="ln" data-n="4"><span class="prompt">$ </span>loment keywords         <span class="c"># the reserved words</span></span><span class="ln" data-n="5"><span class="prompt">$ </span>loment explain E4       <span class="c"># what a diagnostic means, and what to change</span></span></code></pre>
+    </div>
+
+    <p class="body">
+      The last one is the one to remember. An error code on its own is a number; the toolchain
+      holds the sentence that goes with it, and will tell you what the compiler was objecting to
+      and which way to move. <code>loment help</code> with no argument lists the rest, and the
+      <a href="https://loment.fandom.com/wiki/CLI_reference">wiki</a> has the long form.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Look things up in writing</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>The manual</h3>
+        <p>
+          Generated from the compiler and the example corpus, and shipped in the repository: the
+          specifications, and an API reference for every bundled example module. <strong>It is
+          written in Chinese</strong>, and it is a <em>reference</em> rather than a tutorial
+          &mdash; it tells you what a thing is, not what to do with it.
+        </p>
+      </div>
+      <div class="row">
+        <h3>The wiki</h3>
+        <p>
+          The same material as this site, arranged as an encyclopedia of the language: syntax,
+          types, the built-in table, the reclamation tiers, the error codes, and what is
+          deliberately different from other languages. English, and the place to go when you want
+          one page about one thing.
+        </p>
+      </div>
+      <div class="row">
+        <h3>The design records</h3>
+        <p>
+          Every decision in this language has a numbered document behind it, arguing the case and
+          naming what it cost. <strong>They are written in Chinese</strong>, and they are not
+          written for learners &mdash; but when a page here or on the wiki says "the design says
+          so", this is where that is.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Learn by reading code</h2>
+    <p class="body">
+      The repository carries a corpus of example programs, and the toolchain can print any of
+      them without you opening a browser:
+    </p>
+
+    <div class="codewrap">
+<pre class="code"><code><span class="ln" data-n="1"><span class="prompt">$ </span>loment examples        <span class="c"># what is bundled</span></span><span class="ln" data-n="2"><span class="prompt">$ </span>loment example demo    <span class="c"># print one of them in full</span></span></code></pre>
+    </div>
+
+    <p class="caption">
+      For a gentler start, <a href="examples.html">the four programs on this site</a> are short
+      and each one shows the output it actually produced. The full corpus is in the repository
+      under <a href="https://github.com/FujoJTOP/loment/tree/main/loment/examples">loment/examples/</a>,
+      and not every file in it links today.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Let the editor help you</h2>
+    <p class="body">
+      There is an editor extension with a syntax definition and a language server, and files for
+      an editor that does not need one. What the language server does is real: diagnostics from
+      the checker as you type, completion, go to definition, and formatting &mdash; through the
+      separate formatter, not by the server itself.
+    </p>
+    <p class="limit">
+      <strong>Three gaps worth knowing before you rely on it.</strong> There is no cross-file
+      symbol index, so completion and go-to-definition see the current document only. The server
+      does not declare a formatting capability; formatting is a separate program. And the
+      project's own notes say the server <em>has never been driven inside a real editor by
+      hand</em> &mdash; its tests call the same request handler directly. The debugger has gaps of
+      its own: no conditional breakpoints, no expression evaluation, and locals are registers
+      rather than names. The
+      <a href="https://loment.fandom.com/wiki/Editor_support">editor page on the wiki</a> lists
+      them in full.
+    </p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>Where all of it lives</h2>
+    <div style="margin-top: var(--s4)">
+      <a class="doclink" href="start.html">
+        <span class="who">Get started</span>
+        <span class="what">Install it and run your first program. Native binaries; no Python, no clang, no WSL.</span>
+      </a>
+      <a class="doclink" href="examples.html">
+        <span class="who">Examples</span>
+        <span class="what">Four short programs, each with the output it printed — and what is not among them.</span>
+      </a>
+      <a class="doclink" href="https://loment.fandom.com/">
+        <span class="who">Wiki</span>
+        <span class="what">The language, the toolchain and the roadmap, page by page.</span>
+      </a>
+      <a class="doclink" href="https://github.com/FujoJTOP/loment/blob/main/QUICKSTART.md">
+        <span class="who">QUICKSTART.md</span>
+        <span class="what">The long form of the getting-started page, including every build path.</span>
+      </a>
+      <a class="doclink" href="roadmap.html">
+        <span class="who">Roadmap</span>
+        <span class="what">What is planned next, stated as a plan — with no dates attached to it.</span>
+      </a>
+      <a class="doclink" href="https://discord.gg/rGw7NRNU">
+        <span class="who">Discord</span>
+        <span class="what">Where the project talks. Questions are as welcome as bug reports.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Loment is released under the Loment-Open License. Program by Fujo.</span>
+    <nav>
+      <a href="https://github.com/FujoJTOP/loment">Source</a>
+      <a href="https://github.com/FujoJTOP/loment/releases/latest">Releases</a>
+      <a href="https://github.com/FujoJTOP/lompi">lompi</a>
+      <a href="https://loment.fandom.com/">Wiki</a>
+      <a href="https://github.com/FujoJTOP/loment/issues">Issues</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
