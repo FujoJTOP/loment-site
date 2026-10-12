@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: releases.html -->
-<!-- source-sha256: 7413b86510fc7ac7dfc6bdbd639a0b522911ee6c4c879f9482d00f6d30410f2c -->
+<!-- source-sha256: abfdc54bdf320a78bc6da89534cb1263bf91196d3010f434dc4728a89ec313d7 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -235,6 +235,10 @@
     </ol>
 
     <h3>修复</h3>
+    <p class="body">
+      最后一组来自对表层语法的那轮扫面 —— 也就是一个单元还能被写出来的另外六种方式。每一条
+      都是前端可能把你写下的东西弄丢的单独一种方式，所以逐条列出，各附其 issue。
+    </p>
     <ol class="notes">
       <li>
         <strong>Windows 安装器。</strong>随 0.1.4 发布的那一个，在被配置成不搜索当前目录找
@@ -259,6 +263,93 @@
       <li>
         <strong>C 表层语法里的若干修复</strong>，针对前端把某个东西吞掉、或把它报成了别的东西
         的那些地方。每一条都有自己的 issue；标签信息把它们列了出来。
+      </li>
+      <li>
+        用另一种语法写成的单元可能静默丢掉整个函数：前端把转写侧关于它跳过了什么的报告扔掉了。 <a href="https://github.com/FujoJTOP/loment/issues/74">#74</a>
+      </li>
+      <li>
+        <code>loment fmt --write</code> 会毁掉用另一种语法写的文件 —— 它把声明行并进下一行、删掉原本在那里的函数，然后以退出码 0 结束。 <a href="https://github.com/FujoJTOP/loment/issues/115">#115</a>
+      </li>
+      <li>
+        <code>loment doc</code> 会在这种文件上崩溃，或者生成出以生成行号、而不是你写下的那些行号为键的文档。 <a href="https://github.com/FujoJTOP/loment/issues/116">#116</a>
+      </li>
+      <li>
+        函数内的 <code>static</code> 被丢弃，于是那个值在两次调用之间留不下来。 <a href="https://github.com/FujoJTOP/loment/issues/118">#118</a>
+      </li>
+      <li>
+        一个局部变量与 <code>for</code> 体外的某个东西同名，会让转写出来的单元无限循环。 <a href="https://github.com/FujoJTOP/loment/issues/119">#119</a>
+      </li>
+      <li>
+        定义在同一行上的第二个函数被静默丢弃。 <a href="https://github.com/FujoJTOP/loment/issues/122">#122</a>
+      </li>
+      <li>
+        一个未加括号的布尔转换生成了一个不再能解析的单元。 <a href="https://github.com/FujoJTOP/loment/issues/124">#124</a>
+      </li>
+      <li>
+        顶层的 <code>typedef</code>、全局变量、<code>union</code>、<code>#include</code> 与 <code>#define</code> 既没被转写也没被报告 —— 检查仍然打印 OK。 <a href="https://github.com/FujoJTOP/loment/issues/126">#126</a>
+      </li>
+      <li>
+        一个八进制字面量让两个命令行工具都打印出了栈回溯。 <a href="https://github.com/FujoJTOP/loment/issues/127">#127</a>
+      </li>
+      <li>
+        外部符号表塌缩成了它的最后一条，于是跨单元那条路根本无法工作。 <a href="https://github.com/FujoJTOP/loment/issues/128">#128</a>
+      </li>
+      <li>
+        一个 K&amp;R 风格的函数定义静默消失 —— 没有条目，没有 [skip] 行，退出码 0。 <a href="https://github.com/FujoJTOP/loment/issues/129">#129</a>
+      </li>
+      <li>
+        一个名为 <code>true</code> 或 <code>false</code> 的变量在它声明的地方被改名了，在它被使用的地方却没有。 <a href="https://github.com/FujoJTOP/loment/issues/130">#130</a>
+      </li>
+      <li>
+        两个标识符在改名之后可能塌缩成一个，丢掉一次赋值。 <a href="https://github.com/FujoJTOP/loment/issues/134">#134</a>
+      </li>
+      <li>
+        一个名字与关键字冲突的函数生成了一个无法做词法分析的单元。 <a href="https://github.com/FujoJTOP/loment/issues/135">#135</a>
+      </li>
+      <li>
+        开头的一个字节序标记让语法声明变得不可见。 <a href="https://github.com/FujoJTOP/loment/issues/136">#136</a>
+      </li>
+      <li>
+        前端接受了词法分析器拒绝的标识符，并把错误报在了一个生成文件上。 <a href="https://github.com/FujoJTOP/loment/issues/137">#137</a>
+      </li>
+      <li>
+        一个没有显式指定语言的 <code>.c</code> 文件被当成 JSON 读了。 <a href="https://github.com/FujoJTOP/loment/issues/140">#140</a>
+      </li>
+      <li>
+        在这种文件里发一次跳转到定义请求会让语言服务器终止。 <a href="https://github.com/FujoJTOP/loment/issues/142">#142</a>
+      </li>
+      <li>
+        诊断工具与前端对哪些语法是原生的意见不一致，于是其中一个撤回了它本应提供的修复。 <a href="https://github.com/FujoJTOP/loment/issues/145">#145</a>
+      </li>
+      <li>
+        <code>loment dbg</code> 报告了一个并不存在的文件和行号。 <a href="https://github.com/FujoJTOP/loment/issues/146">#146</a>
+      </li>
+      <li>
+        一个被当作语句使用的调用绕过了跨单元闸门并被丢弃；同一个调用放在值的位置上却被拒绝了。 <a href="https://github.com/FujoJTOP/loment/issues/147">#147</a>
+      </li>
+      <li>
+        一个拼错的语法关键字静默回退到了 Loment，而不是报错。 <a href="https://github.com/FujoJTOP/loment/issues/148">#148</a>
+      </li>
+      <li>
+        一元 <code>~</code> 在文档里被说成受支持，却被转写器拒绝。 <a href="https://github.com/FujoJTOP/loment/issues/150">#150</a>
+      </li>
+      <li>
+        表达式语句在文档里被说成受支持、却解析不了 —— 而且报错信息归咎于操作数。 <a href="https://github.com/FujoJTOP/loment/issues/151">#151</a>
+      </li>
+      <li>
+        一个映射不了的返回类型让函数消失了，而错误归咎于它下方好几行处的一个调用点。 <a href="https://github.com/FujoJTOP/loment/issues/152">#152</a>
+      </li>
+      <li>
+        一个函数原型会依它所在的位置，给出三种各不相同、而且都是错的诊断。 <a href="https://github.com/FujoJTOP/loment/issues/153">#153</a>
+      </li>
+      <li>
+        一条越界（不在子集内）诊断在它承诺给出函数名的地方，给的是一个行号和一个函数计数。 <a href="https://github.com/FujoJTOP/loment/issues/154">#154</a>
+      </li>
+      <li>
+        示例附注仍然把 C 那条支线说成链接，而它已经变成了转写。 <a href="https://github.com/FujoJTOP/loment/issues/155">#155</a>
+      </li>
+      <li>
+        一处跨单元名称冲突被用错误的名称报告出来，而且指到了错误的 <code>use</code> 行。 <a href="https://github.com/FujoJTOP/loment/issues/221">#221</a>
       </li>
     </ol>
 

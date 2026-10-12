@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: releases.html -->
-<!-- source-sha256: 7413b86510fc7ac7dfc6bdbd639a0b522911ee6c4c879f9482d00f6d30410f2c -->
+<!-- source-sha256: abfdc54bdf320a78bc6da89534cb1263bf91196d3010f434dc4728a89ec313d7 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -255,6 +255,11 @@
     </ol>
 
     <h3>修正</h3>
+    <p class="body">
+      最後の一群は、表層文法をひと巡りしたことから出てきた —— ユニットを綴ることのできる六つの
+      別の方法である。それぞれが、フロントエンドがあなたの書いたものを落としうる別々の形であり、
+      だからそれぞれが、そのイシューとともに列挙されている。
+    </p>
     <ol class="notes">
       <li>
         <strong>Windows インストーラ。</strong>0.1.4 とともに公開されたものは、実行ファイルを
@@ -284,6 +289,122 @@
         <strong>C の表層文法におけるいくつかの修正</strong> —— フロントエンドが何かを呑み込んだり、
         別の何かとして報告したりした箇所のための。それぞれに独自のイシューがあり、タグの
         メッセージがそれらを列挙している。
+      </li>
+      <li>
+        別の構文で書かれたユニットが、関数まるごとを黙って落とすことがあった: フロントエンドが、
+        転記側のスキップ報告を捨てていた。 <a href="https://github.com/FujoJTOP/loment/issues/74">#74</a>
+      </li>
+      <li>
+        <code>loment fmt --write</code> が、別の構文で書かれたファイルを破壊した —— 宣言の行を
+        次の行に併合し、そこにあった関数を削除し、そして終了コード 0 で終わった。
+        <a href="https://github.com/FujoJTOP/loment/issues/115">#115</a>
+      </li>
+      <li>
+        <code>loment doc</code> がそうしたファイルで死ぬか、あなたが書いた行番号ではなく、
+        生成された行番号に紐づいたドキュメントを出力した。 <a href="https://github.com/FujoJTOP/loment/issues/116">#116</a>
+      </li>
+      <li>
+        関数ローカルの <code>static</code> が落ちたので、その値は呼び出しの間で生き残らなかった。
+        <a href="https://github.com/FujoJTOP/loment/issues/118">#118</a>
+      </li>
+      <li>
+        <code>for</code> 本体の外の何かと名前を共有するローカルが、翻訳されたユニットを永遠に
+        ループさせた。 <a href="https://github.com/FujoJTOP/loment/issues/119">#119</a>
+      </li>
+      <li>
+        同じ行に定義された二つ目の関数が黙って落ちた。 <a href="https://github.com/FujoJTOP/loment/issues/122">#122</a>
+      </li>
+      <li>
+        括弧で括られていない真偽値変換が、もはや解析できないユニットを生んだ。
+        <a href="https://github.com/FujoJTOP/loment/issues/124">#124</a>
+      </li>
+      <li>
+        トップレベルの <code>typedef</code>、グローバル変数、<code>union</code>、<code>#include</code>、
+        <code>#define</code> は、翻訳も報告もされなかった —— それでも検査は OK を印字した。
+        <a href="https://github.com/FujoJTOP/loment/issues/126">#126</a>
+      </li>
+      <li>
+        8 進リテラルが、両方のコマンドラインツールからスタックトレースを印字した。
+        <a href="https://github.com/FujoJTOP/loment/issues/127">#127</a>
+      </li>
+      <li>
+        外部シンボル表が最後のエントリに潰れてしまい、ユニット間の経路はまったく働けなかった。
+        <a href="https://github.com/FujoJTOP/loment/issues/128">#128</a>
+      </li>
+      <li>
+        K&amp;R 形式の関数定義が黙って消えた —— エントリも、[skip] 行もなく、終了コード 0。
+        <a href="https://github.com/FujoJTOP/loment/issues/129">#129</a>
+      </li>
+      <li>
+        <code>true</code> あるいは <code>false</code> という名前の変数が、宣言された場所では
+        改名され、使われた場所ではされなかった。 <a href="https://github.com/FujoJTOP/loment/issues/130">#130</a>
+      </li>
+      <li>
+        二つの識別子が改名後にひとつに潰れ、代入が失われることがあった。
+        <a href="https://github.com/FujoJTOP/loment/issues/134">#134</a>
+      </li>
+      <li>
+        名前がキーワードと衝突する関数が、字句解析できないユニットを生んだ。
+        <a href="https://github.com/FujoJTOP/loment/issues/135">#135</a>
+      </li>
+      <li>
+        先頭のバイト順マークが、文法宣言を見えなくした。 <a href="https://github.com/FujoJTOP/loment/issues/136">#136</a>
+      </li>
+      <li>
+        フロントエンドが、字句解析器が拒む識別子を受け入れ、その誤りを生成されたファイルに
+        対して報告した。 <a href="https://github.com/FujoJTOP/loment/issues/137">#137</a>
+      </li>
+      <li>
+        明示的な言語なしで与えられた <code>.c</code> ファイルが JSON として読まれた。
+        <a href="https://github.com/FujoJTOP/loment/issues/140">#140</a>
+      </li>
+      <li>
+        そうしたファイルでの定義へ移動の要求が、ランゲージサーバを終了させた。
+        <a href="https://github.com/FujoJTOP/loment/issues/142">#142</a>
+      </li>
+      <li>
+        診断ツールとフロントエンドが、どの文法がネイティブかについて食い違い、その一方が、
+        差し出すべきだった修正を取り下げた。 <a href="https://github.com/FujoJTOP/loment/issues/145">#145</a>
+      </li>
+      <li>
+        <code>loment dbg</code> が、存在しないファイルと行を報告した。
+        <a href="https://github.com/FujoJTOP/loment/issues/146">#146</a>
+      </li>
+      <li>
+        文として使われた呼び出しが、ユニット間のゲートを迂回して落ちた。値の位置にある同じ
+        呼び出しは拒否された。 <a href="https://github.com/FujoJTOP/loment/issues/147">#147</a>
+      </li>
+      <li>
+        綴りを間違えた文法キーワードが、エラーになる代わりに黙って Loment にフォールバックした。
+        <a href="https://github.com/FujoJTOP/loment/issues/148">#148</a>
+      </li>
+      <li>
+        単項 <code>~</code> が、対応済みとして文書化され、翻訳器に拒否された。
+        <a href="https://github.com/FujoJTOP/loment/issues/150">#150</a>
+      </li>
+      <li>
+        式文が、対応済みとして文書化され、解析できなかった —— そしてメッセージはオペランドを
+        咎めた。 <a href="https://github.com/FujoJTOP/loment/issues/151">#151</a>
+      </li>
+      <li>
+        対応づけられない戻り型が関数を消し去り、そして誤りは、その数行下の呼び出し地点を
+        咎めた。 <a href="https://github.com/FujoJTOP/loment/issues/152">#152</a>
+      </li>
+      <li>
+        関数プロトタイプが、置かれた場所に応じて三つの異なる誤った診断を生んだ。
+        <a href="https://github.com/FujoJTOP/loment/issues/153">#153</a>
+      </li>
+      <li>
+        部分集合外の診断が、関数の名前を約束していた場所で、行番号と関数の数を与えた。
+        <a href="https://github.com/FujoJTOP/loment/issues/154">#154</a>
+      </li>
+      <li>
+        例の注記が、C の脚を依然としてリンクとして説明していたが、それは翻訳になっていた。
+        <a href="https://github.com/FujoJTOP/loment/issues/155">#155</a>
+      </li>
+      <li>
+        ユニット間の名前衝突が、誤った名前で報告され、誤った <code>use</code> 行を指した。
+        <a href="https://github.com/FujoJTOP/loment/issues/221">#221</a>
       </li>
     </ol>
 

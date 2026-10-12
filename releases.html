@@ -256,6 +256,11 @@
     </ol>
 
     <h3>Fixed</h3>
+    <p class="body">
+      The last group came out of the sweep over the surface grammars &mdash; the six other ways a unit can
+      be spelled. Each is a separate way the front end could lose something you wrote, so each is
+      listed, with its issue.
+    </p>
     <ol class="notes">
       <li>
         <strong>The Windows installer.</strong> The one published with 0.1.4 does nothing at all on
@@ -284,6 +289,93 @@
         <strong>Several fixes in the C surface grammar</strong> for the places the front end
         swallowed something or reported it as something else. Each has its own issue; the tag
         message lists them.
+      </li>
+      <li>
+        A unit written in another syntax could silently lose whole functions: the front door threw away the transcribe side's report of what it had skipped. <a href="https://github.com/FujoJTOP/loment/issues/74">#74</a>
+      </li>
+      <li>
+        <code>loment fmt --write</code> destroyed a file written in another syntax — it merged the declaration line into the next one and deleted the function that was there, and exited 0. <a href="https://github.com/FujoJTOP/loment/issues/115">#115</a>
+      </li>
+      <li>
+        <code>loment doc</code> died on such a file, or produced documentation keyed to generated line numbers rather than the ones you wrote. <a href="https://github.com/FujoJTOP/loment/issues/116">#116</a>
+      </li>
+      <li>
+        A function-local <code>static</code> was dropped, so the value did not survive between calls. <a href="https://github.com/FujoJTOP/loment/issues/118">#118</a>
+      </li>
+      <li>
+        A local sharing a name with something outside a <code>for</code> body made the translated unit loop forever. <a href="https://github.com/FujoJTOP/loment/issues/119">#119</a>
+      </li>
+      <li>
+        A second function defined on the same line was silently dropped. <a href="https://github.com/FujoJTOP/loment/issues/122">#122</a>
+      </li>
+      <li>
+        An unparenthesised boolean conversion produced a unit that no longer parsed. <a href="https://github.com/FujoJTOP/loment/issues/124">#124</a>
+      </li>
+      <li>
+        Top-level <code>typedef</code>, a global variable, <code>union</code>, <code>#include</code> and <code>#define</code> were neither translated nor reported — the check still printed OK. <a href="https://github.com/FujoJTOP/loment/issues/126">#126</a>
+      </li>
+      <li>
+        An octal literal printed a stack trace out of both command-line tools. <a href="https://github.com/FujoJTOP/loment/issues/127">#127</a>
+      </li>
+      <li>
+        The externs table collapsed to its last entry, so the cross-unit path could not work at all. <a href="https://github.com/FujoJTOP/loment/issues/128">#128</a>
+      </li>
+      <li>
+        A K&amp;R-style function definition vanished silently — no entry, no skip line, exit 0. <a href="https://github.com/FujoJTOP/loment/issues/129">#129</a>
+      </li>
+      <li>
+        A variable named <code>true</code> or <code>false</code> was renamed where it was declared and not where it was used. <a href="https://github.com/FujoJTOP/loment/issues/130">#130</a>
+      </li>
+      <li>
+        Two identifiers could collapse into one after renaming, losing an assignment. <a href="https://github.com/FujoJTOP/loment/issues/134">#134</a>
+      </li>
+      <li>
+        A function whose name collided with a keyword produced a unit that would not lex. <a href="https://github.com/FujoJTOP/loment/issues/135">#135</a>
+      </li>
+      <li>
+        A leading byte-order mark made the grammar declaration invisible. <a href="https://github.com/FujoJTOP/loment/issues/136">#136</a>
+      </li>
+      <li>
+        The front end accepted identifiers the lexer rejects, and reported the error against a generated file. <a href="https://github.com/FujoJTOP/loment/issues/137">#137</a>
+      </li>
+      <li>
+        A <code>.c</code> file given without an explicit language was read as JSON. <a href="https://github.com/FujoJTOP/loment/issues/140">#140</a>
+      </li>
+      <li>
+        A go-to-definition request in such a file terminated the language server. <a href="https://github.com/FujoJTOP/loment/issues/142">#142</a>
+      </li>
+      <li>
+        The diagnostics tool and the front door disagreed about which grammars are native, so one of them withdrew a fix it should have offered. <a href="https://github.com/FujoJTOP/loment/issues/145">#145</a>
+      </li>
+      <li>
+        <code>loment dbg</code> reported a file and line that did not exist. <a href="https://github.com/FujoJTOP/loment/issues/146">#146</a>
+      </li>
+      <li>
+        A call used as a statement bypassed the cross-unit gate and was dropped; the same call in value position was refused. <a href="https://github.com/FujoJTOP/loment/issues/147">#147</a>
+      </li>
+      <li>
+        A misspelt grammar keyword fell back silently to Loment instead of being an error. <a href="https://github.com/FujoJTOP/loment/issues/148">#148</a>
+      </li>
+      <li>
+        Unary <code>~</code> was documented as supported and rejected by the translator. <a href="https://github.com/FujoJTOP/loment/issues/150">#150</a>
+      </li>
+      <li>
+        An expression statement was documented as supported and did not parse — and the message blamed the operand. <a href="https://github.com/FujoJTOP/loment/issues/151">#151</a>
+      </li>
+      <li>
+        An unmappable return type made the function vanish, and the error blamed a call site several lines below it. <a href="https://github.com/FujoJTOP/loment/issues/152">#152</a>
+      </li>
+      <li>
+        A function prototype produced three different wrong diagnostics depending on where it was. <a href="https://github.com/FujoJTOP/loment/issues/153">#153</a>
+      </li>
+      <li>
+        An out-of-subset diagnostic gave a line number and a function count where it had promised the function's name. <a href="https://github.com/FujoJTOP/loment/issues/154">#154</a>
+      </li>
+      <li>
+        The example notes still described the C leg as linking, where it had become translation. <a href="https://github.com/FujoJTOP/loment/issues/155">#155</a>
+      </li>
+      <li>
+        A cross-unit name clash was reported with the wrong names, and pointed at the wrong <code>use</code> line. <a href="https://github.com/FujoJTOP/loment/issues/221">#221</a>
       </li>
     </ol>
 

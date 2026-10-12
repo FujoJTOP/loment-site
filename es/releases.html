@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: releases.html -->
-<!-- source-sha256: 7413b86510fc7ac7dfc6bdbd639a0b522911ee6c4c879f9482d00f6d30410f2c -->
+<!-- source-sha256: abfdc54bdf320a78bc6da89534cb1263bf91196d3010f434dc4728a89ec313d7 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -267,6 +267,11 @@
     </ol>
 
     <h3>Corregido</h3>
+    <p class="body">
+      El último grupo surgió del barrido de las gramáticas superficiales — las otras seis formas en
+      que se puede escribir una unidad. Cada una es una forma distinta en que el front end podía
+      perder algo que se había escrito, así que cada una figura aquí, con su incidencia.
+    </p>
     <ol class="notes">
       <li>
         <strong>El instalador de Windows.</strong> El publicado con 0.1.4 no hace absolutamente nada
@@ -298,6 +303,93 @@
         <strong>Varias correcciones en la gramática superficial de C</strong> para los lugares donde
         el front end se tragaba algo o lo reportaba como otra cosa. Cada una tiene su propia
         incidencia; el mensaje de la etiqueta las enumera.
+      </li>
+      <li>
+        Una unidad escrita en otra sintaxis podía perder funciones enteras en silencio: el front end descartaba el informe de omisiones del lado de transcripción. <a href="https://github.com/FujoJTOP/loment/issues/74">#74</a>
+      </li>
+      <li>
+        <code>loment fmt --write</code> destruía un archivo escrito en otra sintaxis — fusionaba la línea de declaración con la siguiente y borraba la función que había allí, y terminaba con salida 0. <a href="https://github.com/FujoJTOP/loment/issues/115">#115</a>
+      </li>
+      <li>
+        <code>loment doc</code> se caía con un archivo así, o producía documentación referida a números de línea generados en vez de a los que se habían escrito. <a href="https://github.com/FujoJTOP/loment/issues/116">#116</a>
+      </li>
+      <li>
+        Un <code>static</code> local a una función se descartaba, así que el valor no sobrevivía entre llamadas. <a href="https://github.com/FujoJTOP/loment/issues/118">#118</a>
+      </li>
+      <li>
+        Una variable local que compartía nombre con algo fuera de un cuerpo <code>for</code> hacía que la unidad traducida entrara en un bucle infinito. <a href="https://github.com/FujoJTOP/loment/issues/119">#119</a>
+      </li>
+      <li>
+        Una segunda función definida en la misma línea se perdía en silencio. <a href="https://github.com/FujoJTOP/loment/issues/122">#122</a>
+      </li>
+      <li>
+        Una conversión booleana sin paréntesis producía una unidad que ya no se podía analizar sintácticamente. <a href="https://github.com/FujoJTOP/loment/issues/124">#124</a>
+      </li>
+      <li>
+        Los <code>typedef</code> de nivel superior, una variable global, <code>union</code>, <code>#include</code> y <code>#define</code> ni se traducían ni se reportaban — la comprobación seguía imprimiendo OK. <a href="https://github.com/FujoJTOP/loment/issues/126">#126</a>
+      </li>
+      <li>
+        Un literal octal hacía que ambas herramientas de línea de comandos imprimieran una traza de pila. <a href="https://github.com/FujoJTOP/loment/issues/127">#127</a>
+      </li>
+      <li>
+        La tabla de símbolos externos colapsaba a su última entrada, así que la ruta entre unidades no podía funcionar en absoluto. <a href="https://github.com/FujoJTOP/loment/issues/128">#128</a>
+      </li>
+      <li>
+        Una definición de función al estilo K&amp;R desaparecía en silencio — sin entrada, sin línea [skip], salida 0. <a href="https://github.com/FujoJTOP/loment/issues/129">#129</a>
+      </li>
+      <li>
+        Una variable llamada <code>true</code> o <code>false</code> se renombraba donde estaba declarada y no donde se usaba. <a href="https://github.com/FujoJTOP/loment/issues/130">#130</a>
+      </li>
+      <li>
+        Dos identificadores podían colapsar en uno tras el renombrado, perdiendo una asignación. <a href="https://github.com/FujoJTOP/loment/issues/134">#134</a>
+      </li>
+      <li>
+        Una función cuyo nombre chocaba con una palabra clave producía una unidad que no se podía analizar léxicamente. <a href="https://github.com/FujoJTOP/loment/issues/135">#135</a>
+      </li>
+      <li>
+        Una marca de orden de bytes al principio hacía invisible la declaración de gramática. <a href="https://github.com/FujoJTOP/loment/issues/136">#136</a>
+      </li>
+      <li>
+        El front end aceptaba identificadores que el analizador léxico rechaza, y reportaba el error contra un archivo generado. <a href="https://github.com/FujoJTOP/loment/issues/137">#137</a>
+      </li>
+      <li>
+        Un archivo <code>.c</code> dado sin un lenguaje explícito se leía como JSON. <a href="https://github.com/FujoJTOP/loment/issues/140">#140</a>
+      </li>
+      <li>
+        Una solicitud de ir a la definición en un archivo así hacía terminar el servidor de lenguaje. <a href="https://github.com/FujoJTOP/loment/issues/142">#142</a>
+      </li>
+      <li>
+        La herramienta de diagnósticos y el front end no coincidían sobre qué gramáticas son nativas, así que una de ellas retiraba una corrección que debería haber ofrecido. <a href="https://github.com/FujoJTOP/loment/issues/145">#145</a>
+      </li>
+      <li>
+        <code>loment dbg</code> reportaba un archivo y una línea que no existían. <a href="https://github.com/FujoJTOP/loment/issues/146">#146</a>
+      </li>
+      <li>
+        Una llamada usada como sentencia eludía la puerta entre unidades y se descartaba; la misma llamada en posición de valor se rechazaba. <a href="https://github.com/FujoJTOP/loment/issues/147">#147</a>
+      </li>
+      <li>
+        Una palabra clave de gramática mal escrita recaía en silencio sobre Loment en vez de dar error. <a href="https://github.com/FujoJTOP/loment/issues/148">#148</a>
+      </li>
+      <li>
+        El <code>~</code> unario estaba documentado como soportado y el traductor lo rechazaba. <a href="https://github.com/FujoJTOP/loment/issues/150">#150</a>
+      </li>
+      <li>
+        Una sentencia de expresión estaba documentada como soportada y no se analizaba — y el mensaje culpaba al operando. <a href="https://github.com/FujoJTOP/loment/issues/151">#151</a>
+      </li>
+      <li>
+        Un tipo de retorno no traducible hacía desaparecer la función, y el error culpaba a un punto de llamada varias líneas más abajo. <a href="https://github.com/FujoJTOP/loment/issues/152">#152</a>
+      </li>
+      <li>
+        Un prototipo de función producía tres diagnósticos erróneos distintos según dónde estuviera. <a href="https://github.com/FujoJTOP/loment/issues/153">#153</a>
+      </li>
+      <li>
+        Un diagnóstico fuera del subconjunto daba un número de línea y un recuento de funciones donde había prometido el nombre de la función. <a href="https://github.com/FujoJTOP/loment/issues/154">#154</a>
+      </li>
+      <li>
+        Las notas del ejemplo todavía describían el tramo de C como enlazado, cuando había pasado a ser traducción. <a href="https://github.com/FujoJTOP/loment/issues/155">#155</a>
+      </li>
+      <li>
+        Un choque de nombres entre unidades se reportaba con los nombres equivocados y apuntaba a la línea <code>use</code> equivocada. <a href="https://github.com/FujoJTOP/loment/issues/221">#221</a>
       </li>
     </ol>
 
