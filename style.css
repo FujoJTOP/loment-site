@@ -618,9 +618,51 @@ html:lang(zh-Hans), html:lang(ja) { --measure: 78ch; }
    past the measure. */
 html:lang(ru) { hyphens: auto; }
 
+/* ------------------------------------------------------------- entrance
+
+   A short settle when a page arrives: the bar fades, then the blocks below it
+   rise a few pixels into place, staggered so the page assembles instead of
+   appearing all at once. Only `opacity` and `translateY`, so it stays on the
+   compositor and never lays anything out twice.
+
+   `backwards`, never `both`. With `both` the element keeps the keyframe's
+   `from` state — `opacity: 0` — for as long as it takes the animation to
+   start, so a browser that declines to run it, or a stylesheet that arrives
+   after the content, leaves the page invisible. `backwards` hides the element
+   only for its own delay, and the element's ordinary state is the visible one.
+
+   `prefers-reduced-motion` turns all of this off; the block at the end of the
+   file also zeroes `animation-delay`, which it has to — a 300ms delay with a
+   0.01ms duration is 300ms of invisible text. */
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes settle-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* The bar gets opacity alone: it is `position: sticky`, and a transform on it
+   would make it a containing block while the animation runs. */
+.bar { animation: settle-fade 300ms ease-out backwards; }
+
+.hero > .wrap, .head > .wrap {
+  animation: settle 420ms cubic-bezier(0.22, 0.61, 0.36, 1) 60ms backwards;
+}
+
+/* One delay for every section rather than a stagger down the page. The only
+   thing a reader sees arrive is the bar, the head and at most the first
+   section — everything after that is below the fold and has finished before
+   it is looked at — so a per-section stagger would be numbering that buys
+   nothing and breaks the day a page starts with a `.sec` instead of a `.head`. */
+main > .sec { animation: settle 460ms cubic-bezier(0.22, 0.61, 0.36, 1) 180ms backwards; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
