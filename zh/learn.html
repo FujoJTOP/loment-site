@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: learn.html -->
-<!-- source-sha256: f328f7c92c5e852604739d7810ec30eabf8f0f53e3b1751054926bce9dc865f7 -->
+<!-- source-sha256: 03342cb91eb560afe37cc5047f7a3a9c1db18fa561204d92f3345be48c4fc271 -->
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
@@ -211,9 +211,18 @@
   <div class="wrap">
     <h2>让编辑器帮你</h2>
     <p class="body">
-      有一个编辑器扩展，带一份语法定义和一个语言服务器，也有给那种不需要语言服务器的编辑器
-      的文件。语言服务器做的事是真的：在你敲字时给出检查器的诊断、补全、跳转到定义，以及
-      格式化 &mdash; 走的是另一个独立的格式化器，不是服务器本身。
+      VS Code 扩展已经上架扩展市场，名字是
+      <a href="https://marketplace.visualstudio.com/items?itemName=hooyan2022.loment">hooyan2022.loment</a>
+      &mdash; 在扩展面板里搜 <code>Loment</code> 就能找到。语言服务器做的事是真的：在你敲字时
+      给出检查器的诊断、补全、跳转到定义，以及格式化 &mdash; 走的是另一个独立的格式化器，不是
+      服务器本身。也有给 Vim 的文件，而服务器用 LSP 走 stdio 通信，所以任何带客户端的编辑器
+      都能接上去。
+    </p>
+    <p class="body">
+      <strong>这个扩展是一个客户端，不是一个编译器。</strong>它身上不带工具链：语言服务器、
+      构建和调试器，都从一份 Loment 检出（checkout，从仓库取下来的源码）里跑程序，而这份检出
+      是从你打开的文件夹一路往上找出来的。装上它、打开一个文件，附近却没有检出时，你只会得到
+      高亮，别的一概没有 &mdash; 在断定这个扩展坏了之前，这点值得知道。
     </p>
     <p class="limit">
       <strong>在你依赖它之前，值得知道三处缺口。</strong>没有跨文件符号索引，所以补全和

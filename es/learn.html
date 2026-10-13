@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- translated-from: learn.html -->
-<!-- source-sha256: f328f7c92c5e852604739d7810ec30eabf8f0f53e3b1751054926bce9dc865f7 -->
+<!-- source-sha256: 03342cb91eb560afe37cc5047f7a3a9c1db18fa561204d92f3345be48c4fc271 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -223,10 +223,20 @@
   <div class="wrap">
     <h2>Deja que el editor te ayude</h2>
     <p class="body">
-      Hay una extensión de editor con una definición de sintaxis y un servidor de lenguaje, y
-      archivos para un editor que no necesita uno. Lo que hace el servidor de lenguaje es real:
-      diagnósticos del comprobador mientras escribes, autocompletado, ir a la definición y formato
-      &mdash; mediante el formateador aparte, no por el propio servidor.
+      La extensión de VS Code está en el marketplace, como
+      <a href="https://marketplace.visualstudio.com/items?itemName=hooyan2022.loment">hooyan2022.loment</a>
+      &mdash; busca <code>Loment</code> en el panel de extensiones. Lo que hace el servidor de
+      lenguaje es real: diagnósticos del comprobador mientras escribes, autocompletado, ir a la
+      definición y formato &mdash; mediante el formateador aparte, no por el propio servidor.
+      También hay archivos para Vim, y el servidor habla LSP por stdio, así que cualquier editor
+      con un cliente puede conectarse.
+    </p>
+    <p class="body">
+      <strong>La extensión es un cliente, no un compilador.</strong> No lleva ningún conjunto de
+      herramientas: el servidor de lenguaje, la compilación y el depurador ejecutan programas desde
+      una copia de trabajo de Loment, que se localiza subiendo por las carpetas a partir de la que
+      tienes abierta. Instálala y abre un archivo sin ninguna copia cerca, y obtienes resaltado y
+      nada más &mdash; algo que conviene saber antes de concluir que la extensión está rota.
     </p>
     <p class="limit">
       <strong>Tres huecos que conviene conocer antes de fiarse de él.</strong> No hay índice de

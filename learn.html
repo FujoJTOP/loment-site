@@ -221,10 +221,19 @@
   <div class="wrap">
     <h2>Let the editor help you</h2>
     <p class="body">
-      There is an editor extension with a syntax definition and a language server, and files for
-      an editor that does not need one. What the language server does is real: diagnostics from
-      the checker as you type, completion, go to definition, and formatting &mdash; through the
-      separate formatter, not by the server itself.
+      The VS Code extension is on the marketplace, as
+      <a href="https://marketplace.visualstudio.com/items?itemName=hooyan2022.loment">hooyan2022.loment</a>
+      &mdash; search <code>Loment</code> in the extensions panel. What the language server does is
+      real: diagnostics from the checker as you type, completion, go to definition, and
+      formatting, through the separate formatter rather than by the server itself. There are files
+      for Vim too, and the server speaks LSP over stdio, so any editor with a client can attach.
+    </p>
+    <p class="body">
+      <strong>The extension is a client, not a compiler.</strong> It carries no toolchain: the
+      language server, the build and the debugger all run programs out of a Loment checkout, found
+      by walking up from the folder you have open. Install it and open a file with no checkout
+      nearby, and you get highlighting and nothing else &mdash; worth knowing before you conclude
+      that the extension is broken.
     </p>
     <p class="limit">
       <strong>Three gaps worth knowing before you rely on it.</strong> There is no cross-file
