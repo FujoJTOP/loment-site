@@ -280,7 +280,18 @@ code {
 
 /* --------------------------------------------------------------- hero */
 
-.hero { padding-block: clamp(var(--s6), 8vw, var(--s8)) var(--s7); }
+/* The homepage is one statement and two buttons, so the hero *is* the page.
+   It holds the first screen instead of leaving the footer floating in the
+   middle of it. `70vh` and not `100vh` on purpose: the bar is 64px on a wide
+   window and up to ~110px once its nav wraps, and a hero measured to the exact
+   viewport would be taller than the screen by exactly that much on a phone.
+   Column + `justify-content` rather than `align-items`, so `.wrap` keeps
+   behaving like the block it is everywhere else. */
+.hero {
+  padding-block: clamp(var(--s6), 8vw, var(--s8)) var(--s7);
+  min-height: 70vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
 
 .eyebrow {
   font: 500 var(--t-xs)/1 var(--mono);
