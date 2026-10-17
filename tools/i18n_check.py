@@ -36,7 +36,12 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # 站址是**唯一**的硬编码处。换域名时改这一行，然后跑 --fix：
 # 30 个页面的 hreflang 会一起重写，跑不出"漏掉某一页"这种形状。
-ORIGIN = "https://fujojtop.github.io/loment-site"
+#
+# **2026-10-17：随仓库迁进 `Loment-Lang` 组织，地址变了。** 组织 Pages 用组织名做子域，
+# 而 **Pages 不做重定向** —— 旧地址 `fujojtop.github.io/loment-site/` 现在是 **404**，
+# 所以这一次不是"好看"，是 55 页 × 6 条 hreflang 全指着一个死域。仓库的旧 URL 会 301，
+# 站点不会 —— 两者的行为不一样，别混。
+ORIGIN = "https://loment-lang.github.io/loment-site"
 
 #: (目录, <html lang>, hreflang, 切换器里的自称, summary 上的短标)
 LANGS = [
